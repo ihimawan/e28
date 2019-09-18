@@ -50,29 +50,29 @@ h2 {
 }
 
 .enemy {
-    background-color: #DCCCA3;
-    color: #DCCCA3;
+    background-color: #394e70;
+    color: #394e70;
     display: inline-block;
     line-height: 11px;
 }
 
 .space {
-    background-color: #252627;
-    color: #252627;
+    background-color: #011627;
+    color: #011627;
     display: inline-block;
     line-height: 11px;
 }
 
 .boundary {
-    color: #D3D4D9;
-    background-color: #D3D4D9;
+    color: #20A4F3;
+    background-color: #20A4F3;
     display: inline-block;
     line-height: 11px;
 }
 
 .food {
-    color: #BA1F33;
-    background-color: #BA1F33;
+    color: #FF3366;
+    background-color: #FF3366;
     content: '&#9829';
     display: inline-block;
     line-height: 11px;

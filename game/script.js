@@ -11,6 +11,7 @@ let xSize = 50;
 let ySize = 25;
 let howManyLeftDefault = 30;
 let minutesLeftDefault = 2;
+let enemyLength = 10;
 
 // constants
 let up = 'up';
@@ -33,7 +34,7 @@ let foodLoc;
 let generateMoreFood;
 let directionQueue = [];
 let currentDirection // up down left right
-let turned; // ensure that you have moved before you can change direction again.
+let enemyOccupy = [];
 
 // timers
 let interval;
@@ -80,6 +81,7 @@ function initializeGame() {
         JSON.stringify({ x: 3, y: 1 })
     ];
     directionQueue = [right];
+    enemyOccupy = [];
     generateMoreFood = true;
     foodLoc = null;
 }
@@ -227,8 +229,7 @@ function playingGame() {
     function dispatchEnemy(enemyDirection, speed) {
         // create enemy in same Y value as food
 
-        let enemyOccupy = [];
-        let enemyLength = 3;
+        enemyOccupy = [];
 
         enemyDirection = enemyDirection || right;
 
@@ -256,15 +257,15 @@ function playingGame() {
                 }
             }
 
-            enemyOccupy.push(newLoc);
+            enemyOccupy.push(JSON.stringify(newLoc));
         }
 
         let enemyInterval = setInterval(function () {
             // obtain last tail of snake
-            let lastTailLocation = enemyOccupy[0];
+            let lastTailLocation = JSON.parse(enemyOccupy[0]);
 
             //increment head location based on current direction
-            let currentHeadLocation = enemyOccupy[enemyOccupy.length - 1];
+            let currentHeadLocation = JSON.parse(enemyOccupy[enemyOccupy.length - 1]);
             let newHeadLocation;
 
             if (enemyDirection === up) {
@@ -301,7 +302,7 @@ function playingGame() {
             // re render the head and the last tail on the DOM
             // check if newHeadLocation crashes with any boundaries, do not rerender head
             if (!boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
-                enemyOccupy.push(newHeadLocation);
+                enemyOccupy.push(JSON.stringify(newHeadLocation));
                 let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
                 headNode.innerHTML = snakeChar;
                 headNode.className = enemyClassName;
@@ -345,22 +346,22 @@ function playingGame() {
                 snakeSays('Ahh... delicious');
                 setTimeout(function () {
                     dispatchEnemy(left, 100);
-                    snakeSays('Holy sssnakes!!! What who is that???', snakeSadClassName);
+                    snakeSays('Holy sssnakes!!! What is that black thing???', snakeSadClassName);
                 }, 1500);
                 setTimeout(function () {
-                    snakeSays('And why is he taking our virgin blood?!?!?!', snakeSadClassName);
+                    snakeSays('And why is it taking our virgin blood?!?!?!', snakeSadClassName);
                 }, 5000);
                 break;
             case 18:
                 setTimeout(function () {
                     dispatchEnemy(randomDirection, 100);
-                    snakeSays('There is he again! We need to stop that thing!', snakeSadClassName);
+                    snakeSays('There it is again! What the heck???', snakeSadClassName);
                 }, 1500);
                 break;
             case 17:
                 setTimeout(function () {
                     dispatchEnemy(randomDirection, 100);
-                    snakeSays('Oh my anaconda... that\'s BBC!!! He surely tanned a lot :/', snakeSadClassName);
+                    snakeSays('Oh my anaconda... that\'s BBC!!! It\'s so dark in this club it\'s so hard to see!!', snakeSadClassName);
                 }, 1500);
                 setTimeout(function () {
                     snakeSays('No matter! We just gotta keep going and keep getting things faster than he can...');
@@ -413,7 +414,7 @@ function loseGame(message) {
 
 function checkKey(e) {
     e = e || window.event;
-    let direction = directionQueue[directionQueue.length - 1];
+    let direction = directionQueue.length > 1 ? directionQueue[directionQueue.length - 1] : currentDirection;
     if (e.keyCode == '38') {
         if (direction !== down) {
             directionQueue.push(up);
