@@ -31,7 +31,8 @@ let points;
 let snakeOccupy = [];
 let foodLoc;
 let generateMoreFood;
-let currentDirection; // up down left right
+let directionQueue = [];
+let currentDirection // up down left right
 let turned; // ensure that you have moved before you can change direction again.
 
 // timers
@@ -72,12 +73,13 @@ function snakeSays(text, className) {
 
 function initializeGame() {
     points = howManyLeftDefault;
-    snakeOccupy = [];
     // initial size is 3
-    snakeOccupy.push(JSON.stringify({ x: 1, y: 1 }));
-    snakeOccupy.push(JSON.stringify({ x: 2, y: 1 }));
-    snakeOccupy.push(JSON.stringify({ x: 3, y: 1 }));
-    currentDirection = right;
+    snakeOccupy = [
+        JSON.stringify({ x: 1, y: 1 }),
+        JSON.stringify({ x: 2, y: 1 }),
+        JSON.stringify({ x: 3, y: 1 })
+    ];
+    directionQueue = [right];
     generateMoreFood = true;
     foodLoc = null;
 }
@@ -150,6 +152,11 @@ function playingGame() {
         //increment head location based on current direction
         let currentHeadLocation = JSON.parse(snakeOccupy[snakeOccupy.length - 1]);
         let newHeadLocation;
+
+        if (directionQueue.length > 0) {
+            currentDirection = directionQueue[0];
+            directionQueue.shift();
+        }
 
         if (currentDirection === up) {
             newHeadLocation = {
@@ -406,21 +413,22 @@ function loseGame(message) {
 
 function checkKey(e) {
     e = e || window.event;
+    let direction = directionQueue[directionQueue.length - 1];
     if (e.keyCode == '38') {
-        if (currentDirection !== down) {
-            currentDirection = up;
+        if (direction !== down) {
+            directionQueue.push(up);
         }
     } else if (e.keyCode == '40') {
-        if (currentDirection !== up) {
-            currentDirection = down;
+        if (direction !== up) {
+            directionQueue.push(down);
         }
     } else if (e.keyCode == '37') {
-        if (currentDirection !== right) {
-            currentDirection = left;
+        if (direction !== right) {
+            directionQueue.push(left);
         }
     } else if (e.keyCode == '39') {
-        if (currentDirection !== left) {
-            currentDirection = right;
+        if (direction !== left) {
+            directionQueue.push(right);
         }
     }
 }
