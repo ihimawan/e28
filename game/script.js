@@ -24,6 +24,8 @@ let spaceClassName = 'space';
 let snakeClassName = 'snake'
 let enemyClassName = 'enemy'
 let foodClassName = 'food'
+let snakeHappyClassName = 'snakeHappy'
+let snakeSadClassName = 'snakeSad'
 
 // game state
 let boundaryOccupy = new Set(); // static value once board init is done
@@ -37,11 +39,29 @@ let currentDirection; // up down left right
 let interval;
 
 function startGame() {
+
+    snakeSays("oh my god thank you! I just need to get " + howManyLeftDefault + " units longer, then Sssasha will finally like me!", snakeHappyClassName);
+    let score = document.getElementById("score");
+    score.innerHTML = howManyLeftDefault;
+
+    let startBtn = document.getElementById("startBtn");
+    startBtn.disabled = true;
+
+    let stopBtn = document.getElementById("stopBtn");
+    stopBtn.innerHTML = "This is awful.. you're just gonna get nowhere. Just give up."
+    stopBtn.onclick = loseGame.bind(this, "Oh the betrayal!!! ;(");
+
     clearBoard();
 
     // initialize values
     initializeGame();
     playingGame();
+}
+
+function snakeSays(text, className) {
+    let snakeSays = document.getElementById('snakeSays');
+    snakeSays.innerHTML = text;
+    snakeSays.className = className;
 }
 
 function initializeGame() {
@@ -87,6 +107,12 @@ function generateFoodLoc() {
         || snakeOccupy.includes(JSON.stringify(foodLoc)));
 }
 
+function youUgly() {
+    let snakeSays = document.getElementById("snakeSays");
+    snakeSays.innerHTML = "that's so mean.. i grew this face myself. my mom says i'm great, ok?!"
+    snakeSays.className = "snakeSad";
+}
+
 function playingGame() {
     interval = setInterval(function () {
         // obtain last tail of snake
@@ -120,7 +146,7 @@ function playingGame() {
 
         // check if newHeadLocation crashes with any boundaries/tail
         if (boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
-            loseGame('you hit wall');
+            loseGame('Oh no... how did I hit a wall???');
             return;
         }
 
@@ -129,11 +155,16 @@ function playingGame() {
             points--;
             let pointsNode = document.getElementById('score');
             pointsNode.innerHTML = points;
+
+            if (points <= 0) {
+                winGame();
+            }
+
             generateMoreFood = true;
         } else {
             snakeOccupy.shift();
             if ((snakeOccupy.length !== 1 && snakeOccupy.includes(JSON.stringify(newHeadLocation)))) {
-                loseGame('you hurt yourself');
+                loseGame('What! I\'m not trying to eat myself!! How did I think that i was food T_T');
                 return;
             }
         }
@@ -160,8 +191,15 @@ function playingGame() {
     }, 100);
 }
 
+function winGame() {
+    snakeSays('OH MY GOD I DID IT, I DID IT!!!! ahem.. I mean WE did it..', snakeHappyClassName);
+}
+
 function loseGame(message) {
-    alert('you lose because ' + message + ' now hoa the boa is heart broken :(');
+    snakeSays(message, snakeSadClassName);
+    let startBtn = document.getElementById("startBtn");
+    startBtn.innerHTML = "Stop being such a whiney baby. Let's just try again then."
+    startBtn.disabled = false;
     clearInterval(interval);
 }
 
