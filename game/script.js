@@ -5,6 +5,7 @@ let boundaryChar = 'x';
 let spaceChar = '_';
 let snakeChar = 'o';
 let foodChar = 'o';
+let enemyChar = 'o';
 
 // default settings
 let xSize = 50;
@@ -149,8 +150,8 @@ function timerStart() {
 
 function playingGame() {
     interval = setInterval(function () {
-        // obtain last tail of snake
-        let lastTailLocation = JSON.parse(snakeOccupy[0]);
+
+        let lastTailLocationBeforeShift = JSON.parse(snakeOccupy[0]);
 
         //increment head location based on current direction
         let currentHeadLocation = JSON.parse(snakeOccupy[snakeOccupy.length - 1]);
@@ -202,23 +203,34 @@ function playingGame() {
             evaluatePoints();
 
         } else {
+            // if not eating food, keep length as is and shift location
             snakeOccupy.shift();
-            if ((snakeOccupy.length !== 1 && snakeOccupy.includes(JSON.stringify(newHeadLocation)))) {
-                loseGame('What! I\'m not trying to eat myself!! How did I think that i was food T_T');
-                return;
-            }
+        }
+
+        // re render the head and the last tail on the DOM
+        let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
+        let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
+        headNode.innerHTML = snakeChar;
+        headNode.className = snakeClassName;
+
+        if (enemyOccupy.includes(JSON.stringify(lastTailLocationBeforeShift))) {
+            tailNode.className = enemyClassName;
+        } else if (JSON.stringify(lastTailLocationBeforeShift) === JSON.stringify(newHeadLocation)) {
+            tailNode.className = snakeClassName;
+        } else {
+            tailNode.innerHTML = spaceChar;
+            tailNode.className = spaceClassName;
+        }
+
+
+        // check if eating yourself
+        if (snakeOccupy.includes(JSON.stringify(newHeadLocation))) {
+            loseGame('What! I\'m not trying to eat myself!! How did I think that i was food T_T');
+            return;
         }
 
         // otherwise, continue with new head location
         snakeOccupy.push(JSON.stringify(newHeadLocation));
-
-        // re render the head and the last tail on the DOM
-        let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
-        let tailNode = document.getElementById(lastTailLocation.x + '-' + lastTailLocation.y);
-        headNode.innerHTML = snakeChar;
-        headNode.className = snakeClassName;
-        tailNode.innerHTML = spaceChar;
-        tailNode.className = spaceClassName;
 
         // generate food
         if (generateMoreFood) {
@@ -237,7 +249,6 @@ function playingGame() {
 
         enemyDirection = enemyDirection || right;
 
-        // for (let i = 0; i < enemyLength; i++) {
         let newLoc;
         if (enemyDirection === up) {
             newLoc = {
@@ -262,11 +273,10 @@ function playingGame() {
         }
 
         enemyOccupy.push(JSON.stringify(newLoc));
-        // }
 
         enemyInterval = setInterval(function () {
-            // obtain last tail of snake
-            let lastTailLocation = JSON.parse(enemyOccupy[0]);
+
+            let lastTailLocationBeforeShift = JSON.parse(enemyOccupy[0]);
 
             //increment head location based on current direction
             let currentHeadLocation = JSON.parse(enemyOccupy[enemyOccupy.length - 1]);
@@ -313,9 +323,18 @@ function playingGame() {
                 enemyOccupy.shift();
             }
 
-            let tailNode = document.getElementById(lastTailLocation.x + '-' + lastTailLocation.y);
-            tailNode.innerHTML = spaceChar;
-            tailNode.className = spaceClassName;
+            if (enemyOccupy.length === 0) {
+                clearInterval(enemyInterval);
+            }
+
+            let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
+            if (snakeOccupy.includes(enemyOccupy[0])) {
+                tailNode.innerHTML = snakeChar;
+                tailNode.className = snakeClassName;
+            } else {
+                tailNode.innerHTML = spaceChar;
+                tailNode.className = spaceClassName;
+            }
 
             // generate food
             if (generateMoreFood) {
