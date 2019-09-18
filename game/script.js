@@ -41,6 +41,7 @@ let enemyOccupy = [];
 let interval;
 let timerInterval;
 let enemyInterval;
+let enemyFactoryInterval;
 
 function startGame() {
 
@@ -149,6 +150,136 @@ function timerStart() {
     }, 1000);
 }
 
+function activateEnemyFactory() {
+    enemyFactoryInterval = setInterval(() => {
+        let enemyProbability = [true, true, true, false];
+        let dispatchEnemyBool = enemyProbability[Math.floor(Math.random() * enemyProbability.length)];
+        if (dispatchEnemyBool) {
+            let [minSpeed, maxSpeed] = [50, 100];
+            let randomSpeed = Math.floor(Math.random() * maxSpeed) + minSpeed;
+            dispatchEnemy(randomDirection, randomSpeed);
+        }
+    }, 1000);
+}
+
+function dispatchEnemy(speed) {
+    // create enemy in same Y value as food
+    if (enemyOccupy.length > 0) return; // do not want to disturb existing enemy
+
+    let directions = [down, up, right, left];
+    let enemyDirection = directions[Math.floor(Math.random() * directions.length)];
+
+    enemyOccupy = [];
+
+    let newLoc;
+    if (enemyDirection === up) {
+        newLoc = {
+            x: foodLoc.x,
+            y: ySize - 2
+        }
+    } else if (enemyDirection === down) {
+        newLoc = {
+            x: foodLoc.x,
+            y: 1
+        }
+    } else if (enemyDirection === left) {
+        newLoc = {
+            x: xSize - 2,
+            y: foodLoc.y
+        }
+    } else if (enemyDirection === right) {
+        newLoc = {
+            x: 1,
+            y: foodLoc.y
+        }
+    }
+
+    enemyOccupy.push(JSON.stringify(newLoc));
+
+    let node = document.getElementById(newLoc.x + '-' + newLoc.y);
+    if (snakeOccupy.includes(JSON.stringify(newLoc))) {
+        node.innerHTML = snakeChar;
+        node.className = snakeClassName;
+    } else {
+        node.innerHTML = spaceChar;
+        node.className = spaceClassName;
+    }
+
+    enemyInterval = setInterval(function () {
+
+        if (enemyOccupy.length === 0) {
+            clearInterval(enemyInterval);
+            enemyInterval = null;
+            return;
+        }
+
+        let lastTailLocationBeforeShift = JSON.parse(enemyOccupy[0]);
+
+        //increment head location based on current direction
+        let currentHeadLocation = JSON.parse(enemyOccupy[enemyOccupy.length - 1]);
+        let newHeadLocation;
+
+        if (enemyDirection === up) {
+            newHeadLocation = {
+                x: currentHeadLocation.x,
+                y: currentHeadLocation.y - 1
+            }
+        } else if (enemyDirection === down) {
+            newHeadLocation = {
+                x: currentHeadLocation.x,
+                y: currentHeadLocation.y + 1
+            }
+        } else if (enemyDirection === left) {
+            newHeadLocation = {
+                x: currentHeadLocation.x - 1,
+                y: currentHeadLocation.y
+            }
+        } else if (enemyDirection === right) {
+            newHeadLocation = {
+                x: currentHeadLocation.x + 1,
+                y: currentHeadLocation.y
+            }
+        }
+
+        // if enemy eat food
+        if (JSON.stringify(newHeadLocation) === JSON.stringify(foodLoc)) {
+            generateMoreFood = true;
+        }
+
+        // re render the head and the last tail on the DOM
+        // check if newHeadLocation crashes with any boundaries, do not rerender head
+        if (!boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
+            if (enemyOccupy.length >= enemyLength) {
+                enemyOccupy.shift();
+            }
+            enemyOccupy.push(JSON.stringify(newHeadLocation));
+            let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
+            headNode.innerHTML = snakeChar;
+            headNode.className = enemyClassName;
+        } else {
+            enemyOccupy.shift();
+        }
+
+        let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
+        if (snakeOccupy.includes(JSON.stringify(lastTailLocationBeforeShift))) {
+            tailNode.innerHTML = snakeChar;
+            tailNode.className = snakeClassName;
+        } else {
+            tailNode.innerHTML = spaceChar;
+            tailNode.className = spaceClassName;
+        }
+
+        // generate food
+        if (generateMoreFood) {
+            generateFoodLoc();
+            let foodNode = document.getElementById(foodLoc.x + '-' + foodLoc.y);
+            foodNode.innerHTML = foodChar;
+            foodNode.className = foodClassName;
+            generateMoreFood = false;
+        }
+    }, speed || 10);
+}
+
 function playingGame() {
     interval = setInterval(function () {
 
@@ -243,129 +374,7 @@ function playingGame() {
         }
     }, 100);
 
-    function dispatchEnemy(enemyDirection, speed) {
-        // create enemy in same Y value as food
-
-        if (enemyOccupy.length > 0) return; // do not want to disturb existing enemy
-
-        enemyOccupy = [];
-
-        enemyDirection = enemyDirection || right;
-
-        let newLoc;
-        if (enemyDirection === up) {
-            newLoc = {
-                x: foodLoc.x,
-                y: ySize - 2
-            }
-        } else if (enemyDirection === down) {
-            newLoc = {
-                x: foodLoc.x,
-                y: 1
-            }
-        } else if (enemyDirection === left) {
-            newLoc = {
-                x: xSize - 2,
-                y: foodLoc.y
-            }
-        } else if (enemyDirection === right) {
-            newLoc = {
-                x: 1,
-                y: foodLoc.y
-            }
-        }
-
-        enemyOccupy.push(JSON.stringify(newLoc));
-
-        let node = document.getElementById(newLoc.x + '-' + newLoc.y);
-        if (snakeOccupy.includes(JSON.stringify(newLoc))) {
-            node.innerHTML = snakeChar;
-            node.className = snakeClassName;
-        } else {
-            node.innerHTML = spaceChar;
-            node.className = spaceClassName;
-        }
-
-        enemyInterval = setInterval(function () {
-
-            if (enemyOccupy.length === 0) {
-                clearInterval(enemyInterval);
-                enemyInterval = null;
-                return;
-            }
-
-            let lastTailLocationBeforeShift = JSON.parse(enemyOccupy[0]);
-
-            //increment head location based on current direction
-            let currentHeadLocation = JSON.parse(enemyOccupy[enemyOccupy.length - 1]);
-            let newHeadLocation;
-
-            if (enemyDirection === up) {
-                newHeadLocation = {
-                    x: currentHeadLocation.x,
-                    y: currentHeadLocation.y - 1
-                }
-            } else if (enemyDirection === down) {
-                newHeadLocation = {
-                    x: currentHeadLocation.x,
-                    y: currentHeadLocation.y + 1
-                }
-            } else if (enemyDirection === left) {
-                newHeadLocation = {
-                    x: currentHeadLocation.x - 1,
-                    y: currentHeadLocation.y
-                }
-            } else if (enemyDirection === right) {
-                newHeadLocation = {
-                    x: currentHeadLocation.x + 1,
-                    y: currentHeadLocation.y
-                }
-            }
-
-            // if enemy eat food
-            if (JSON.stringify(newHeadLocation) === JSON.stringify(foodLoc)) {
-                generateMoreFood = true;
-            }
-
-            // re render the head and the last tail on the DOM
-            // check if newHeadLocation crashes with any boundaries, do not rerender head
-            if (!boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
-                if (enemyOccupy.length >= enemyLength) {
-                    enemyOccupy.shift();
-                }
-                enemyOccupy.push(JSON.stringify(newHeadLocation));
-                let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
-                headNode.innerHTML = snakeChar;
-                headNode.className = enemyClassName;
-            } else {
-                enemyOccupy.shift();
-            }
-
-            let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
-            if (snakeOccupy.includes(JSON.stringify(lastTailLocationBeforeShift))) {
-                tailNode.innerHTML = snakeChar;
-                tailNode.className = snakeClassName;
-            } else {
-                tailNode.innerHTML = spaceChar;
-                tailNode.className = spaceClassName;
-            }
-
-            // generate food
-            if (generateMoreFood) {
-                generateFoodLoc();
-                let foodNode = document.getElementById(foodLoc.x + '-' + foodLoc.y);
-                foodNode.innerHTML = foodChar;
-                foodNode.className = foodClassName;
-                generateMoreFood = false;
-            }
-        }, speed || 10);
-    }
-
     function evaluatePoints() {
-
-        let directions = [down, up, right, left];
-        let randomDirection = directions[Math.floor(Math.random() * directions.length)];
-
         switch (points) {
             case 29:
                 snakeSays('Yassssss! first virgin blood... i can feel the energy now..');
@@ -379,7 +388,7 @@ function playingGame() {
             case 20:
                 snakeSays('Ahh... delicious');
                 setTimeout(function () {
-                    dispatchEnemy(left, 100);
+                    dispatchEnemy(100);
                     snakeSays('Holy sssnakes!!! What is BBC doing here???', snakeSadClassName);
                 }, 1500);
                 setTimeout(function () {
@@ -388,24 +397,31 @@ function playingGame() {
                 break;
             case 18:
                 setTimeout(function () {
-                    dispatchEnemy(randomDirection, 100);
+                    dispatchEnemy(100);
                     snakeSays('There it is again! What the heck???', snakeSadClassName);
                 }, 1500);
                 break;
             case 17:
-                setTimeout(function () {
-                    dispatchEnemy(randomDirection, 100);
-                    snakeSays('Oh my anaconda... It\'s so dark in this club it\'s so hard to see!!', snakeSadClassName);
-                }, 1500);
+                activateEnemyFactory();
+                snakeSays('Oh my anaconda... It\'s so dark in this club it\'s so hard to see!!', snakeSadClassName);
+
                 setTimeout(function () {
                     snakeSays('He must have noticed what we were trying to do... and he\'s trying to get ahead of us..');
                 }, 5000);
                 break;
+            case 15:
+                snakeSays('No matter... we just have to get virgin blood before BBC gets to them...');
             case 12:
                 snakeSays('Get outta the way, BBC!!! SSSASHA IS MINE!!!');
                 break;
             case 10:
                 snakeSays('Only 10 more!!!');
+                break;
+            case 5:
+                snakeSays('So close... so CLOSE!');
+                break;
+            case 1:
+                snakeSays('LAST ONE LAST ONE!!');
                 break;
             case 0:
                 winGame();
@@ -413,29 +429,21 @@ function playingGame() {
             default:
                 break;
         }
-
-        if (points <= 15) {
-            let enemyProbability = [true, true, true, false];
-            let dispatchEnemyBool = enemyProbability[Math.floor(Math.random() * enemyProbability.length)];
-            if (dispatchEnemyBool) {
-                let [minSpeed, maxSpeed] = [50, 100];
-                let randomSpeed = Math.floor(Math.random() * maxSpeed) + minSpeed;
-                let [minDelay, maxDelay] = [1000, 3000];
-                let randomDelay = Math.floor(Math.random() * maxDelay) + minDelay;
-
-                setTimeout(function () {
-                    dispatchEnemy(randomDirection, randomSpeed);
-                }, randomDelay);
-            }
-        }
     }
 }
 
 function winGame() {
-    snakeSays('OH MY GOD I DID IT, I DID IT!!!! ahem.. I mean WE did it..', snakeHappyClassName);
-    clearInterval(interval);
-    clearInterval(timerInterval);
-    clearInterval(enemyInterval);
+    snakeSays('OH MY GOD I DID IT, I DID IT!!!! ahem.. I mean WE did it.. you are a life saver..', snakeHappyClassName);
+    document.getElementById(buttonInputs);
+    const startBtn = document.getElementById('startBtn');
+    startBtn.innerHTML = "<strong>YEAHHH. NOW LET'S SEDUCE SSSASHA WITH YOUR LOOOOONG BODY, HOA.</strong>";
+    startBtn.onclick = window.open.bind(this, 'https://tinyurl.com/2fcpre6');
+    startBtn.disabled = false;
+    const stopBtn = document.getElementById('stopBtn');
+    stopBtn.disabled = true;
+    let intervalCollection = [interval, timerInterval, enemyInterval, enemyFactoryInterval];
+    intervalCollection.forEach(intv => clearInterval(intv));
+
 }
 
 function loseGame(message) {
@@ -443,9 +451,8 @@ function loseGame(message) {
     let startBtn = document.getElementById("startBtn");
     startBtn.innerHTML = "Stop being such a whiney baby. Let's just try again then."
     startBtn.disabled = false;
-    clearInterval(interval);
-    clearInterval(timerInterval);
-    clearInterval(enemyInterval);
+    let intervalCollection = [interval, timerInterval, enemyInterval, enemyFactoryInterval];
+    intervalCollection.forEach(intv => clearInterval(intv));
 }
 
 function checkKey(e) {
