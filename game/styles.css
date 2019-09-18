@@ -1,8 +1,86 @@
 li {
     display: inline;
-    margin: 5px;
+    margin: 0px;
 }
 
 ul {
-    margin: 5px;
+    margin-top: -25px;
+}
+
+body {
+    text-align: center;
+    margin: auto;
+    max-width: 500px;
+    border-style: solid;
+    padding: 15px;
+}
+
+h2 {
+    text-align: center
+}
+
+.snake {
+    background-color: #4ECDC4;
+    color: #4ECDC4;
+    display: inline-block;
+    line-height: 11px;
+}
+
+.space {
+    background-color: #252627;
+    color: #252627;
+    display: inline-block;
+    line-height: 11px;
+}
+
+.boundary {
+    color: #D3D4D9;
+    background-color: #D3D4D9;
+    display: inline-block;
+    line-height: 11px;
+}
+
+.food {
+    color: #BA1F33;
+    background-color: #BA1F33;
+    content: '&#9829';
+    display: inline-block;
+    line-height: 11px;
+}
+
+#startBtn {
+    border-color: #4CAF50;
+    color: green;
+    width: 100%;
+}
+
+#startBtn:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+#stopBtn {
+    border-color: #f44336;
+    color: red;
+    width: 100%;
+}
+
+#stopBtn:hover {
+    background: #f44336;
+    color: white;
+}
+
+.snakeHappy{
+    background-color: #4ECDC4;
+    color: #F7FFF7;
+    border-left : 5px solid #799b9a;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+
+}
+
+.snakeSad{
+    background-color: #FF6B6B;
+    color: #F7FFF7;
+    width: 100%;
 }
