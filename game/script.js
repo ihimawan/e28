@@ -10,7 +10,7 @@ let foodChar = 'o';
 let xSize = 50;
 let ySize = 25;
 let howManyLeftDefault = 30;
-let minutesLeftDefault = 3;
+let minutesLeftDefault = 2;
 
 // constants
 let up = 'up';
@@ -32,8 +32,9 @@ let snakeOccupy = [];
 let foodLoc;
 let generateMoreFood;
 let currentDirection; // up down left right
+let turned; // ensure that you have moved before you can change direction again.
 
-
+// timers
 let interval;
 let timerInterval;
 
@@ -377,7 +378,7 @@ function playingGame() {
             if (dispatchEnemyBool) {
                 let [minSpeed, maxSpeed] = [50, 100];
                 let randomSpeed = Math.floor(Math.random() * maxSpeed) + minSpeed;
-                let [minDelay, maxDelay] = [100, 2000];
+                let [minDelay, maxDelay] = [1000, 3000];
                 let randomDelay = Math.floor(Math.random() * maxDelay) + minDelay;
 
                 setTimeout(function () {
