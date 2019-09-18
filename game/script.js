@@ -1,8 +1,5 @@
 document.onkeydown = checkKey;
 
-// outputs
-let board = document.getElementById('board');
-
 // ascii characters
 let boundaryChar = 'x';
 let spaceChar = '_';
@@ -13,6 +10,7 @@ let foodChar = 'o';
 let xSize = 50;
 let ySize = 25;
 let howManyLeftDefault = 30;
+let minutesLeftDefault = 3;
 
 // constants
 let up = 'up';
@@ -37,12 +35,18 @@ let currentDirection; // up down left right
 
 
 let interval;
+let timerInterval;
 
 function startGame() {
 
     snakeSays("oh my god thank you! I just need to get " + howManyLeftDefault + " units longer, then Sssasha will finally like me!", snakeHappyClassName);
     let score = document.getElementById("score");
     score.innerHTML = howManyLeftDefault;
+
+    let minutes = document.getElementById('minutes');
+    minutes.innerHTML = minutesLeftDefault;
+    let seconds = document.getElementById('seconds');
+    seconds.innerHTML = '0';
 
     let startBtn = document.getElementById("startBtn");
     startBtn.disabled = true;
@@ -56,12 +60,13 @@ function startGame() {
     // initialize values
     initializeGame();
     playingGame();
+    timerStart();
 }
 
 function snakeSays(text, className) {
     let snakeSays = document.getElementById('snakeSays');
     snakeSays.innerHTML = text;
-    snakeSays.className = className;
+    snakeSays.className = className || snakeHappyClassName;
 }
 
 function initializeGame() {
@@ -113,6 +118,29 @@ function youUgly() {
     snakeSays.className = "snakeSad";
 }
 
+function timerStart() {
+    timerInterval = setInterval(() => {
+        let seconds = document.getElementById('seconds');
+        let secondsAmt = parseInt(seconds.innerHTML);
+
+        if (secondsAmt > 0) {
+            secondsAmt--;
+            seconds.innerHTML = secondsAmt;
+        } else {
+            let minutes = document.getElementById('minutes');
+            let minutesAmt = parseInt(minutes.innerHTML);
+            if (minutesAmt > 0) {
+                secondsAmt = 59;
+                seconds.innerHTML = secondsAmt;
+                minutesAmt--;
+                minutes.innerHTML = minutesAmt;
+            } else {
+                loseGame('BBC went home with Sssasha!! I feel like such a fool T_T');
+            }
+        }
+    }, 1000);
+}
+
 function playingGame() {
     interval = setInterval(function () {
         // obtain last tail of snake
@@ -156,9 +184,7 @@ function playingGame() {
             let pointsNode = document.getElementById('score');
             pointsNode.innerHTML = points;
 
-            if (points <= 0) {
-                winGame();
-            }
+            evaluatePoints();
 
             generateMoreFood = true;
         } else {
@@ -189,10 +215,30 @@ function playingGame() {
             generateMoreFood = false;
         }
     }, 100);
+
+    function evaluatePoints() {
+        switch (points) {
+            case 29:
+                snakeSays('Yassssss! first virgin blood... i can feel the energy now..');
+                break;
+            case 25:
+                snakeSays('We\'re really geting the hang of this ;)');
+                break;
+            case 22:
+                snakeSays('Fantassssstic! Almost a third way there.');
+                break;
+            case 0:
+                winGame();
+                break;
+            default:
+        }
+    }
 }
 
 function winGame() {
     snakeSays('OH MY GOD I DID IT, I DID IT!!!! ahem.. I mean WE did it..', snakeHappyClassName);
+    clearInterval(interval);
+    clearInterval(timerInterval);
 }
 
 function loseGame(message) {
@@ -201,6 +247,7 @@ function loseGame(message) {
     startBtn.innerHTML = "Stop being such a whiney baby. Let's just try again then."
     startBtn.disabled = false;
     clearInterval(interval);
+    clearInterval(timerInterval);
 }
 
 function checkKey(e) {
@@ -225,13 +272,7 @@ function checkKey(e) {
 }
 
 (function () {
-
-    boundaryOccupy.clear();
-
     initializeGame();
-
-    // reset existing board
-    board.innerHTML = '';
 
     // generate board
     for (let i = 0; i < ySize; i++) {
@@ -263,6 +304,13 @@ function checkKey(e) {
         }
         board.appendChild(ulNode);
     }
+
+    // initialize snake 
+    snakeOccupy.forEach(snakeStr => {
+        let snakeLoc = JSON.parse(snakeStr);
+        let snakeNode = document.getElementById(snakeLoc.x + '-' + snakeLoc.y);
+        snakeNode.className = snakeClassName;
+    })
 
     function appendLi(xCoor, yCoor, char, className) {
         let liNode = document.createElement('li');
