@@ -39,6 +39,7 @@ let enemyOccupy = [];
 // timers
 let interval;
 let timerInterval;
+let enemyInterval;
 
 function startGame() {
 
@@ -88,7 +89,7 @@ function initializeGame() {
 
 function clearBoard() {
 
-    let coordinatesToClear = snakeOccupy;
+    let coordinatesToClear = snakeOccupy.concat(enemyOccupy);
 
     if (foodLoc !== null) {
         coordinatesToClear = coordinatesToClear.concat(JSON.stringify(foodLoc))
@@ -106,8 +107,8 @@ function clearBoard() {
 
 function generateFoodLoc() {
     do {
-        let randomX = Math.floor(Math.random() * xSize);
-        let randomY = Math.floor(Math.random() * ySize);
+        let randomX = Math.floor(Math.random() * (xSize - 1)) + 1;
+        let randomY = Math.floor(Math.random() * (ySize - 1)) + 1;
         foodLoc = {
             x: randomX,
             y: randomY
@@ -186,6 +187,9 @@ function playingGame() {
         if (boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
             loseGame('Oh no... how did I hit a wall???');
             return;
+        } else if (enemyOccupy.includes(JSON.stringify(newHeadLocation))) {
+            loseGame('BBC BEAT ME UP!!!! NOOOOO! ;(');
+            return;
         }
 
         // if snake eat food
@@ -260,7 +264,7 @@ function playingGame() {
         enemyOccupy.push(JSON.stringify(newLoc));
         // }
 
-        let enemyInterval = setInterval(function () {
+        enemyInterval = setInterval(function () {
             // obtain last tail of snake
             let lastTailLocation = JSON.parse(enemyOccupy[0]);
 
@@ -347,10 +351,10 @@ function playingGame() {
                 snakeSays('Ahh... delicious');
                 setTimeout(function () {
                     dispatchEnemy(left, 100);
-                    snakeSays('Holy sssnakes!!! What is that black thing???', snakeSadClassName);
+                    snakeSays('Holy sssnakes!!! What is BBC doing here???', snakeSadClassName);
                 }, 1500);
                 setTimeout(function () {
-                    snakeSays('And why is it taking our virgin blood?!?!?!', snakeSadClassName);
+                    snakeSays('And why is he taking our virgin blood?!?!?!', snakeSadClassName);
                 }, 5000);
                 break;
             case 18:
@@ -362,10 +366,10 @@ function playingGame() {
             case 17:
                 setTimeout(function () {
                     dispatchEnemy(randomDirection, 100);
-                    snakeSays('Oh my anaconda... that\'s BBC!!! It\'s so dark in this club it\'s so hard to see!!', snakeSadClassName);
+                    snakeSays('Oh my anaconda... It\'s so dark in this club it\'s so hard to see!!', snakeSadClassName);
                 }, 1500);
                 setTimeout(function () {
-                    snakeSays('No matter! We just gotta keep going and keep getting things faster than he can...');
+                    snakeSays('He must have noticed what we were trying to do... and he\'s trying to get ahead of us..');
                 }, 5000);
                 break;
             case 12:
@@ -402,6 +406,7 @@ function winGame() {
     snakeSays('OH MY GOD I DID IT, I DID IT!!!! ahem.. I mean WE did it..', snakeHappyClassName);
     clearInterval(interval);
     clearInterval(timerInterval);
+    clearInterval(enemyInterval);
 }
 
 function loseGame(message) {
@@ -411,6 +416,7 @@ function loseGame(message) {
     startBtn.disabled = false;
     clearInterval(interval);
     clearInterval(timerInterval);
+    clearInterval(enemyInterval);
 }
 
 function checkKey(e) {
