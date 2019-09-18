@@ -11,7 +11,7 @@ let enemyChar = 'o';
 let xSize = 50;
 let ySize = 25;
 let howManyLeftDefault = 30;
-let minutesLeftDefault = 2;
+let minutesLeftDefault = 3;
 let enemyLength = 10;
 
 // constants
@@ -116,7 +116,8 @@ function generateFoodLoc() {
         }
     }
     while (boundaryOccupy.has(JSON.stringify(foodLoc))
-        || snakeOccupy.includes(JSON.stringify(foodLoc)));
+    || snakeOccupy.includes(JSON.stringify(foodLoc))
+        || enemyOccupy.includes(JSON.stringify(foodLoc)));
 }
 
 function youUgly() {
@@ -245,6 +246,8 @@ function playingGame() {
     function dispatchEnemy(enemyDirection, speed) {
         // create enemy in same Y value as food
 
+        if (enemyOccupy.length > 0) return; // do not want to disturb existing enemy
+
         enemyOccupy = [];
 
         enemyDirection = enemyDirection || right;
@@ -274,7 +277,22 @@ function playingGame() {
 
         enemyOccupy.push(JSON.stringify(newLoc));
 
+        let node = document.getElementById(newLoc.x + '-' + newLoc.y);
+        if (snakeOccupy.includes(JSON.stringify(newLoc))) {
+            node.innerHTML = snakeChar;
+            node.className = snakeClassName;
+        } else {
+            node.innerHTML = spaceChar;
+            node.className = spaceClassName;
+        }
+
         enemyInterval = setInterval(function () {
+
+            if (enemyOccupy.length === 0) {
+                clearInterval(enemyInterval);
+                enemyInterval = null;
+                return;
+            }
 
             let lastTailLocationBeforeShift = JSON.parse(enemyOccupy[0]);
 
@@ -323,12 +341,8 @@ function playingGame() {
                 enemyOccupy.shift();
             }
 
-            if (enemyOccupy.length === 0) {
-                clearInterval(enemyInterval);
-            }
-
             let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
-            if (snakeOccupy.includes(enemyOccupy[0])) {
+            if (snakeOccupy.includes(JSON.stringify(lastTailLocationBeforeShift))) {
                 tailNode.innerHTML = snakeChar;
                 tailNode.className = snakeClassName;
             } else {
@@ -343,10 +357,6 @@ function playingGame() {
                 foodNode.innerHTML = foodChar;
                 foodNode.className = foodClassName;
                 generateMoreFood = false;
-            }
-
-            if (enemyOccupy.length === 0) {
-                clearInterval(enemyInterval);
             }
         }, speed || 10);
     }

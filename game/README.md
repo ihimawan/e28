@@ -9,3 +9,4 @@ So then I had to do JSON.stringify();
 speed, but i am lazy to make it 
 enemies
 when receiving user event before being able to render
+multiple enemies
