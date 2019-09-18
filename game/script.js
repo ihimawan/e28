@@ -183,10 +183,10 @@ function playingGame() {
             points--;
             let pointsNode = document.getElementById('score');
             pointsNode.innerHTML = points;
+            generateMoreFood = true;
 
             evaluatePoints();
 
-            generateMoreFood = true;
         } else {
             snakeOccupy.shift();
             if ((snakeOccupy.length !== 1 && snakeOccupy.includes(JSON.stringify(newHeadLocation)))) {
@@ -216,7 +216,113 @@ function playingGame() {
         }
     }, 100);
 
+    function dispatchEnemy(enemyDirection, speed) {
+        // create enemy in same Y value as food
+
+        let enemyOccupy = [];
+        let enemyLength = 3;
+
+        enemyDirection = enemyDirection || right;
+
+        for (let i = 0; i < enemyLength; i++) {
+            let newLoc;
+            if (enemyDirection === up) {
+                newLoc = {
+                    x: foodLoc.x,
+                    y: ySize - 2 - i
+                }
+            } else if (enemyDirection === down) {
+                newLoc = {
+                    x: foodLoc.x,
+                    y: 1 + i
+                }
+            } else if (enemyDirection === left) {
+                newLoc = {
+                    x: xSize - 2 - i,
+                    y: foodLoc.y
+                }
+            } else if (enemyDirection === right) {
+                newLoc = {
+                    x: 1 + i,
+                    y: foodLoc.y
+                }
+            }
+
+            enemyOccupy.push(newLoc);
+        }
+
+        let enemyInterval = setInterval(function () {
+            // obtain last tail of snake
+            let lastTailLocation = enemyOccupy[0];
+
+            //increment head location based on current direction
+            let currentHeadLocation = enemyOccupy[enemyOccupy.length - 1];
+            let newHeadLocation;
+
+            if (enemyDirection === up) {
+                newHeadLocation = {
+                    x: currentHeadLocation.x,
+                    y: currentHeadLocation.y - 1
+                }
+            } else if (enemyDirection === down) {
+                newHeadLocation = {
+                    x: currentHeadLocation.x,
+                    y: currentHeadLocation.y + 1
+                }
+            } else if (enemyDirection === left) {
+                newHeadLocation = {
+                    x: currentHeadLocation.x - 1,
+                    y: currentHeadLocation.y
+                }
+            } else if (enemyDirection === right) {
+                newHeadLocation = {
+                    x: currentHeadLocation.x + 1,
+                    y: currentHeadLocation.y
+                }
+            }
+
+            // if enemy eat food
+            if (JSON.stringify(newHeadLocation) === JSON.stringify(foodLoc)) {
+                generateMoreFood = true;
+            } else {
+                enemyOccupy.shift();
+            }
+
+            // continue with new head location regardless
+
+            // re render the head and the last tail on the DOM
+            // check if newHeadLocation crashes with any boundaries, do not rerender head
+            if (!boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
+                enemyOccupy.push(newHeadLocation);
+                let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
+                headNode.innerHTML = snakeChar;
+                headNode.className = enemyClassName;
+            }
+
+            let tailNode = document.getElementById(lastTailLocation.x + '-' + lastTailLocation.y);
+            tailNode.innerHTML = spaceChar;
+            tailNode.className = spaceClassName;
+
+            // generate food
+            if (generateMoreFood) {
+                generateFoodLoc();
+                let foodNode = document.getElementById(foodLoc.x + '-' + foodLoc.y);
+                foodNode.innerHTML = foodChar;
+                foodNode.className = foodClassName;
+                generateMoreFood = false;
+            }
+
+            if (enemyOccupy.length === 0) {
+                clearInterval(enemyInterval);
+            }
+        }, speed || 10);
+    }
+
     function evaluatePoints() {
+
+        let directions = [down, up, right, left];
+        let randomDirection = directions[Math.floor(Math.random() * directions.length)];
+
         switch (points) {
             case 29:
                 snakeSays('Yassssss! first virgin blood... i can feel the energy now..');
@@ -227,10 +333,57 @@ function playingGame() {
             case 22:
                 snakeSays('Fantassssstic! Almost a third way there.');
                 break;
+            case 20:
+                snakeSays('Ahh... delicious');
+                setTimeout(function () {
+                    dispatchEnemy(left, 100);
+                    snakeSays('Holy sssnakes!!! What who is that???', snakeSadClassName);
+                }, 1500);
+                setTimeout(function () {
+                    snakeSays('And why is he taking our virgin blood?!?!?!', snakeSadClassName);
+                }, 5000);
+                break;
+            case 18:
+                setTimeout(function () {
+                    dispatchEnemy(randomDirection, 100);
+                    snakeSays('There is he again! We need to stop that thing!', snakeSadClassName);
+                }, 1500);
+                break;
+            case 17:
+                setTimeout(function () {
+                    dispatchEnemy(randomDirection, 100);
+                    snakeSays('Oh my anaconda... that\'s BBC!!! He surely tanned a lot :/', snakeSadClassName);
+                }, 1500);
+                setTimeout(function () {
+                    snakeSays('No matter! We just gotta keep going and keep getting things faster than he can...');
+                }, 5000);
+                break;
+            case 12:
+                snakeSays('Get outta the way, BBC!!! SSSASHA IS MINE!!!');
+                break;
+            case 10:
+                snakeSays('Only 10 more!!!');
+                break;
             case 0:
                 winGame();
                 break;
             default:
+                break;
+        }
+
+        if (points <= 15) {
+            let enemyProbability = [true, true, true, false];
+            let dispatchEnemyBool = enemyProbability[Math.floor(Math.random() * enemyProbability.length)];
+            if (dispatchEnemyBool) {
+                let [minSpeed, maxSpeed] = [50, 100];
+                let randomSpeed = Math.floor(Math.random() * maxSpeed) + minSpeed;
+                let [minDelay, maxDelay] = [100, 2000];
+                let randomDelay = Math.floor(Math.random() * maxDelay) + minDelay;
+
+                setTimeout(function () {
+                    dispatchEnemy(randomDirection, randomSpeed);
+                }, randomDelay);
+            }
         }
     }
 }
