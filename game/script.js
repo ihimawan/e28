@@ -233,32 +233,32 @@ function playingGame() {
 
         enemyDirection = enemyDirection || right;
 
-        for (let i = 0; i < enemyLength; i++) {
-            let newLoc;
-            if (enemyDirection === up) {
-                newLoc = {
-                    x: foodLoc.x,
-                    y: ySize - 2 - i
-                }
-            } else if (enemyDirection === down) {
-                newLoc = {
-                    x: foodLoc.x,
-                    y: 1 + i
-                }
-            } else if (enemyDirection === left) {
-                newLoc = {
-                    x: xSize - 2 - i,
-                    y: foodLoc.y
-                }
-            } else if (enemyDirection === right) {
-                newLoc = {
-                    x: 1 + i,
-                    y: foodLoc.y
-                }
+        // for (let i = 0; i < enemyLength; i++) {
+        let newLoc;
+        if (enemyDirection === up) {
+            newLoc = {
+                x: foodLoc.x,
+                y: ySize - 2
             }
-
-            enemyOccupy.push(JSON.stringify(newLoc));
+        } else if (enemyDirection === down) {
+            newLoc = {
+                x: foodLoc.x,
+                y: 1
+            }
+        } else if (enemyDirection === left) {
+            newLoc = {
+                x: xSize - 2,
+                y: foodLoc.y
+            }
+        } else if (enemyDirection === right) {
+            newLoc = {
+                x: 1,
+                y: foodLoc.y
+            }
         }
+
+        enemyOccupy.push(JSON.stringify(newLoc));
+        // }
 
         let enemyInterval = setInterval(function () {
             // obtain last tail of snake
@@ -293,19 +293,20 @@ function playingGame() {
             // if enemy eat food
             if (JSON.stringify(newHeadLocation) === JSON.stringify(foodLoc)) {
                 generateMoreFood = true;
-            } else {
-                enemyOccupy.shift();
             }
-
-            // continue with new head location regardless
 
             // re render the head and the last tail on the DOM
             // check if newHeadLocation crashes with any boundaries, do not rerender head
             if (!boundaryOccupy.has(JSON.stringify(newHeadLocation))) {
+                if (enemyOccupy.length >= enemyLength) {
+                    enemyOccupy.shift();
+                }
                 enemyOccupy.push(JSON.stringify(newHeadLocation));
                 let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
                 headNode.innerHTML = snakeChar;
                 headNode.className = enemyClassName;
+            } else {
+                enemyOccupy.shift();
             }
 
             let tailNode = document.getElementById(lastTailLocation.x + '-' + lastTailLocation.y);
