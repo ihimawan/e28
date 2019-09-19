@@ -1,3 +1,7 @@
+h2 {
+    text-align: center
+}
+
 li {
     display: inline;
     margin: 0px;
@@ -6,12 +10,6 @@ li {
 ul {
     margin-top: -25px;
     margin-left: -25px;
-}
-
-#board {
-    text-align: center;
-    padding: 25px;
-    margin-bottom:  -25px;
 }
 
 .text {
@@ -38,9 +36,6 @@ ul {
     min-width: 500px;
 }
 
-h2 {
-    text-align: center
-}
 
 .snake {
     background-color: #4ECDC4;
@@ -78,6 +73,38 @@ h2 {
     line-height: 11px;
 }
 
+.sasha {
+    color: #FF3366;
+    font-weight: bold;
+}
+
+
+.snakeHappy{
+    display:block;
+    background-color: #4ECDC4;
+    color: #F7FFF7;
+    border-left : 5px solid #799b9a;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+    height: 50px;
+
+}
+
+.snakeSad{
+    display:block;
+    background-color: #FF6B6B;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-left : 5px solid #ff3a4d;
+    padding: 5px;
+    height: 50px;
+
+    color: #F7FFF7;
+}
+
+.sub {
+    vertical-align: sub;
+  font-size: smaller;
+}
 
 #startBtn {
     border-color: #4CAF50;
@@ -111,29 +138,8 @@ h2 {
 }
 
 
-.snakeHappy{
-    display:block;
-    background-color: #4ECDC4;
-    color: #F7FFF7;
-    border-left : 5px solid #799b9a;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    padding: 5px;
-    height: 50px;
-
-}
-
-.snakeSad{
-    display:block;
-    background-color: #FF6B6B;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    border-left : 5px solid #ff3a4d;
-    padding: 5px;
-    height: 50px;
-
-    color: #F7FFF7;
-}
-
-.sub {
-    vertical-align: sub;
-  font-size: smaller;
+#board {
+    text-align: center;
+    padding: 25px;
+    margin-bottom: -25px;
 }

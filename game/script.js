@@ -1,58 +1,59 @@
+// pay attention to user key input
 document.onkeydown = checkKey;
 
-// ascii characters
-let boundaryChar = 'x';
-let spaceChar = '_';
-let snakeChar = 'o';
-let foodChar = 'o';
-let enemyChar = 'o';
-
 // default settings
-let xSize = 50;
-let ySize = 25;
-let howManyLeftDefault = 30;
-let minutesLeftDefault = 3;
-let enemyLength = 10;
+const xSize = 50;
+const ySize = 25;
+const howManyLeftDefault = 30;
+const minutesLeftDefault = 3;
+const secondsLeftDefault = 0;
+const enemyLength = 10;
+const initialSnakeLength = 3;
 
 // constants
-let up = 'up';
-let down = 'down';
-let left = 'left';
-let right = 'right';
-let boundaryClassName = 'boundary';
-let spaceClassName = 'space';
-let snakeClassName = 'snake'
-let enemyClassName = 'enemy'
-let foodClassName = 'food'
-let snakeHappyClassName = 'snakeHappy'
-let snakeSadClassName = 'snakeSad'
+const char = 'x';
+const up = 'up';
+const down = 'down';
+const left = 'left';
+const right = 'right';
+const boundaryClassName = 'boundary';
+const spaceClassName = 'space';
+const snakeClassName = 'snake'
+const enemyClassName = 'enemy'
+const foodClassName = 'food'
+const snakeHappyClassName = 'snakeHappy'
+const snakeSadClassName = 'snakeSad'
 
 // game state
-let boundaryOccupy = new Set(); // static value once board init is done
+const boundaryOccupy = new Set(); // static value once board init is done
 let points;
 let snakeOccupy = [];
+let enemyOccupy = [];
+let directionQueue = []; // for if user presses keys so fast before direction changes
+let currentDirection; // up down left right
 let foodLoc;
 let generateMoreFood;
-let directionQueue = [];
-let currentDirection // up down left right
-let enemyOccupy = [];
+let enemyDirection;
 
 // timers
-let interval;
+let snakeInterval;
 let timerInterval;
 let enemyInterval;
 let enemyFactoryInterval;
 
+document.getElementById("startBtn").onclick = startGame.bind(this);
+document.getElementById("stopBtn").onclick = youUgly.bind(this);
+
 function startGame() {
 
-    snakeSays("oh my god thank you! I just need to get " + howManyLeftDefault + " units longer, then Sssasha will finally like me!", snakeHappyClassName);
+    snakeSays("oh my god thank you! I just need to get " + howManyLeftDefault + " units longer, then <span class='sasha'>Sssasha</span> will finally like me!", snakeHappyClassName);
     let score = document.getElementById("score");
     score.innerHTML = howManyLeftDefault;
 
     let minutes = document.getElementById('minutes');
     minutes.innerHTML = minutesLeftDefault;
     let seconds = document.getElementById('seconds');
-    seconds.innerHTML = '0';
+    seconds.innerHTML = secondsLeftDefault;
 
     let startBtn = document.getElementById("startBtn");
     startBtn.disabled = true;
@@ -61,12 +62,27 @@ function startGame() {
     stopBtn.innerHTML = "This is awful.. you're just gonna get nowhere. Just give up."
     stopBtn.onclick = loseGame.bind(this, "Oh the betrayal!!! ;(");
 
+    // empty contents of board
     clearBoard();
 
     // initialize values
     initializeGame();
     playingGame();
     timerStart();
+}
+
+function clearBoard() {
+    let coordinatesToClear = snakeOccupy.concat(enemyOccupy);
+    if (foodLoc !== null) {
+        coordinatesToClear = coordinatesToClear.concat(JSON.stringify(foodLoc))
+    }
+    if (coordinatesToClear.length === 0) return;
+    coordinatesToClear.forEach(strCoor => {
+        let snakeCoor = JSON.parse(strCoor);
+        let snakeNode = document.getElementById(snakeCoor.x + '-' + snakeCoor.y);
+        snakeNode.innerHTML = char;
+        snakeNode.className = spaceClassName;
+    });
 }
 
 function snakeSays(text, className) {
@@ -77,34 +93,14 @@ function snakeSays(text, className) {
 
 function initializeGame() {
     points = howManyLeftDefault;
-    // initial size is 3
-    snakeOccupy = [
-        JSON.stringify({ x: 1, y: 1 }),
-        JSON.stringify({ x: 2, y: 1 }),
-        JSON.stringify({ x: 3, y: 1 })
-    ];
+    snakeOccupy = [];
+    for (let i = 1; i <= initialSnakeLength; i++) {
+        snakeOccupy.push(JSON.stringify({ x: i, y: 1 }));
+    }
     directionQueue = [right];
     enemyOccupy = [];
     generateMoreFood = true;
     foodLoc = null;
-}
-
-function clearBoard() {
-
-    let coordinatesToClear = snakeOccupy.concat(enemyOccupy);
-
-    if (foodLoc !== null) {
-        coordinatesToClear = coordinatesToClear.concat(JSON.stringify(foodLoc))
-    }
-
-    if (coordinatesToClear.length === 0) return;
-    coordinatesToClear.forEach(strCoor => {
-        let snakeCoor = JSON.parse(strCoor);
-        let snakeNode = document.getElementById(snakeCoor.x + '-' + snakeCoor.y);
-        snakeNode.innerHTML = spaceChar;
-        snakeNode.className = spaceClassName;
-    });
-
 }
 
 function generateFoodLoc() {
@@ -119,12 +115,6 @@ function generateFoodLoc() {
     while (boundaryOccupy.has(JSON.stringify(foodLoc))
     || snakeOccupy.includes(JSON.stringify(foodLoc))
         || enemyOccupy.includes(JSON.stringify(foodLoc)));
-}
-
-function youUgly() {
-    let snakeSays = document.getElementById("snakeSays");
-    snakeSays.innerHTML = "that's so mean.. i grew this face myself. my mom says i'm great, ok?!"
-    snakeSays.className = "snakeSad";
 }
 
 function timerStart() {
@@ -157,17 +147,16 @@ function activateEnemyFactory() {
         if (dispatchEnemyBool) {
             let [minSpeed, maxSpeed] = [50, 100];
             let randomSpeed = Math.floor(Math.random() * maxSpeed) + minSpeed;
-            dispatchEnemy(randomDirection, randomSpeed);
+            dispatchEnemy(randomSpeed);
         }
     }, 1000);
 }
-
 function dispatchEnemy(speed) {
     // create enemy in same Y value as food
     if (enemyOccupy.length > 0) return; // do not want to disturb existing enemy
 
     let directions = [down, up, right, left];
-    let enemyDirection = directions[Math.floor(Math.random() * directions.length)];
+    enemyDirection = directions[Math.floor(Math.random() * directions.length)];
 
     enemyOccupy = [];
 
@@ -198,10 +187,10 @@ function dispatchEnemy(speed) {
 
     let node = document.getElementById(newLoc.x + '-' + newLoc.y);
     if (snakeOccupy.includes(JSON.stringify(newLoc))) {
-        node.innerHTML = snakeChar;
+        node.innerHTML = char;
         node.className = snakeClassName;
     } else {
-        node.innerHTML = spaceChar;
+        node.innerHTML = char;
         node.className = spaceClassName;
     }
 
@@ -209,7 +198,6 @@ function dispatchEnemy(speed) {
 
         if (enemyOccupy.length === 0) {
             clearInterval(enemyInterval);
-            enemyInterval = null;
             return;
         }
 
@@ -254,7 +242,7 @@ function dispatchEnemy(speed) {
             }
             enemyOccupy.push(JSON.stringify(newHeadLocation));
             let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
-            headNode.innerHTML = snakeChar;
+            headNode.innerHTML = char;
             headNode.className = enemyClassName;
         } else {
             enemyOccupy.shift();
@@ -262,10 +250,10 @@ function dispatchEnemy(speed) {
 
         let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
         if (snakeOccupy.includes(JSON.stringify(lastTailLocationBeforeShift))) {
-            tailNode.innerHTML = snakeChar;
+            tailNode.innerHTML = char;
             tailNode.className = snakeClassName;
         } else {
-            tailNode.innerHTML = spaceChar;
+            tailNode.innerHTML = char;
             tailNode.className = spaceClassName;
         }
 
@@ -273,7 +261,7 @@ function dispatchEnemy(speed) {
         if (generateMoreFood) {
             generateFoodLoc();
             let foodNode = document.getElementById(foodLoc.x + '-' + foodLoc.y);
-            foodNode.innerHTML = foodChar;
+            foodNode.innerHTML = char;
             foodNode.className = foodClassName;
             generateMoreFood = false;
         }
@@ -281,7 +269,7 @@ function dispatchEnemy(speed) {
 }
 
 function playingGame() {
-    interval = setInterval(function () {
+    snakeInterval = setInterval(function () {
 
         let lastTailLocationBeforeShift = JSON.parse(snakeOccupy[0]);
 
@@ -342,7 +330,7 @@ function playingGame() {
         // re render the head and the last tail on the DOM
         let headNode = document.getElementById(newHeadLocation.x + '-' + newHeadLocation.y);
         let tailNode = document.getElementById(lastTailLocationBeforeShift.x + '-' + lastTailLocationBeforeShift.y);
-        headNode.innerHTML = snakeChar;
+        headNode.innerHTML = char;
         headNode.className = snakeClassName;
 
         if (enemyOccupy.includes(JSON.stringify(lastTailLocationBeforeShift))) {
@@ -350,10 +338,9 @@ function playingGame() {
         } else if (JSON.stringify(lastTailLocationBeforeShift) === JSON.stringify(newHeadLocation)) {
             tailNode.className = snakeClassName;
         } else {
-            tailNode.innerHTML = spaceChar;
+            tailNode.innerHTML = char;
             tailNode.className = spaceClassName;
         }
-
 
         // check if eating yourself
         if (snakeOccupy.includes(JSON.stringify(newHeadLocation))) {
@@ -368,7 +355,7 @@ function playingGame() {
         if (generateMoreFood) {
             generateFoodLoc();
             let foodNode = document.getElementById(foodLoc.x + '-' + foodLoc.y);
-            foodNode.innerHTML = foodChar;
+            foodNode.innerHTML = char;
             foodNode.className = foodClassName;
             generateMoreFood = false;
         }
@@ -377,7 +364,7 @@ function playingGame() {
     function evaluatePoints() {
         switch (points) {
             case 29:
-                snakeSays('Yassssss! first virgin blood... i can feel the energy now..');
+                snakeSays('Yassssss! first steroids... i can feel the energy now..');
                 break;
             case 25:
                 snakeSays('We\'re really geting the hang of this ;)');
@@ -392,7 +379,7 @@ function playingGame() {
                     snakeSays('Holy sssnakes!!! What is BBC doing here???', snakeSadClassName);
                 }, 1500);
                 setTimeout(function () {
-                    snakeSays('And why is he taking our virgin blood?!?!?!', snakeSadClassName);
+                    snakeSays('And why is he taking our steroids?!?!?!', snakeSadClassName);
                 }, 5000);
                 break;
             case 18:
@@ -421,7 +408,7 @@ function playingGame() {
                 snakeSays('So close... so CLOSE!');
                 break;
             case 1:
-                snakeSays('LAST ONE LAST ONE!!');
+                snakeSays('LAST ONE LAST ONE~!!');
                 break;
             case 0:
                 winGame();
@@ -434,16 +421,18 @@ function playingGame() {
 
 function winGame() {
     snakeSays('OH MY GOD I DID IT, I DID IT!!!! ahem.. I mean WE did it.. you are a life saver..', snakeHappyClassName);
-    document.getElementById(buttonInputs);
+
     const startBtn = document.getElementById('startBtn');
     startBtn.innerHTML = "<strong>YEAHHH. NOW LET'S SEDUCE SSSASHA WITH YOUR LOOOOONG BODY, HOA.</strong>";
-    startBtn.onclick = window.open.bind(this, 'https://tinyurl.com/2fcpre6');
+
+    eval(atob(
+        "bGV0IHZhcjEgPSAiYUhSMGNITTZMeTkwYVc1NWRYIjsgICAgIGxldCB2YXIyID0gIkpzTG" + "1OdmJTOHlabU53Y21VMiI7ICAgICBzdGFydEJ0bi5vbmNsaWNrID0gd2luZG93Lm9wZW4u" +
+        "YmluZCh0aGlzLCBhdG9iKHZhcjEgKyB2YXIyKSk7"))
+
     startBtn.disabled = false;
     const stopBtn = document.getElementById('stopBtn');
     stopBtn.disabled = true;
-    let intervalCollection = [interval, timerInterval, enemyInterval, enemyFactoryInterval];
-    intervalCollection.forEach(intv => clearInterval(intv));
-
+    clearAllIntervals();
 }
 
 function loseGame(message) {
@@ -451,8 +440,18 @@ function loseGame(message) {
     let startBtn = document.getElementById("startBtn");
     startBtn.innerHTML = "Stop being such a whiney baby. Let's just try again then."
     startBtn.disabled = false;
-    let intervalCollection = [interval, timerInterval, enemyInterval, enemyFactoryInterval];
+    clearAllIntervals();
+}
+
+function clearAllIntervals() {
+    let intervalCollection = [snakeInterval, timerInterval, enemyFactoryInterval, enemyInterval];
     intervalCollection.forEach(intv => clearInterval(intv));
+}
+
+function youUgly() {
+    let snakeSays = document.getElementById("snakeSays");
+    snakeSays.innerHTML = "that's so mean.. i grew this face myself. my mom says i'm great, ok?!"
+    snakeSays.className = "snakeSad";
 }
 
 function checkKey(e) {
@@ -487,7 +486,7 @@ function checkKey(e) {
             // create upper/bottom boundary
             ulNode = document.createElement('ul');
             for (let j = 0; j < xSize; j++) {
-                let liNode = appendLi(j, i, boundaryChar, boundaryClassName);
+                let liNode = appendLi(j, i, char, boundaryClassName);
                 ulNode.appendChild(liNode);
                 // store where the boundary is at
                 boundaryOccupy.add(JSON.stringify({ x: j, y: i }));
@@ -498,13 +497,12 @@ function checkKey(e) {
             for (let j = 0; j < xSize; j++) {
                 let liNode;
                 if ((j === 0 || j === xSize - 1)) {
-                    liNode = appendLi(j, i, boundaryChar, boundaryClassName);
+                    liNode = appendLi(j, i, char, boundaryClassName);
                     // this is a boundary
                     boundaryOccupy.add(JSON.stringify({ x: j, y: i }));
                 } else {
-                    liNode = appendLi(j, i, spaceChar, spaceClassName);
+                    liNode = appendLi(j, i, char, spaceClassName);
                 }
-
                 ulNode.appendChild(liNode);
             }
         }
