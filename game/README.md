@@ -13,7 +13,6 @@ Despite being a species of large, heave-bodied snake, <b>Hoa the Boa</b> is a re
 
 ## more stuff can be done
 1. power ups
-1. when receiving user event before being able to render
 1. multiple enemies
 1. more robust obfuscation to hide what happens when you win
 1. responsive UI
