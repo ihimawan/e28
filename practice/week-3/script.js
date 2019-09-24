@@ -6,9 +6,9 @@ const app = new Vue({
         moods: []
     },
     methods: {
-        flipHappy: () => {
+        flipHappy: function () {
             this.happy = !this.happy;
-            console.log('this is happiness' + this.happy);
+            this.name = 'chicken';
         }
     }
 });
