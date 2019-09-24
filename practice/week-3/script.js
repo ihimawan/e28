@@ -9,6 +9,9 @@ const app = new Vue({
         flipHappy: function () {
             this.happy = !this.happy;
             this.name = 'chicken';
+        },
+        someOtherMethod() {
+            alert(this.name);
         }
     }
 });
