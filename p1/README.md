@@ -1,7 +1,7 @@
-#Project 1
+# Project 1
 * By: Indri Himawan
-* Prod URL: xxx
+* Prod URL: not yet set up
 
-##Outside resources
+## Outside resources
 
-##Notes
+## Notes
