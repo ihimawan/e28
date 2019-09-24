@@ -1,0 +1,48 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+    <script src="script.js" defer></script>
+
+    <meta charset="utf-8">
+
+    <title>Practice</title>
+    <meta name="description" content="Just practicing with Vue.js">
+    <meta name="author" content="Indri Himawan">
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        v-cloak is an attribute that you can add to an element to hide mustache syntax before they get loaded.
+        <input type="text" v-model='name' />
+        <p v-if='name != null'> my name is {{name}} </p>
+
+        <button id='btn' v-on:click='flipHappy'>flip happiness</button>
+
+        <div v-if='happy'>yay im happy</div>
+        <div v-else>im sad</div>
+
+        <div v-if='moods.length > 0'>
+            <p>my moods are: {{moods}}</p>
+
+            <ul>
+                <li v-for='mood in moods'>{{mood}}</li>
+            </ul>
+        </div>
+
+        <button v-on:click='moods.push(name)'>use more moods</button>
+
+    </div>
+</body>
+
+</html>
