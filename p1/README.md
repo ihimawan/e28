@@ -1,6 +1,6 @@
 # Project 1
 * By: Indri Himawan
-* Prod URL: not yet set up
+* Prod URL: http://llamaoralpaca.indrihimawan.com/
 
 ## Outside resources
 
