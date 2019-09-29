@@ -4,8 +4,13 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Hoa next Gen</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+
+    <title>Llama or Alpaca</title>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src='script.js' defer></script>
@@ -13,9 +18,59 @@
 
 </head>
 
-<body>
-    <div id="app" v-cloak>
-        {{message}}
+<body id="main-page">
+    <div class="container" id="app" v-cloak>
+
+        <div v-if="gameStage === 'intro'">
+
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-4">Tell me who you are</h1>
+                    <p class="card-text">This is what you would be known as through out the game</p>
+                    <div id="profile-pic-selection" class="container">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <img src="http://via.placeholder.com/200" class="rounded mx-auto d-block img-thumbnail"
+                                    alt="...">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="http://via.placeholder.com/200" class="rounded mx-auto d-block img-thumbnail"
+                                    alt="...">
+
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="http://via.placeholder.com/200" class="rounded mx-auto d-block img-thumbnail"
+                                    alt="...">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="text-input" class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 mb-3">
+                                <label for="username">Pick a name for yourself</label>
+                                <input type="
+                                    text" class="form-control is-valid"
+                                    id="username" placeholder="Alpacas are better than Llamas">
+                                <div class="valid-feedback">
+                                    You are the master of creating names
+                                </div>
+                                <div class="invalid-feedback">
+                                    Don't make it too long, please...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary">Yep, this is me</a>
+                </div>
+            </div>
+
+        </div>
+        <div v-else-if="gameStage === 'chat'">chat</div>
+        <div v-else-if="game">game</div>
+        <div v-else-if="win">win</div>
+        <div v-else-if="lose">lose</div>
+
     </div>
 </body>
 

@@ -1,3 +1,8 @@
 [v-cloak] {
     display: none;
 }
+
+#main-page {
+    background-color: #FF7E6B;
+    color: #1A535C;
+}

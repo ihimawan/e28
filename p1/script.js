@@ -1,7 +1,23 @@
 const app = new Vue({
     el: '#app',
     data: {
-        message: ''
+        gameStage: 'intro', //chat //game // win // lose
+        playerInfo: {
+            name: '',
+            picture: ''
+        },
+        chatInfo: {
+
+        },
+        gameInfo: {
+
+        },
+        winInfo: {
+
+        },
+        loseInfo: {
+
+        }
     }
 });
 
