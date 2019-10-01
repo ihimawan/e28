@@ -6,3 +6,16 @@
     background-color: #FF7E6B;
     color: #1A535C;
 }
+
+#app {
+    width: 50%;
+    margin: auto;
+}
+
+.characterSelectImg {
+    opacity: 0.5;
+}
+
+.characterSelectImg:hover {
+    opacity: 1;
+}
