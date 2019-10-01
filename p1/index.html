@@ -36,7 +36,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerInfo.picturesAvailable'>
-                                <img :src="pictureInfo.img" class="rounded mx-auto d-block img-thumbnail characterSelectImg"
+                                <img :src="pictureInfo.img" class="rounded mx-auto d-block img-thumbnail" :class="{
+                                    'character-unselected' : playerInfo.selectedPictureIdx === null || playerInfo.selectedPictureIdx !== index
+                                }"
                                     @click="selectProfilePicture(index)">
                             </div>
                         </div>
@@ -67,7 +69,14 @@
             </div>
         </div>
 
-        <div v-else-if="currentGameStage === 'chat'">chat</div>
+        <div v-else-if="currentGameStage === 'chat'">
+            <div class="card">
+                <div class="card-body">
+                    chat
+                </div>
+            </div>
+        </div>
+
         <div v-else-if="game">game</div>
         <div v-else-if="win">win</div>
         <div v-else-if="lose">lose</div>

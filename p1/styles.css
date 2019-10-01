@@ -12,10 +12,10 @@
     margin: auto;
 }
 
-.characterSelectImg {
+.character-unselected {
     opacity: 0.5;
 }
 
-.characterSelectImg:hover {
+.character-unselected:hover {
     opacity: 1;
 }

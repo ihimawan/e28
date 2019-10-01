@@ -56,5 +56,3 @@ const app = new Vue({
         }
     }
 });
-
-app.message = "what's up people i'm the best";
