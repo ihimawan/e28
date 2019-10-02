@@ -36,14 +36,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerInfo.picturesAvailable'>
-                                <img :src="pictureInfo.img" class="rounded mx-auto d-block img-thumbnail" :class="{
-                                    'character-unselected' : playerInfo.selectedPictureIdx === null || playerInfo.selectedPictureIdx !== index
-                                }"
+                                <img :src="pictureInfo.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"
+                                    :class="{'character-unselected' : playerInfo.selectedPictureIdx === null || playerInfo.selectedPictureIdx !== index}"
                                     @click="selectProfilePicture(index)">
                             </div>
                         </div>
                         <div class="row justify-content-center" v-if="playerInfo.selectedPictureIdx !==null">
-                            <p>{{playerInfo.picturesAvailable[playerInfo.selectedPictureIdx].comment}}</p>
+                            <p class="text-muted">{{playerInfo.picturesAvailable[playerInfo.selectedPictureIdx].comment}}</p>
                         </div>
                     </div>
 
@@ -53,7 +52,7 @@
                             <div class="col-md-4 mb-3">
                                 <input type="
                                                 text" class="form-control"
-                                    :class="{'is-valid' : playerInfo.validName, 'is-invalid' : playerInfo.name !== null && !playerInfo.validName}"
+                                    :class="{'is-valid' : playerInfo.validName, 'is-invalid' : playerInfo.name !== null && playerInfo.validName !== null && !playerInfo.validName}"
                                     id="username" placeholder="Give yourself a name" v-model='playerInfo.name' @keyup=validateName(playerInfo.name)>
                                 <div class="valid-feedback">
                                     <button @click="goToNextGameStage" type="button" class="btn btn-light">Hot name.
@@ -69,10 +68,60 @@
             </div>
         </div>
 
+        <div v-else-if="currentGameStage === 'home'">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-4">Welcome, {{playerInfo.name}}.</h1>
+                    <h4 class="text-muted">You look like someone who could use a pretty alpaca...</h4>
+                    <div class="card-deck">
+                        <div class="card border-secondary" v-for="(profile, index) in homeInfo.profiles">
+                            <img :src="profile.img" width="300" height="300" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">{{profile.name}}</h5>
+                                <p class="card-text">{{profile.comment}}</p>
+                                <a href="#" class="btn btn-primary" @click="displayInterest(index)">Chat with me!</a>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">{{profile.distance}} alpaca distances away</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div v-else-if="currentGameStage === 'chat'">
             <div class="card">
                 <div class="card-body">
-                    chat
+                    <h4>Conversations with {{homeInfo.profiles[chatInfo.selectedProfileIdx].name}}</h4>
+                    <div class="media" v-for="msg in chatInfo.chat">
+                        picture here. {{msg}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div v-if=chatInfo.modal.show>
+                <div class="modal-backdrop show fade"></div>
+                <div class="modal show in" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">An Alpaca wants to talk to you!</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <h4>{{chatInfo.modal.title}}</h4>
+                                <p>{{chatInfo.modal.message}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ehh... no</button>
+                                <button type="button" class="btn btn-primary" @click="goToNextGameStage">Reply</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
