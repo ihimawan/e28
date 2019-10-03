@@ -1,4 +1,4 @@
-import { gameStages, maxChoices, passingPercentage } from './exports/defaultGameSettings.js'
+import { gameStages, maxChoices, passingPercentage } from './modules/defaultGameSettings.js'
 
 const app = new Vue({
     el: '#app',
@@ -251,7 +251,7 @@ const app = new Vue({
                 newIndex = Math.floor(Math.random() * this.gameInfo.choices.length);
             }
             this.gameInfo.currentIndex = newIndex;
-            this.gameInfo.doneIndex.add(newIndex);
+            this.gameInfo.doneIndexes.add(newIndex);
         },
         resultHandler: function () {
             let passingScore = Math.ceil(this.gameInfo.score * passingPercentage / 100);
