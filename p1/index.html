@@ -13,7 +13,8 @@
     <title>Llama or Alpaca</title>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
-    <script src='script.js' defer></script>
+    <script src='exports/defaultGameSettings.js'></script>
+    <script type="module" src='script.js' defer></script>
     <link rel="stylesheet" href="styles.css">
 
 </head>
@@ -25,9 +26,8 @@
         <div v-if="currentGameStage === 'intro'" id="intro-content">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="display-4">Alpacal♥ve</h1>
-                    <p class="
-                                        card-text">Dating website from alpaca to alpaca</p>
+                    <h1 class="display-4">Alpacan Mingle</h1>
+                    <p class="card-text">Dating website from Alpaca to Alpaca</p>
 
                     <!-- Select profile picture -->
                     <div id="profile-pic-selection" class="container">
@@ -55,11 +55,36 @@
                                     :class="{'is-valid' : playerInfo.validName, 'is-invalid' : playerInfo.name !== null && playerInfo.validName !== null && !playerInfo.validName}"
                                     id="username" placeholder="Give yourself a name" v-model='playerInfo.name' @keyup=validateName(playerInfo.name)>
                                 <div class="valid-feedback">
-                                    <button @click="goToNextGameStage" type="button" class="btn btn-light">Hot name.
-                                        Let's go find you the love of your life.</button>
+                                    <button @click="activateModalHandler" type="button" class="btn btn-light">Hot
+                                        name. Let's go find you the love of your life.</button>
                                 </div>
                                 <div class="invalid-feedback">
                                     Can't read this.. must be just alphabets and not too long please..
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div v-if=playerInfo.modal.show>
+                        <div class="modal-backdrop show fade"></div>
+                        <div class="modal show in" id="playerModal" tabindex="-1" role="dialog" aria-hidden="true"
+                            style="display:block;">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{{playerInfo.modal.title}}</h5>
+                                        <button type="button" class="close" @click="dismissModalHandler" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <p>{{playerInfo.modal.text}}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{playerInfo.modal.disagree}}</button>
+                                        <button type="button" class="btn btn-primary" @click="goToNextGameStage">{{playerInfo.modal.agree}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,16 +98,74 @@
                 <div class="card-body">
                     <h1 class="display-4">Welcome, {{playerInfo.name}}.</h1>
                     <h4 class="text-muted">You look like someone who could use a pretty alpaca...</h4>
+
+                    <div class="alert alert-danger" role="alert">
+                        According to our data, you haven't taken the <strong>Llama or Alpaca</strong> test yet. Click
+                        <a href="#" @click="activateModalHandler">here</a> to get more information.
+                    </div>
+
                     <div class="card-deck">
                         <div class="card border-secondary" v-for="(profile, index) in homeInfo.profiles">
                             <img :src="profile.img" width="300" height="300" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">{{profile.name}}</h5>
                                 <p class="card-text">{{profile.comment}}</p>
-                                <a href="#" class="btn btn-primary" @click="displayInterest(index)">Chat with me!</a>
+                                <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with me!</a>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted">{{profile.distance}} alpaca distances away</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div v-if=homeInfo.modal.show>
+                <div class="modal-backdrop show fade"></div>
+                <div class="modal show in" id="homeInfoModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{homeInfo.modal.title}}</h5>
+                                <button type="button" class="close" @click="dismissModalHandler" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p>{{homeInfo.modal.text}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{homeInfo.modal.disagree}}</button>
+                                <button type="button" class="btn btn-primary" @click="goToNextGameStage">{{homeInfo.modal.agree}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-else-if="currentGameStage === 'game'">
+            <div class="card">
+                <div class="card-body">
+                    <h1> Llama or Alpaca Test</h1>
+                    <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start Test</a>
+                    <div id="profile-pic-selection" class="container" v-if="gameInfo.currentIndex !== null">
+                        <div class="row justify-content-center">
+                            <div class="card" style="width: 18rem;">
+                                <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top" width="300"
+                                    height="300">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{gameInfo.choices[gameInfo.currentIndex].title}}</h5>
+                                    <p class="card-text">{{gameInfo.choices[gameInfo.currentIndex].description}}</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" v-for="hint in gameInfo.choices[gameInfo.currentIndex].hints">{{hint}}</li>
+                                </ul>
+                                <div class="card-body">
+                                    <a href="#" @click="chooseHandler('llamas')" class="card-link">Llama</a>
+                                    <a href="#" @click="chooseHandler('alpacas')" class="card-link">Alpaca</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -99,34 +182,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Modal -->
-            <div v-if=chatInfo.modal.show>
-                <div class="modal-backdrop show fade"></div>
-                <div class="modal show in" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">An Alpaca wants to talk to you!</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <h4>{{chatInfo.modal.title}}</h4>
-                                <p>{{chatInfo.modal.message}}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ehh... no</button>
-                                <button type="button" class="btn btn-primary" @click="goToNextGameStage">Reply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div v-else-if="game">game</div>
         <div v-else-if="win">win</div>
         <div v-else-if="lose">lose</div>
 
