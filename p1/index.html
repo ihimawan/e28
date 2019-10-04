@@ -211,11 +211,12 @@
                             <h1 class="display-4">question {{gameInfo.doneIndexes.size}} of {{gameInfo.maxChoices}}
                             </h1>
                         </div>
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-sm">
+                        <div class="container" @keyup.37="chooseHandler('llamas')" @keyup.39="chooseHandler('alpacas')">
+                            <div class="
+                            row justify-content-center">
+                                <div class="col-sm answer-review">
                                     <img :src="gameInfo.choices[leftIndex].url" v-for="leftIndex in gameInfo.leftChoiceIndexes"
-                                        class="rounded choice-image" width="100" height="100" style="margin: 5px">
+                                        class="rounded">
                                 </div>
                                 <div class="col-sm">
                                     <div class="card border-secondary" style="width: 18rem;">
@@ -225,20 +226,15 @@
                                             <h5 class="card-title">{{gameInfo.choices[gameInfo.currentIndex].title}}</h5>
                                             <p class="card-text">{{gameInfo.choices[gameInfo.currentIndex].description}}</p>
                                         </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item" v-for="hint in gameInfo.choices[gameInfo.currentIndex].hints">{{hint}}</li>
-                                        </ul>
                                         <div class="card-body">
-                                            <a href="#" @click="chooseHandler('llamas')" @keyup.37="chooseHandler('llamas')"
-                                                class="card-link">Llama</a>
-                                            <a href="#" @click="chooseHandler('alpacas')" @keyup.39="chooseHandler('alpacas')"
-                                                class="card-link">Alpaca</a>
+                                            <a href="#" @click="chooseHandler('llamas')" class="card-link">Llama</a>
+                                            <a href="#" @click="chooseHandler('alpacas')" class="card-link">Alpaca</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm">
+                                <div class="col-sm answer-review">
                                     <img :src="gameInfo.choices[rightIndex].url" v-for="rightIndex in gameInfo.rightChoiceIndexes"
-                                        class="rounded choice-image" width="100" height="100" style="margin: 5px">
+                                        class="rounded">
                                 </div>
 
                             </div>
@@ -257,6 +253,11 @@
                                 </div>
                                 <div class="modal-body text-center">
                                     <p>{{gameInfo.modal.text}}</p>
+                                    <strong>You got the following wrong:</strong>
+                                    <div class="answer-review">
+                                        <img :src="gameInfo.choices[wrongIndex].url" v-for="wrongIndex in gameInfo.wrongChoiceIndexes"
+                                            class="rounded">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{gameInfo.modal.disagree}}</button>

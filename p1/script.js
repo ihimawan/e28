@@ -99,6 +99,8 @@ const app = new Vue({
         chooseHandler: function (choice) {
             if (this.gameInfo.choices[this.gameInfo.currentIndex].url.includes(choice)) { //'llamas' or 'alpacas'
                 this.gameInfo.score++;
+            } else {
+                this.gameInfo.wrongChoiceIndexes.push(this.gameInfo.currentIndex);
             }
 
             if (choice === 'llamas') {

@@ -267,6 +267,7 @@ const gameStartState = {
     currentIndex: null,
     leftChoiceIndexes: [],
     rightChoiceIndexes: [],
+    wrongChoiceIndexes: [],
     doneIndexes: new Set(),
     timePerImg: 5000,
     score: 0,
