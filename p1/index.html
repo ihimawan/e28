@@ -14,7 +14,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src='modules/defaultGameSettings.js' defer></script>
-    <script src='modules/gameChoices.js' defer></script>
 
     <script type="module" src='script.js' defer></script>
     <link rel="stylesheet" href="styles.css">
@@ -101,7 +100,7 @@
                     <h1 class="display-4">Welcome, {{playerInfo.name}}.</h1>
                     <h4 class="text-muted">You look like someone who could use a pretty alpaca...</h4>
 
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" role="alert" v-if="!homeInfo.testPassed">
                         According to our data, you haven't taken the <strong>Llama or Alpaca</strong> test yet. Click
                         <a href="#" @click="activateModalHandler">here</a> to get more information.
                     </div>
@@ -112,7 +111,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{profile.name}}</h5>
                                 <p class="card-text">{{profile.comment}}</p>
-                                <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with me!</a>
+                                <div v-if="!homeInfo.testPassed">
+                                    <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with me!</a>
+                                </div>
+                                <div v-else>
+                                    <a href="#" class="btn btn-primary" @click="chatWithAlpaca(index)">Chat with me!</a>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted">{{profile.distance}} alpaca distances away</small>
@@ -151,7 +155,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="display-4"> Llama or Alpaca Test</h1>
-                    <h4>Because we can't deal with Llamas. They're Llaaaaame (hehe)</h4>
+                    <h4 class="text-muted">Because we can't deal with Llamas. They're Llaaaaame (hehe)</h4>
                     <div v-if="gameInfo.currentIndex === null">
                         <p>
                             You will be presented with a profile of an existing user. You will need to be able to
@@ -204,7 +208,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{gameInfo.modal.disagree}}</button>
-                                <button type="button" class="btn btn-primary" @click="goToNextGameStage" v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
+                                <button type="button" class="btn btn-primary" @click="testPassedHandler" v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
                             </div>
                         </div>
                     </div>
@@ -212,10 +216,10 @@
             </div>
         </div>
 
-        <div v-else-if="currentGameStage === 'chat'">
+        <div v-else-if="currentGameStage === 'end'">
             <div class="card">
                 <div class="card-body">
-                    <h4>Conversations with {{homeInfo.profiles[chatInfo.selectedProfileIdx].name}}</h4>
+                    <h4>The journey ends here. Thanks for playing.</h4>
                     <div class="media" v-for="msg in chatInfo.chat">
                         picture here. {{msg}}
                     </div>

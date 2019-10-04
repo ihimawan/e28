@@ -3,7 +3,7 @@ import * as gameSetting from './modules/defaultGameSettings.js'
 const app = new Vue({
     el: '#app',
     data: {
-        currentGameStage: gameSetting.gameStages[2],
+        currentGameStage: gameSetting.gameStages[0],
         playerInfo: {
             name: null,
             validName: null,
@@ -49,15 +49,6 @@ const app = new Vue({
         },
         gameInfo: {
             ...gameSetting.gameStartState
-        },
-        chatInfo: {
-            selectedProfileIdx: null,
-            chat: [
-                "What do you call it when Alpacas sing?",
-                "ummm.. i dunno.",
-                "Alpacapella!",
-                "Haha, that is so lame that I'd be intrigued to talk to you..."
-            ]
         }
     },
     methods: {
@@ -109,8 +100,8 @@ const app = new Vue({
         },
         generateNewImageHandler: function () {
             // check if game is finished
-            if (this.gameInfo.doneIndexes.size > gameSetting.maxChoices
-                || this.gameInfo.doneIndexes.size > this.gameInfo.choices.length) {
+            if (this.gameInfo.doneIndexes.size >= gameSetting.maxChoices
+                || this.gameInfo.doneIndexes.size >= this.gameInfo.choices.length) {
                 this.gameInfo.modal = gameSetting.resultHandler(this.gameInfo.score);
                 if (this.gameInfo.modal.status === 'win') {
                     this.homeInfo.testPassed = true;
@@ -124,6 +115,12 @@ const app = new Vue({
             }
             this.gameInfo.currentIndex = newIndex;
             this.gameInfo.doneIndexes.add(newIndex);
+        },
+        testPassedHandler: function () {
+            this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('home')];
+        },
+        journeyEndHandler: function (index) {
+
         }
     }
 });
