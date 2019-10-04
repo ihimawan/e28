@@ -14,6 +14,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src='modules/defaultGameSettings.js' defer></script>
+    <script src='modules/gameChoices.js' defer></script>
+
     <script type="module" src='script.js' defer></script>
     <link rel="stylesheet" href="styles.css">
 
@@ -152,7 +154,7 @@
                     <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start Test</a>
                     <div id="profile-pic-selection" class="container" v-if="gameInfo.currentIndex !== null">
                         <div class="row justify-content-center">
-                            <div class="card" style="width: 18rem;">
+                            <div class="card border-secondary" style="width: 18rem;">
                                 <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top" width="300"
                                     height="300">
                                 <div class="card-body">

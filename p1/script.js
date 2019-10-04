@@ -1,9 +1,10 @@
-import { gameStages, maxChoices, passingPercentage } from './modules/defaultGameSettings.js'
+import * as gameSetting from './modules/defaultGameSettings.js'
+import gameChoices from './modules/gameChoices.js';
 
 const app = new Vue({
     el: '#app',
     data: {
-        currentGameStage: gameStages[2],
+        currentGameStage: gameSetting.gameStages[2],
         playerInfo: {
             name: null,
             validName: null,
@@ -15,20 +16,7 @@ const app = new Vue({
                 agree: "I will not feel attacked",
                 disagree: "I am offended already"
             },
-            picturesAvailable: [
-                {
-                    img: "resources/images/players/one.png",
-                    comment: "What a handsome devil you are."
-                },
-                {
-                    img: "resources/images/players/two.png",
-                    comment: "You look bombin.. it must be the alpacalypse."
-                },
-                {
-                    img: "resources/images/players/three.png",
-                    comment: "mmm.... Feleece navidad.."
-                }
-            ]
+            picturesAvailable: [...gameSetting.playerPictures]
         },
         homeInfo: {
             modal: {
@@ -60,122 +48,8 @@ const app = new Vue({
             ]
         },
         gameInfo: {
-            started: false,
-            currentIndex: null,
-            doneIndexes: new Set(),
-            timePerImg: 5000,
-            score: 0,
-            choices: [
-                {
-                    url: "./resources/images/game/alpacas/1.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/2.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/3.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/4.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/5.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/6.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/7.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/8.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/9.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/10.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/alpacas/11.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/1.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/2.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/3.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/4.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/5.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/6.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                },
-                {
-                    url: "./resources/images/game/llamas/7.jpg",
-                    title: 'Billy Bob',
-                    description: 'I like to eat',
-                    hints: ['hint 1', 'hint 2']
-                }
-            ]
-
+            ...gameSetting.gameStartState,
+            choices: [...gameChoices]
         },
         chatInfo: {
             modal: {
@@ -191,7 +65,6 @@ const app = new Vue({
                 "Haha, that is so lame that I'd be intrigued to talk to you..."
             ]
         },
-
         winInfo: {
 
         },
@@ -211,27 +84,31 @@ const app = new Vue({
             }
         },
         goToNextGameStage: function () {
-            let indexOfNextStage = gameStages.indexOf(this.currentGameStage);
-            if (indexOfNextStage !== -1 && gameStages.length <= indexOfNextStage + 2) {
+            let indexOfNextStage = gameSetting.gameStages.indexOf(this.currentGameStage);
+            if (indexOfNextStage !== -1 && gameSetting.gameStages.length <= indexOfNextStage + 2) {
                 throw new Error('Unable to find next stage');
             }
-            this.currentGameStage = gameStages[indexOfNextStage + 1]
+            this.currentGameStage = gameSetting.gameStages[indexOfNextStage + 1]
         },
         activateModalHandler: function () {
-            if (this.currentGameStage === gameStages[0]) {
+            if (this.currentGameStage === gameSetting.gameStages[0]) {
                 this.playerInfo.modal.show = true;
-            } else if (this.currentGameStage === gameStages[1]) {
+            } else if (this.currentGameStage === gameSetting.gameStages[1]) {
                 this.homeInfo.modal.show = true;
             }
         },
         dismissModalHandler: function () {
-            if (this.currentGameStage === gameStages[0]) {
+            if (this.currentGameStage === gameSetting.gameStages[0]) {
                 this.playerInfo.modal.show = false;
-            } else if (this.currentGameStage === gameStages[1]) {
+            } else if (this.currentGameStage === gameSetting.gameStages[1]) {
                 this.homeInfo.modal.show = false;
             }
         },
         gameBeginHandler: function () {
+            //reset game settings
+            Object.keys(gameSetting.gameStartState).forEach(key => {
+                this.gameInfo[key] = gameSetting.gameStartState[key]
+            })
             this.generateNewImageHandler();
         },
         chooseHandler: function (choice) {
@@ -241,11 +118,10 @@ const app = new Vue({
             this.generateNewImageHandler();
         },
         generateNewImageHandler: function () {
-            if (this.gameInfo.doneIndexes.size > maxChoices
+            if (this.gameInfo.doneIndexes.size > gameSetting.maxChoices
                 || this.gameInfo.doneIndexes.size > this.gameInfo.choices.length) {
-
+                this.resultHandler();
             }
-
             let newIndex = null;
             while (newIndex === null || this.gameInfo.doneIndexes.has(newIndex)) {
                 newIndex = Math.floor(Math.random() * this.gameInfo.choices.length);
@@ -254,9 +130,11 @@ const app = new Vue({
             this.gameInfo.doneIndexes.add(newIndex);
         },
         resultHandler: function () {
-            let passingScore = Math.ceil(this.gameInfo.score * passingPercentage / 100);
+            let passingScore = Math.ceil(this.gameInfo.score * gameSetting.passingPercentage / 100);
             if (this.gameInfo.score >= passingScore) {
-
+                console.log('you win!')
+            } else {
+                console.log('you lose!')
             }
         },
         displayInterest: function (index) {
