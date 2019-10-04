@@ -3,7 +3,7 @@ import * as gameSetting from './modules/defaultGameSettings.js'
 const app = new Vue({
     el: '#app',
     data: {
-        currentGameStage: gameSetting.gameStages[2],
+        currentGameStage: gameSetting.gameStages[0],
         playerInfo: {
             name: null,
             validName: null,
@@ -31,9 +31,7 @@ const app = new Vue({
             profiles: gameSetting.getHomeProfiles(),
             articles: [...gameSetting.articles]
         },
-        gameInfo: {
-            ...gameSetting.gameStartState
-        }
+        gameInfo: gameSetting.getGameStartState()
     },
     methods: {
         selectProfilePicture: function (index) {
@@ -78,10 +76,7 @@ const app = new Vue({
         },
         gameBeginHandler: function () {
             //reset game settings
-            this.gameInfo = { ...gameSetting.gameStartState }
-            this.gameInfo.doneIndexes.clear();
-            this.gameInfo.leftChoiceIndexes = [];
-            this.gameInfo.rightChoiceIndexes = [];
+            this.gameInfo = gameSetting.getGameStartState();
             this.gameInfo.loadingScreenShow = true;
             this.loadingScreenTimeDown();
             this.generateNewImageHandler();

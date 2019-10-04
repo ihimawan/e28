@@ -87,7 +87,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <p>{{playerInfo.modal.text}}</p>
+                                        <img <p>{{playerInfo.modal.text}}</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{playerInfo.modal.disagree}}</button>
@@ -253,10 +253,15 @@
                                 </div>
                                 <div class="modal-body text-center">
                                     <p>{{gameInfo.modal.text}}</p>
-                                    <strong>You got the following wrong:</strong>
-                                    <div class="answer-review">
-                                        <img :src="gameInfo.choices[wrongIndex].url" v-for="wrongIndex in gameInfo.wrongChoiceIndexes"
-                                            class="rounded">
+                                    <div v-if="gameInfo.wrongChoiceIndexes.length > 0">
+                                        <strong>You got the following wrong:</strong>
+                                        <div class="answer-review">
+                                            <img :src="gameInfo.choices[wrongIndex].url" v-for="wrongIndex in gameInfo.wrongChoiceIndexes"
+                                                class="rounded">
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <strong>You got nothing wrong! You are an expert!</strong>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -273,7 +278,8 @@
             <!-- End screen -->
             <div v-else-if="currentGameStage === 'end'">
                 <div class="card-body">
-                    <h4>The journey ends here. Thanks for playing.</h4>
+                    <h1>The journey ends here. Thanks for playing.</h1>
+
                 </div>
             </div>
         </div>

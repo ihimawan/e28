@@ -261,19 +261,21 @@ const gameChoices = [
     }
 ];
 
-const gameStartState = {
-    loadingScreenShow: null,
-    countDown: 3,
-    currentIndex: null,
-    leftChoiceIndexes: [],
-    rightChoiceIndexes: [],
-    wrongChoiceIndexes: [],
-    doneIndexes: new Set(),
-    timePerImg: 5000,
-    score: 0,
-    maxChoices: maxChoices,
-    modal: null,
-    choices: [...gameChoices]
+const getGameStartState = () => {
+    return {
+        loadingScreenShow: null,
+        countDown: 3,
+        currentIndex: null,
+        leftChoiceIndexes: [],
+        rightChoiceIndexes: [],
+        wrongChoiceIndexes: [],
+        doneIndexes: new Set(),
+        timePerImg: 5000,
+        score: 0,
+        maxChoices: maxChoices,
+        modal: null,
+        choices: [...gameChoices]
+    }
 }
 
 const getHomeProfiles = () => {
@@ -289,4 +291,4 @@ const getHomeProfiles = () => {
     return randomIndexes.map(index => gameChoices[index]);
 }
 
-export { genderSelection, getHomeProfiles, gameStages, maxChoices, passingPercentage, gameStartState, playerPictures, resultHandler, articles };
+export { genderSelection, getHomeProfiles, gameStages, maxChoices, passingPercentage, getGameStartState, playerPictures, resultHandler, articles };
