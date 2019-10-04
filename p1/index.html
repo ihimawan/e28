@@ -150,9 +150,23 @@
         <div v-else-if="currentGameStage === 'game'">
             <div class="card">
                 <div class="card-body">
-                    <h1> Llama or Alpaca Test</h1>
-                    <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start Test</a>
+                    <h1 class="display-4"> Llama or Alpaca Test</h1>
+                    <h4>Because we can't deal with Llamas. They're Llaaaaame (hehe)</h4>
+                    <div v-if="gameInfo.currentIndex === null">
+                        <p>
+                            You will be presented with a profile of an existing user. You will need to be able to
+                            determine if they are a Llama or Alpaca based on their profile. You will need an accuracy
+                            of 70% (which is pretty low, so you should be able to do this if you're a real Alpaca.. or
+                            Alpaca lover.)
+                        </p>
+                        <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start the test that will
+                            determine the rest of your life</a>
+                    </div>
                     <div id="profile-pic-selection" class="container" v-if="gameInfo.currentIndex !== null">
+                        <div class="row justify-content-center">
+                            <h1 class="display-4">question {{gameInfo.doneIndexes.size}} of {{gameInfo.maxChoices}}
+                            </h1>
+                        </div>
                         <div class="row justify-content-center">
                             <div class="card border-secondary" style="width: 18rem;">
                                 <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top" width="300"

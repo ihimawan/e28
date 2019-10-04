@@ -18,6 +18,7 @@ const app = new Vue({
             picturesAvailable: [...gameSetting.playerPictures]
         },
         homeInfo: {
+            testPassed: false,
             modal: {
                 show: false,
                 title: "What is the Llama or Alpaca test?",
@@ -107,11 +108,16 @@ const app = new Vue({
             this.generateNewImageHandler();
         },
         generateNewImageHandler: function () {
+            // check if game is finished
             if (this.gameInfo.doneIndexes.size > gameSetting.maxChoices
                 || this.gameInfo.doneIndexes.size > this.gameInfo.choices.length) {
                 this.gameInfo.modal = gameSetting.resultHandler(this.gameInfo.score);
+                if (this.gameInfo.modal.status === 'win') {
+                    this.homeInfo.testPassed = true;
+                }
                 return;
             }
+            // if not, generate new image
             let newIndex = null;
             while (newIndex === null || this.gameInfo.doneIndexes.has(newIndex)) {
                 newIndex = Math.floor(Math.random() * this.gameInfo.choices.length);

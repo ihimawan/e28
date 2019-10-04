@@ -25,13 +25,15 @@ const resultHandler = (score) => {
     const scoreString = "You got " + score + "/" + maxChoices + " while it needs " + passingScore + "/" + maxChoices + " to pass.";
     if (score >= passingScore) {
         return {
+            status: "win",
             title: "You are a real Alpaca!",
-            text: scoreString + " You have proven yourself that you are not an impostor to the Alpaca community. Welcome to Alpacan Mingle.",
+            text: scoreString + " You have proven yourself that you are not an impostor to the Alpaca community. Welcome to Alpacan Mingle. You now have full access to our site.",
             agree: "Let's chat up some lady Alpacas",
             disagree: "I'm not convinced I'm worthy"
         };
     }
     return {
+        status: "lose",
         title: "FAKE!!!",
         text: scoreString + " You may be a Llama! Even worse... a Llama Lover!!",
         disagree: "This is BS I'll try again...",
@@ -54,6 +56,7 @@ const gameStartState = {
     doneIndexes: new Set(),
     timePerImg: 5000,
     score: 0,
+    maxChoices: maxChoices,
     modal: null,
     choices: [...gameChoices]
 }
