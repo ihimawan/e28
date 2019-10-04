@@ -40,12 +40,24 @@ const resultHandler = (score) => {
 
 const articles = [
     {
-        img: "",
-        title: "What's the difference between Llamas and Alpacas?",
-        action: "https://www.britannica.com/story/whats-the-difference-between-llamas-and-alpacas"
+        img: "./resources/images/articles/1.jpg",
+        title: "7 Differences Between Llamas and Alpacas",
+        action: "https://www.alpacadirect.com/blogs/alpaca-direct-blog/alpaca-vs-llama-7-ways-to-tell-the-difference"
     },
     {
-
+        img: "./resources/images/articles/2.jpg",
+        title: "Why won't you let me love you?",
+        action: "https://www.reddit.com/r/AnimalsBeingJerks/comments/dclyuf/why_wont_you_let_me_love_you/?utm_source=share&utm_medium=ios_app&utm_name=iossmf"
+    },
+    {
+        img: "./resources/images/articles/3.jpg",
+        title: "12 Reasons Why Alpacas Are The Most Amazing Creatures On Earth",
+        action: "https://www.thethings.com/12-reasons-why-alpacas-are-the-most-amazing-creatures-on-earth/"
+    },
+    {
+        img: "./resources/images/articles/3.jpg",
+        title: "12 Reasons Why Alpacas Are The Most Amazing Creatures On Earth",
+        action: "https://www.thethings.com/12-reasons-why-alpacas-are-the-most-amazing-creatures-on-earth/"
     }
 ];
 

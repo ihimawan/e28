@@ -3,8 +3,13 @@
 }
 
 #main-page {
-    background-color: #FF7E6B;
+    background-image: url(./resources/images/bg.jpg);
+    background-repeat: repeat;
     color: #1A535C;
+}
+
+#main-card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #app {

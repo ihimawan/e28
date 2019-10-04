@@ -45,7 +45,8 @@ const app = new Vue({
                     distance: 5,
                     comment: "Two pacas in this pic you don't know which one I am! I always try to pose with fancy schmancy alpacas to increase my chances of getting matches heheh pls help me im so alone"
                 }
-            ]
+            ],
+            articles: [...gameSetting.articles]
         },
         gameInfo: {
             ...gameSetting.gameStartState
@@ -119,8 +120,8 @@ const app = new Vue({
         testPassedHandler: function () {
             this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('home')];
         },
-        journeyEndHandler: function (index) {
-
+        journeyEndHandler: function () {
+            this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('end')];
         }
     }
 });
