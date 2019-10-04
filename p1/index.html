@@ -168,8 +168,11 @@
 
             <div v-else-if="currentGameStage === 'game'">
                 <div class="card-body">
+                    <!-- header -->
                     <h1 class="display-4"> Llama or Alpaca Test</h1>
                     <h4 class="text-muted">Because we can't deal with Llamas. They're Llaaaaame (hehe)</h4>
+
+                    <!-- how to play the game.. show only if game hasn't started -->
                     <div v-if="gameInfo.currentIndex === null">
                         <p>
                             You will be presented with a profile of an existing user. You will need to be able to
@@ -180,7 +183,20 @@
                         <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start the test that will
                             determine the rest of your life</a>
                     </div>
-                    <div id="profile-pic-selection" class="container" v-if="gameInfo.currentIndex !== null">
+                    <!-- Give a countdown right before game starts -->
+                    <div v-else-if="gameInfo.loadingScreenShow" class="text-center">
+                        <h1 class="display-4">Get Ready!</h1>
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <h2 class="text-muted">{{gameInfo.countDown}}</h2>
+                    </div>
+                    <div class="container" v-else>
+                        <!-- if game has started, give a restart button -->
+                        <div class="row">
+                            <a href="#" @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
+                                restart.</a>
+                        </div>
                         <div class="row justify-content-center">
                             <h1 class="display-4">question {{gameInfo.doneIndexes.size}} of {{gameInfo.maxChoices}}
                             </h1>
@@ -227,13 +243,16 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- End screen -->
             <div v-else-if="currentGameStage === 'end'">
                 <div class="card-body">
                     <h4>The journey ends here. Thanks for playing.</h4>
                 </div>
             </div>
         </div>
-    </div>
+
     </div>
 
 </body>

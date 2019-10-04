@@ -3,7 +3,7 @@ import * as gameSetting from './modules/defaultGameSettings.js'
 const app = new Vue({
     el: '#app',
     data: {
-        currentGameStage: gameSetting.gameStages[0],
+        currentGameStage: gameSetting.gameStages[2],
         playerInfo: {
             name: null,
             validName: null,
@@ -12,7 +12,7 @@ const app = new Vue({
             modal: {
                 show: false,
                 title: "Terms and Conditions (stop being offended)",
-                text: "This whole website is a satire to online dating and my pet peeve of humans not knowing the difference between Alpacas and Llamas (Alpacas are way cutter, obviously). With this, I hope that you, as a human user, playing the role of a male Alpaca looking for a lover, will NOT be offended by the segregation of Alpacas and Llamas in this game; and/or my bias towards of Alpacas over Llamas.",
+                text: "This whole website is a satire to online dating and my pet peeve of humans not knowing the difference between Alpacas and Llamas (Alpacas are way cutter, obviously). With this, I hope that you, as a human user, playing the role of an Alpaca looking for a lover, will NOT be offended by the segregation of Alpacas and Llamas in this game; and/or my bias towards of Alpacas over Llamas.",
                 agree: "I will not feel attacked",
                 disagree: "I am offended already"
             },
@@ -93,7 +93,19 @@ const app = new Vue({
             //reset game settings
             this.gameInfo = { ...gameSetting.gameStartState }
             this.gameInfo.doneIndexes.clear();
+            this.gameInfo.loadingScreenShow = true;
+            this.loadingScreenTimeDown();
             this.generateNewImageHandler();
+        },
+        loadingScreenTimeDown: function () {
+            if (this.gameInfo.countDown > 0) {
+                setTimeout(() => {
+                    this.gameInfo.countDown--;
+                    this.loadingScreenTimeDown();
+                }, 1000)
+            } else {
+                this.gameInfo.loadingScreenShow = false;
+            }
         },
         chooseHandler: function (choice) {
             if (this.gameInfo.choices[this.gameInfo.currentIndex].url.includes(choice)) { //'llamas' or 'alpacas'

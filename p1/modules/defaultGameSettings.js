@@ -255,6 +255,8 @@ const gameChoices = [
 ];
 
 const gameStartState = {
+    loadingScreenShow: null,
+    countDown: 3,
     currentIndex: null,
     doneIndexes: new Set(),
     timePerImg: 5000,
