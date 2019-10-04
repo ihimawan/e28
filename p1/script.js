@@ -8,6 +8,7 @@ const app = new Vue({
             name: null,
             validName: null,
             selectedPictureIdx: null,
+            selectedGender: null,
             modal: {
                 show: false,
                 title: "Terms and Conditions (stop being offended)",
@@ -15,7 +16,8 @@ const app = new Vue({
                 agree: "I will not feel attacked",
                 disagree: "I am offended already"
             },
-            picturesAvailable: [...gameSetting.playerPictures]
+            picturesAvailable: [...gameSetting.playerPictures],
+            genders: [...gameSetting.genderSelection]
         },
         homeInfo: {
             testPassed: false,

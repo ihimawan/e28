@@ -23,9 +23,10 @@
 <body id="main-page">
     <div class="container" id="app" v-cloak>
         <div class="card" id="main-card">
-            <div class="card-body">
-                <!-- Introduction content -->
-                <div v-if="currentGameStage === 'intro'" id="intro-content">
+            <!-- Introduction content -->
+            <div v-if="currentGameStage === 'intro'" id="intro-content">
+                <div class="card-body">
+
                     <h1 class="display-4">Alpacan Mingle</h1>
                     <p class="card-text">Dating website from Alpaca to Alpaca</p>
 
@@ -55,12 +56,19 @@
                                     :class="{'is-valid' : playerInfo.validName, 'is-invalid' : playerInfo.name !== null && playerInfo.validName !== null && !playerInfo.validName}"
                                     id="username" placeholder="Give yourself a name" v-model='playerInfo.name' @keyup=validateName(playerInfo.name)>
                                 <div class="valid-feedback">
-                                    <button @click="activateModalHandler" type="button" class="btn btn-light">Hot
-                                        name. Let's go find you the love of your life.</button>
+                                    Hot name. Now select your gender.
+                                    <select class="custom-select" id="inputGroupSelect02" v-model="playerInfo.selectedGender">
+                                        <option selected>Choose gender...</option>
+                                        <option v-for="gender in playerInfo.genders" :value=gender @click="alert(gender)">{{gender}}</option>
+                                    </select>
+                                    <p>We want to stay Politically Correct. <a href="https://abcnews.go.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users"
+                                            target="_blank">Source</a></p>
                                 </div>
                                 <div class="invalid-feedback">
                                     Can't read this.. must be just alphabets and not too long please..
                                 </div>
+                                <button v-if="playerInfo.selectedGender" @click="activateModalHandler" type="button"
+                                    class="btn btn-primary">Hot. Let's go find you the love of your life.</button>
                             </div>
                         </div>
                     </div>
@@ -90,9 +98,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <div v-else-if="currentGameStage === 'home'">
+            <div v-else-if="currentGameStage === 'home'">
+                <div class="card-body">
+
                     <h1 class="display-4">Welcome, {{playerInfo.name}}.</h1>
                     <h4 class="text-muted">You look like someone who could use a pretty alpaca...</h4>
 
@@ -119,43 +130,44 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm" v-for="article in homeInfo.articles">
-                                {{article.title}}
-                            </div>
-                        </div>
+                <div class="row card-footer text-muted">
+                    <div class="col-sm" v-for="article in homeInfo.articles">
+                        <img :src=article.img width=200 class="img-thumbnail">
+                        <h5>{{article.title}}</h5>
+                        <a :href=article.action target="_blank">View article</a>
                     </div>
+                </div>
 
-                    <!-- Modal -->
-                    <div v-if=homeInfo.modal.show>
-                        <div class="modal-backdrop show fade"></div>
-                        <div class="modal show in" id="homeInfoModal" tabindex="-1" role="dialog" aria-hidden="true"
-                            style="display:block;">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">{{homeInfo.modal.title}}</h5>
-                                        <button type="button" class="close" @click="dismissModalHandler" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body text-center">
-                                        <p>{{homeInfo.modal.text}}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{homeInfo.modal.disagree}}</button>
-                                        <button type="button" class="btn btn-primary" @click="goToNextGameStage">{{homeInfo.modal.agree}}</button>
-                                    </div>
+                <!-- Modal -->
+                <div v-if=homeInfo.modal.show>
+                    <div class="modal-backdrop show fade"></div>
+                    <div class="modal show in" id="homeInfoModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{homeInfo.modal.title}}</h5>
+                                    <button type="button" class="close" @click="dismissModalHandler" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <p>{{homeInfo.modal.text}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{homeInfo.modal.disagree}}</button>
+                                    <button type="button" class="btn btn-primary" @click="goToNextGameStage">{{homeInfo.modal.agree}}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-                <div v-else-if="currentGameStage === 'game'">
+            <div v-else-if="currentGameStage === 'game'">
+                <div class="card-body">
                     <h1 class="display-4"> Llama or Alpaca Test</h1>
                     <h4 class="text-muted">Because we can't deal with Llamas. They're Llaaaaame (hehe)</h4>
                     <div v-if="gameInfo.currentIndex === null">
@@ -193,38 +205,35 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal -->
-                    <div v-if="gameInfo.modal">
-                        <div class="modal-backdrop show fade"></div>
-                        <div class="modal show in" id="winModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">{{gameInfo.modal.title}}</h5>
-                                    </div>
-                                    <div class="modal-body text-center">
-                                        <p>{{gameInfo.modal.text}}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{gameInfo.modal.disagree}}</button>
-                                        <button type="button" class="btn btn-primary" @click="testPassedHandler" v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
-                                    </div>
+                </div>
+                <!-- Modal -->
+                <div v-if="gameInfo.modal">
+                    <div class="modal-backdrop show fade"></div>
+                    <div class="modal show in" id="winModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{gameInfo.modal.title}}</h5>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <p>{{gameInfo.modal.text}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{gameInfo.modal.disagree}}</button>
+                                    <button type="button" class="btn btn-primary" @click="testPassedHandler" v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-else-if="currentGameStage === 'end'">
+            </div>
+            <div v-else-if="currentGameStage === 'end'">
+                <div class="card-body">
                     <h4>The journey ends here. Thanks for playing.</h4>
-                    <div class="media" v-for="msg in chatInfo.chat">
-                        picture here. {{msg}}
-                    </div>
                 </div>
-
-                <div v-else-if="win">win</div>
-                <div v-else-if="lose">lose</div>
             </div>
         </div>
+    </div>
     </div>
 
 </body>

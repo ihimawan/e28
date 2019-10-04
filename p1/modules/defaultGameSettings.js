@@ -38,26 +38,83 @@ const resultHandler = (score) => {
     };
 }
 
+const genderSelection = ["Agender",
+    "Androgyne",
+    "Androgynous",
+    "Bigender",
+    "Cis",
+    "Cisgender",
+    "Cis Female",
+    "Cis Male",
+    "Cis Man",
+    "Cis Woman",
+    "Cisgender Female",
+    "Cisgender Male",
+    "Cisgender Man",
+    "Cisgender Woman",
+    "Female to Male",
+    "FTM",
+    "Gender Fluid",
+    "Gender Nonconforming",
+    "Gender Questioning",
+    "Gender Variant",
+    "Genderqueer",
+    "Intersex",
+    "Male to Female",
+    "MTF",
+    "Neither",
+    "Neutrois",
+    "Non-binary",
+    "Other",
+    "Pangender",
+    "Trans",
+    "Trans*",
+    "Trans Female",
+    "Trans* Female",
+    "Trans Male",
+    "Trans* Male",
+    "Trans Man",
+    "Trans* Man",
+    "Trans Person",
+    "Trans* Person",
+    "Trans Woman",
+    "Trans* Woman",
+    "Transfeminine",
+    "Transgender",
+    "Transgender Female",
+    "Transgender Male",
+    "Transgender Man",
+    "Transgender Person",
+    "Transgender Woman",
+    "Transmasculine",
+    "Transsexual",
+    "Transsexual Female",
+    "Transsexual Male",
+    "Transsexual Man",
+    "Transsexual Person",
+    "Transsexual Woman",
+    "Two-Spirit"]
+
 const articles = [
     {
         img: "./resources/images/articles/1.jpg",
-        title: "7 Differences Between Llamas and Alpacas",
+        title: "7 Differences Between Llamas and Alpacas (super important information!!)",
         action: "https://www.alpacadirect.com/blogs/alpaca-direct-blog/alpaca-vs-llama-7-ways-to-tell-the-difference"
     },
     {
-        img: "./resources/images/articles/2.jpg",
-        title: "Why won't you let me love you?",
+        img: "./resources/images/articles/2.png",
+        title: "Why won't you let me love you? (super cute)",
         action: "https://www.reddit.com/r/AnimalsBeingJerks/comments/dclyuf/why_wont_you_let_me_love_you/?utm_source=share&utm_medium=ios_app&utm_name=iossmf"
     },
     {
-        img: "./resources/images/articles/3.jpg",
+        img: "./resources/images/articles/3.png",
         title: "12 Reasons Why Alpacas Are The Most Amazing Creatures On Earth",
         action: "https://www.thethings.com/12-reasons-why-alpacas-are-the-most-amazing-creatures-on-earth/"
     },
     {
-        img: "./resources/images/articles/3.jpg",
-        title: "12 Reasons Why Alpacas Are The Most Amazing Creatures On Earth",
-        action: "https://www.thethings.com/12-reasons-why-alpacas-are-the-most-amazing-creatures-on-earth/"
+        img: "./resources/images/articles/4.png",
+        title: "Llama being dumb jerk (you won't believe what you see!)",
+        action: "https://www.youtube.com/watch?v=UfxmVEq4-7Q"
     }
 ];
 
@@ -207,4 +264,4 @@ const gameStartState = {
     choices: [...gameChoices]
 }
 
-export { gameStages, maxChoices, passingPercentage, gameStartState, playerPictures, resultHandler, articles };
+export { genderSelection, gameStages, maxChoices, passingPercentage, gameStartState, playerPictures, resultHandler, articles };
