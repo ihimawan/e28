@@ -28,26 +28,7 @@ const app = new Vue({
                 agree: "Ok, I'll do it",
                 disagree: "Nah"
             },
-            profiles: [
-                {
-                    name: "Fluffers (not fat!)",
-                    img: "resources/images/home/one.png",
-                    distance: 2,
-                    comment: "I weighed myself and I came to only 200 alpaca weight units.. I promise I'm not catfishing anyone this time by just posting a picture of my face and not my body!"
-                },
-                {
-                    name: "Bob (im girl tho)",
-                    img: "resources/images/home/two.png",
-                    distance: 9203,
-                    comment: "Just being a regular alpaca in the wild alpaca world. I'd like to think I'm special but I'm actually not. Also my neck is long. Could always use a strong alpaca man ;) (No Llamas pls)"
-                },
-                {
-                    name: "Carl",
-                    img: "resources/images/home/three.png",
-                    distance: 5,
-                    comment: "Two pacas in this pic you don't know which one I am! I always try to pose with fancy schmancy alpacas to increase my chances of getting matches heheh pls help me im so alone"
-                }
-            ],
+            profiles: gameSetting.getHomeProfiles(),
             articles: [...gameSetting.articles]
         },
         gameInfo: {
@@ -65,7 +46,13 @@ const app = new Vue({
                 this.playerInfo.validName = false;
             }
         },
-        goToNextGameStage: function () {
+        goToNextGameStage: function (newStage) {
+
+            if (newStage === 'home') {
+                this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('home')];
+                return;
+            }
+
             let indexOfNextStage = gameSetting.gameStages.indexOf(this.currentGameStage);
             if (indexOfNextStage !== -1 && gameSetting.gameStages.length <= indexOfNextStage + 2) {
                 throw new Error('Unable to find next stage');
@@ -93,6 +80,8 @@ const app = new Vue({
             //reset game settings
             this.gameInfo = { ...gameSetting.gameStartState }
             this.gameInfo.doneIndexes.clear();
+            this.gameInfo.leftChoiceIndexes = [];
+            this.gameInfo.rightChoiceIndexes = [];
             this.gameInfo.loadingScreenShow = true;
             this.loadingScreenTimeDown();
             this.generateNewImageHandler();
@@ -110,6 +99,12 @@ const app = new Vue({
         chooseHandler: function (choice) {
             if (this.gameInfo.choices[this.gameInfo.currentIndex].url.includes(choice)) { //'llamas' or 'alpacas'
                 this.gameInfo.score++;
+            }
+
+            if (choice === 'llamas') {
+                this.gameInfo.leftChoiceIndexes.push(this.gameInfo.currentIndex);
+            } else {
+                this.gameInfo.rightChoiceIndexes.push(this.gameInfo.currentIndex);
             }
             this.generateNewImageHandler();
         },
@@ -130,6 +125,9 @@ const app = new Vue({
             }
             this.gameInfo.currentIndex = newIndex;
             this.gameInfo.doneIndexes.add(newIndex);
+        },
+        refreshProfiles: function () {
+            this.homeInfo.profiles = gameSetting.getHomeProfiles();
         },
         testPassedHandler: function () {
             this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('home')];

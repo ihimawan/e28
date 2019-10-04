@@ -204,6 +204,13 @@ const gameChoices = [
         hints: ['hint 1', 'hint 2']
     },
     {
+        url: "./resources/images/game/alpacas/13.png",
+        title: 'Willie hotpants',
+        description: "Two pacas in this pic you don't know which one I am! I always try to pose with fancy schmancy alpacas to increase my chances of getting matches heheh pls help me im so alone.",
+        distance: 2,
+        hints: ['hint 1', 'hint 2']
+    },
+    {
         url: "./resources/images/game/llamas/1.jpg",
         title: 'Bob (im girl tho)',
         description: "Just being a regular alpaca in the wild alpaca world. I'd like to think I'm special but I'm actually not. Also my neck is long. Could always use a strong alpaca man ;) (No Llamas pls)",
@@ -258,6 +265,8 @@ const gameStartState = {
     loadingScreenShow: null,
     countDown: 3,
     currentIndex: null,
+    leftChoiceIndexes: [],
+    rightChoiceIndexes: [],
     doneIndexes: new Set(),
     timePerImg: 5000,
     score: 0,
@@ -266,4 +275,17 @@ const gameStartState = {
     choices: [...gameChoices]
 }
 
-export { genderSelection, gameStages, maxChoices, passingPercentage, gameStartState, playerPictures, resultHandler, articles };
+const getHomeProfiles = () => {
+    const needHowMany = 3;
+    const randomIndexes = [];
+    for (let i = 0; i < needHowMany; i++) {
+        let nextRandomIndex = null;
+        while (nextRandomIndex === null || randomIndexes.includes(nextRandomIndex)) {
+            nextRandomIndex = Math.floor(Math.random() * gameChoices.length);
+        }
+        randomIndexes.push(nextRandomIndex);
+    }
+    return randomIndexes.map(index => gameChoices[index]);
+}
+
+export { genderSelection, getHomeProfiles, gameStages, maxChoices, passingPercentage, gameStartState, playerPictures, resultHandler, articles };

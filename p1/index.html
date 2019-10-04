@@ -112,23 +112,31 @@
                         <a href="#" @click="activateModalHandler">here</a> to get more information.
                     </div>
 
-                    <div class="card-deck">
-                        <div class="card border-secondary" v-for="(profile, index) in homeInfo.profiles">
-                            <img :src="profile.img" width="300" height="300" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">{{profile.name}}</h5>
-                                <p class="card-text">{{profile.comment}}</p>
-                                <div v-if="!homeInfo.testPassed">
-                                    <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with me!</a>
+                    <div>
+                        <div class="card-deck">
+                            <div class="card border-secondary" v-for="(profile, index) in homeInfo.profiles">
+                                <img :src="profile.url" width="300" height="320" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{profile.title}}</h5>
+                                    <p class="card-text">{{profile.description}}</p>
+                                    <div v-if="!homeInfo.testPassed">
+                                        <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with me!</a>
+                                    </div>
+                                    <div v-else>
+                                        <a href="#" class="btn btn-primary" @click="journeyEndHandler">Chat with me!</a>
+                                    </div>
                                 </div>
-                                <div v-else>
-                                    <a href="#" class="btn btn-primary" @click="journeyEndHandler">Chat with me!</a>
+                                <div class="card-footer">
+                                    <small class="text-muted">{{profile.distance}} alpaca distances away</small>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">{{profile.distance}} alpaca distances away</small>
                             </div>
                         </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-link" @click="refreshProfiles">Load more
+                                ...</button>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -180,6 +188,8 @@
                             of 70% (which is pretty low, so you should be able to do this if you're a real Alpaca.. or
                             Alpaca lover.)
                         </p>
+                        <a href="#" @click="goToNextGameStage('home')" class=" btn btn-secondary">Nevermind, I want to
+                            go back to looking at Alpacas</a>
                         <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start the test that will
                             determine the rest of your life</a>
                     </div>
@@ -191,36 +201,50 @@
                         </div>
                         <h2 class="text-muted">{{gameInfo.countDown}}</h2>
                     </div>
-                    <div class="container" v-else>
+                    <div v-else>
                         <!-- if game has started, give a restart button -->
-                        <div class="row">
-                            <a href="#" @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
-                                restart.</a>
-                        </div>
+                        <a href="#" @click="goToNextGameStage('home')" class="btn btn-secondary">Nevermind, I want
+                            to go back to looking at Alpacas</a>
+                        <a href="#" @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
+                            restart.</a>
                         <div class="row justify-content-center">
                             <h1 class="display-4">question {{gameInfo.doneIndexes.size}} of {{gameInfo.maxChoices}}
                             </h1>
                         </div>
-                        <div class="row justify-content-center">
-                            <div class="card border-secondary" style="width: 18rem;">
-                                <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top" width="300"
-                                    height="300">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{gameInfo.choices[gameInfo.currentIndex].title}}</h5>
-                                    <p class="card-text">{{gameInfo.choices[gameInfo.currentIndex].description}}</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-sm">
+                                    <img :src="gameInfo.choices[leftIndex].url" v-for="leftIndex in gameInfo.leftChoiceIndexes"
+                                        class="rounded choice-image" width="100" height="100" style="margin: 5px">
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" v-for="hint in gameInfo.choices[gameInfo.currentIndex].hints">{{hint}}</li>
-                                </ul>
-                                <div class="card-body">
-                                    <a href="#" @click="chooseHandler('llamas')" @keyup.37="chooseHandler('llamas')"
-                                        class="card-link">Llama</a>
-                                    <a href="#" @click="chooseHandler('alpacas')" @keyup.39="chooseHandler('alpacas')"
-                                        class="card-link">Alpaca</a>
+                                <div class="col-sm">
+                                    <div class="card border-secondary" style="width: 18rem;">
+                                        <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top"
+                                            width="300" height="300">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{gameInfo.choices[gameInfo.currentIndex].title}}</h5>
+                                            <p class="card-text">{{gameInfo.choices[gameInfo.currentIndex].description}}</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item" v-for="hint in gameInfo.choices[gameInfo.currentIndex].hints">{{hint}}</li>
+                                        </ul>
+                                        <div class="card-body">
+                                            <a href="#" @click="chooseHandler('llamas')" @keyup.37="chooseHandler('llamas')"
+                                                class="card-link">Llama</a>
+                                            <a href="#" @click="chooseHandler('alpacas')" @keyup.39="chooseHandler('alpacas')"
+                                                class="card-link">Alpaca</a>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="col-sm">
+                                    <img :src="gameInfo.choices[rightIndex].url" v-for="rightIndex in gameInfo.rightChoiceIndexes"
+                                        class="rounded choice-image" width="100" height="100" style="margin: 5px">
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- Modal -->
                 <div v-if="gameInfo.modal">
