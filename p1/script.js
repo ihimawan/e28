@@ -1,5 +1,4 @@
 import * as gameSetting from './modules/defaultGameSettings.js'
-import gameChoices from './modules/gameChoices.js';
 
 const app = new Vue({
     el: '#app',
@@ -48,15 +47,9 @@ const app = new Vue({
             ]
         },
         gameInfo: {
-            ...gameSetting.gameStartState,
-            choices: [...gameChoices]
+            ...gameSetting.gameStartState
         },
         chatInfo: {
-            modal: {
-                show: false,
-                title: "You have been reported!",
-                message: "You have been reported as a potential llama. Llamas are not allowed here. You are prompted to take the Llama or Alpaca quiz before you are allowed in this website any longer."
-            },
             selectedProfileIdx: null,
             chat: [
                 "What do you call it when Alpacas sing?",
@@ -64,12 +57,6 @@ const app = new Vue({
                 "Alpacapella!",
                 "Haha, that is so lame that I'd be intrigued to talk to you..."
             ]
-        },
-        winInfo: {
-
-        },
-        loseInfo: {
-
         }
     },
     methods: {
@@ -102,13 +89,15 @@ const app = new Vue({
                 this.playerInfo.modal.show = false;
             } else if (this.currentGameStage === gameSetting.gameStages[1]) {
                 this.homeInfo.modal.show = false;
+            } else if (this.currentGameStage === gameSetting.gameStages[2]) {
+                this.gameInfo.modal = null;
+                this.gameBeginHandler();
             }
         },
         gameBeginHandler: function () {
             //reset game settings
-            Object.keys(gameSetting.gameStartState).forEach(key => {
-                this.gameInfo[key] = gameSetting.gameStartState[key]
-            })
+            this.gameInfo = { ...gameSetting.gameStartState }
+            this.gameInfo.doneIndexes.clear();
             this.generateNewImageHandler();
         },
         chooseHandler: function (choice) {
@@ -120,7 +109,8 @@ const app = new Vue({
         generateNewImageHandler: function () {
             if (this.gameInfo.doneIndexes.size > gameSetting.maxChoices
                 || this.gameInfo.doneIndexes.size > this.gameInfo.choices.length) {
-                this.resultHandler();
+                this.gameInfo.modal = gameSetting.resultHandler(this.gameInfo.score);
+                return;
             }
             let newIndex = null;
             while (newIndex === null || this.gameInfo.doneIndexes.has(newIndex)) {
@@ -128,18 +118,6 @@ const app = new Vue({
             }
             this.gameInfo.currentIndex = newIndex;
             this.gameInfo.doneIndexes.add(newIndex);
-        },
-        resultHandler: function () {
-            let passingScore = Math.ceil(this.gameInfo.score * gameSetting.passingPercentage / 100);
-            if (this.gameInfo.score >= passingScore) {
-                console.log('you win!')
-            } else {
-                console.log('you lose!')
-            }
-        },
-        displayInterest: function (index) {
-            this.chatInfo.selectedProfileIdx = index;
-            this.goToNextGameStage();
         }
     }
 });

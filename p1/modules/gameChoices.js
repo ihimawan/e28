@@ -26,7 +26,7 @@ const gameChoices = [
     {
         url: "./resources/images/game/alpacas/5.jpg",
         title: 'Billy Bob',
-        description: 'Look at my beautiful photograph just walking on the green fields protocred: some guy I friendzoned',
+        description: 'Look at my beautiful photograph just walking on the green fields protocred: some guy I friendzoned #blessed',
         hints: ['hint 1', 'hint 2']
     },
     {

@@ -165,9 +165,32 @@
                                     <li class="list-group-item" v-for="hint in gameInfo.choices[gameInfo.currentIndex].hints">{{hint}}</li>
                                 </ul>
                                 <div class="card-body">
-                                    <a href="#" @click="chooseHandler('llamas')" class="card-link">Llama</a>
-                                    <a href="#" @click="chooseHandler('alpacas')" class="card-link">Alpaca</a>
+                                    <a href="#" @click="chooseHandler('llamas')" @keyup.37="chooseHandler('llamas')"
+                                        class="card-link">Llama</a>
+                                    <a href="#" @click="chooseHandler('alpacas')" @keyup.39="chooseHandler('alpacas')"
+                                        class="card-link">Alpaca</a>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div v-if="gameInfo.modal">
+                <div class="modal-backdrop show fade"></div>
+                <div class="modal show in" id="winModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block;">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{gameInfo.modal.title}}</h5>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p>{{gameInfo.modal.text}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{gameInfo.modal.disagree}}</button>
+                                <button type="button" class="btn btn-primary" @click="goToNextGameStage" v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
                             </div>
                         </div>
                     </div>
