@@ -4,7 +4,6 @@
 
 ## Outside resources
 * Bootstrap CSS (just because I want a somewhat good looking website with minimal skill)
-* Alpaca Jokes http://www.jokes4us.com/animaljokes/alpacajokes.html
 * Alpaca pictures https://www.boredpanda.com/cute-funny-alpacas/ 
 * https://butterflygrace.tumblr.com/post/41514389327
 * https://www.equilter.com/product/260261/alpacas-helpful-herd-pink

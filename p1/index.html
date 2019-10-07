@@ -26,14 +26,20 @@
             <!-- Introduction content -->
             <div v-if="currentGameStage === 'intro'" id="intro-content">
                 <div class="card-body">
+                    <div class="row">
+                        <div>
+                            <h1 class="display-4">Alpacan Mingle</h1>
+                            <p class="card-text">Welcome to the dating website from Alpaca to Alpaca. This is a secret
+                                web site in the <strong>deep deep dark web</strong> where nobody knows that Alpacas are
+                                smarter than humans and will we will eventually rule the world. But with this ambition,
+                                doesn't mean that we can't find some love in the middle of it ❤</p>
 
-                    <h1 class="display-4">Alpacan Mingle</h1>
-                    <p class="card-text">Dating website from Alpaca to Alpaca</p>
-
+                        </div>
+                    </div>
                     <!-- Select profile picture -->
                     <div id="profile-pic-selection" class="container">
                         <div class="row justify-content-center">
-                            <p>Which one of these is the most <i>you</i>?</p>
+                            <h1 class="display-4">Which one of these is the most <i>you</i>?</h1>
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerInfo.picturesAvailable'>

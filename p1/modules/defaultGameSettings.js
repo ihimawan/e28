@@ -5,15 +5,15 @@ const passingPercentage = 70;
 const playerPictures = [
     {
         img: "resources/images/players/one.png",
-        comment: "What a handsome devil you are."
+        comment: "Plain and simple.. What a handsome angel you are."
     },
     {
         img: "resources/images/players/two.png",
-        comment: "You look bombin.. it must be the alpacalypse."
+        comment: "mmm.. Feleece navidad.."
     },
     {
         img: "resources/images/players/three.png",
-        comment: "mmm.... Feleece navidad.."
+        comment: "A party necklace? You look bombin in it.. it must be the alpacalypse."
     }
 ];
 
