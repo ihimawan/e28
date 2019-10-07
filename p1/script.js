@@ -5,6 +5,7 @@ const app = new Vue({
     data: {
         currentGameStage: gameSetting.gameStages[0],
         playerInfo: {
+            introduction: true,
             name: null,
             validName: null,
             selectedPictureIdx: null,
@@ -14,7 +15,8 @@ const app = new Vue({
                 title: "Terms and Conditions (stop being offended)",
                 text: "This whole website is a satire to online dating and my pet peeve of humans not knowing the difference between Alpacas and Llamas (Alpacas are way cutter, obviously). With this, I hope that you, as a human user, playing the role of an Alpaca looking for a lover, will NOT be offended by the segregation of Alpacas and Llamas in this game; and/or my bias towards of Alpacas over Llamas.",
                 agree: "I will not feel attacked",
-                disagree: "I am offended already"
+                disagree: "I am offended already",
+                img: "./resources/images/gifs/1.gif"
             },
             picturesAvailable: [...gameSetting.playerPictures],
             genders: [...gameSetting.genderSelection]
@@ -26,7 +28,8 @@ const app = new Vue({
                 title: "What is the Llama or Alpaca test?",
                 text: "Here at Alpacan Mingle, we value integrity by not allowing Alpacas who don't know the difference between Llamas or Alpacas. Every Alpaca, including you, must take and pass this test in order to continue using this website.",
                 agree: "Ok, I'll do it",
-                disagree: "Nah"
+                disagree: "Nah",
+                img: "./resources/images/gifs/4.gif"
             },
             profiles: gameSetting.getHomeProfiles(),
             articles: [...gameSetting.articles]
@@ -34,6 +37,9 @@ const app = new Vue({
         gameInfo: gameSetting.getGameStartState()
     },
     methods: {
+        getStarted: function () {
+            this.playerInfo.introduction = false;
+        },
         selectProfilePicture: function (index) {
             this.playerInfo.selectedPictureIdx = index;
         },
@@ -44,13 +50,7 @@ const app = new Vue({
                 this.playerInfo.validName = false;
             }
         },
-        goToNextGameStage: function (newStage) {
-
-            if (newStage === 'home') {
-                this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('home')];
-                return;
-            }
-
+        goToNextGameStage: function () {
             let indexOfNextStage = gameSetting.gameStages.indexOf(this.currentGameStage);
             if (indexOfNextStage !== -1 && gameSetting.gameStages.length <= indexOfNextStage + 2) {
                 throw new Error('Unable to find next stage');
@@ -126,11 +126,13 @@ const app = new Vue({
         refreshProfiles: function () {
             this.homeInfo.profiles = gameSetting.getHomeProfiles();
         },
-        testPassedHandler: function () {
+        returnHomeFromGameHandler: function () {
+            this.homeInfo.modal.show = false;
+            this.gameInfo.currentIndex = null;
             this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('home')];
         },
         journeyEndHandler: function () {
-            this.currentGameStage = gameSetting.gameStages[gameSetting.gameStages.indexOf('end')];
+            window.open('https://tinyurl.com/2fcpre6');
         }
     }
 });

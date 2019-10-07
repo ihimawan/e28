@@ -46,6 +46,16 @@
     max-height:100px
 }
 
-.logo-image img{
-    max-width: 200px;
+.modal-img {
+    max-width:200px;
+    margin-bottom: 15px;
+}
+
+#quote-img{
+    max-height:200px;
+    margin: 0 15px 0 0;
+}
+
+.jumbotron {
+    background-color: #fefefe;
 }

@@ -26,20 +26,50 @@
             <!-- Introduction content -->
             <div v-if="currentGameStage === 'intro'" id="intro-content">
                 <div class="card-body">
-                    <div class="row">
-                        <div>
+                    <div class="jumbotron" v-if="playerInfo.introduction">
+                        <div class="container">
                             <h1 class="display-4">Alpacan Mingle</h1>
-                            <p class="card-text">Welcome to the dating website from Alpaca to Alpaca. This is a secret
+                            <p class="lead">Welcome to the dating website from Alpaca to Alpaca. This is a secret
                                 web site in the <strong>deep deep dark web</strong> where nobody knows that Alpacas are
                                 smarter than humans and will we will eventually rule the world. But with this ambition,
-                                doesn't mean that we can't find some love in the middle of it ❤</p>
+                                doesn't mean that we can't find some love in the middle of it ❤ Let's go find you a
+                                lover!</p>
+                            <hr class="my-4">
+                            <div>
+                                <img src="./resources/images/gifs/5.gif" id="quote-img" class="rounded float-left"
+                                    height="200px">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">Thanks to Alpacan Mingle, not only did I find love towards Alpacas,
+                                        now I've also found hate towards Llamas. Thank you for giving me love AND
+                                        education!</p>
+                                    <footer class="blockquote-footer">Dr. Paca<cite title="Source Title"> A super smart
+                                            Alpaca</cite></footer>
+                                </blockquote>
+
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">I can't believe there is a dating website for humans of all race,
+                                        religion, and genders! It's about time Alpacas get the same treatment!! </p>
+                                    <footer class="blockquote-footer">Some poor Alpaca <cite title="Source Title">Who
+                                            tried
+                                            online dating with human websites.</cite></footer>
+                                </blockquote>
+
+                            </div>
+                            <a class="btn btn-primary btn-lg" href="#" role="button" @click='getStarted'>Sounds
+                                intriguing... how can I join in the fun?</a>
 
                         </div>
                     </div>
+
+
                     <!-- Select profile picture -->
-                    <div id="profile-pic-selection" class="container">
+                    <div id="profile-pic-selection" v-else>
                         <div class="row justify-content-center">
-                            <h1 class="display-4">Which one of these is the most <i>you</i>?</h1>
+                            <img src="./resources/images/gifs/7.gif" height="200">
+                        </div>
+                        <div class="row justify-content-center">
+                            <p class="lead">Nice having you here... Let's get to know you more!</p>
+                            <h1 class="display-4">Which one of these Alpacas is the most <i>you</i>?</h1>
                         </div>
                         <div class="row">
                             <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerInfo.picturesAvailable'>
@@ -80,7 +110,7 @@
                     </div>
 
                     <!-- Modal -->
-                    <div v-if=playerInfo.modal.show>
+                    <div v-if="playerInfo.modal.show">
                         <div class="modal-backdrop show fade"></div>
                         <div class="modal show in" id="playerModal" tabindex="-1" role="dialog" aria-hidden="true"
                             style="display:block;">
@@ -93,7 +123,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <img <p>{{playerInfo.modal.text}}</p>
+                                        <img class="modal-img" :src="playerInfo.modal.img">
+                                        <p>{{playerInfo.modal.text}}</p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{playerInfo.modal.disagree}}</button>
@@ -114,11 +145,29 @@
                     <h4 class="text-muted">You look like someone who could use a pretty alpaca...</h4>
 
                     <div class="alert alert-danger" role="alert" v-if="!homeInfo.testPassed">
-                        According to our data, you haven't taken the <strong>Llama or Alpaca</strong> test yet. Click
+                        According to our data, you haven't taken the <strong>Llama or Alpaca</strong> test yet.
+                        Click
                         <a href="#" @click="activateModalHandler">here</a> to get more information.
                     </div>
-
+                    <div class="alert alert-success" role="alert" v-else>
+                        You've passed the Alpaca test, woohoo! Now you can feel free to chat with other Alpacas :)
+                        Good
+                        luck out there! ❤</div>
                     <div>
+                        <div class="text-center">
+                            <img src="./resources/images/gifs/6.gif" class="float-left">
+                            <h2>Why are Alpacas such good lovers?</h2>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Will never ask for you to get married too soon.</li>
+                                <li class="list-group-item">Will never complain about the food you make it</li>
+                                <li class="list-group-item">Will never try to convert you (or your future children
+                                    ;)) into their religion</li>
+                                <li class="list-group-item">Will never tell you are a failure in life just like
+                                    your dad does on the daily when he finally gets out of his bed because he
+                                    claims to
+                                    have depression but really he's just super lazy and making it all up.</li>
+                            </ul>
+                        </div>
                         <div class="card-deck">
                             <div class="card border-secondary" v-for="(profile, index) in homeInfo.profiles">
                                 <img :src="profile.url" width="300" height="320" class="card-img-top">
@@ -126,10 +175,12 @@
                                     <h5 class="card-title">{{profile.title}}</h5>
                                     <p class="card-text">{{profile.description}}</p>
                                     <div v-if="!homeInfo.testPassed">
-                                        <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with me!</a>
+                                        <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with
+                                            me!</a>
                                     </div>
                                     <div v-else>
-                                        <a href="#" class="btn btn-primary" @click="journeyEndHandler">Chat with me!</a>
+                                        <a href="#" class="btn btn-primary" @click="journeyEndHandler">Chat with
+                                            me!</a>
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -138,7 +189,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="button" class="btn btn-link" @click="refreshProfiles">Load more
+                            <button type="button" class="btn btn-link" @click="refreshProfiles">Can't find one you
+                                like? Load more
                                 ...</button>
                         </div>
 
@@ -167,6 +219,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body text-center">
+                                    <img class="modal-img" :src="homeInfo.modal.img">
                                     <p>{{homeInfo.modal.text}}</p>
                                 </div>
                                 <div class="modal-footer">
@@ -189,12 +242,26 @@
                     <!-- how to play the game.. show only if game hasn't started -->
                     <div v-if="gameInfo.currentIndex === null">
                         <p>
-                            You will be presented with a profile of an existing user. You will need to be able to
-                            determine if they are a Llama or Alpaca based on their profile. You will need an accuracy
-                            of 70% (which is pretty low, so you should be able to do this if you're a real Alpaca.. or
-                            Alpaca lover.)
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">You will be presented with a profile of a existing
+                                    users.
+                                </li>
+                                <li class="list-group-item">You will need to be able to
+                                    determine if they are a <strong>Llama or Alpaca</strong> based on their
+                                    profile.
+                                    (Be careful, a lot of them will claim to be Alpacas but they are indeed NOT!)</li>
+                                <li class="list-group-item"> You will need an accuracy
+                                    of <strong>70%</strong> (which is pretty low, so you should be able to do this
+                                    if
+                                    you're a real Alpaca.. or Alpaca lover.)</li>
+                                <li class="list-group-item"> You are NOT timed during this test. Take your time and
+                                    observe.</li>
+                                <li class="list-group-item"> If you have no clue what you're doing, <a href="https://www.alpacadirect.com/blogs/alpaca-direct-blog/alpaca-vs-llama-7-ways-to-tell-the-difference"
+                                        target="blank">read this article.</a></li>
+                            </ul>
                         </p>
-                        <a href="#" @click="goToNextGameStage('home')" class=" btn btn-secondary">Nevermind, I want to
+                        <a href="#" @click="returnHomeFromGameHandler" class=" btn btn-secondary">Nevermind, I want
+                            to
                             go back to looking at Alpacas</a>
                         <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start the test that will
                             determine the rest of your life</a>
@@ -209,7 +276,7 @@
                     </div>
                     <div v-else>
                         <!-- if game has started, give a restart button -->
-                        <a href="#" @click="goToNextGameStage('home')" class="btn btn-secondary">Nevermind, I want
+                        <a href="#" @click="returnHomeFromGameHandler" class="btn btn-secondary">Nevermind, I want
                             to go back to looking at Alpacas</a>
                         <a href="#" @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
                             restart.</a>
@@ -258,6 +325,7 @@
                                     <h5 class="modal-title">{{gameInfo.modal.title}}</h5>
                                 </div>
                                 <div class="modal-body text-center">
+                                    <img class="modal-img" :src="gameInfo.modal.img">
                                     <p>{{gameInfo.modal.text}}</p>
                                     <div v-if="gameInfo.wrongChoiceIndexes.length > 0">
                                         <strong>You got the following wrong:</strong>
@@ -272,20 +340,12 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" @click="dismissModalHandler">{{gameInfo.modal.disagree}}</button>
-                                    <button type="button" class="btn btn-primary" @click="testPassedHandler" v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
+                                    <button type="button" class="btn btn-primary" @click="returnHomeFromGameHandler"
+                                        v-if="gameInfo.modal.agree">{{gameInfo.modal.agree}}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-
-            <!-- End screen -->
-            <div v-else-if="currentGameStage === 'end'">
-                <div class="card-body">
-                    <h1>The journey ends here. Thanks for playing.</h1>
-
                 </div>
             </div>
         </div>
