@@ -1,4 +1,4 @@
-const gameStages = ['intro', 'home', 'game', 'end'];
+const gameStages = ['intro', 'home', 'game'];
 const maxChoices = 12;
 const passingPercentage = 70;
 

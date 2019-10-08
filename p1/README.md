@@ -4,9 +4,11 @@
 
 ## Outside resources
 * Bootstrap CSS (just because I want a somewhat good looking website with minimal skill)
-* Alpaca pictures https://www.boredpanda.com/cute-funny-alpacas/ 
-* https://butterflygrace.tumblr.com/post/41514389327
-* https://www.equilter.com/product/260261/alpacas-helpful-herd-pink
-* https://abcnews.go.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users
+* NONE of Alpaca pictures are my own! Sources: https://www.boredpanda.com/cute-funny-alpacas/ 
+* NONE of Llama pictures are my own! Source: Google image searches.
+* 58 Genders: https://abcnews.go.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users
+* NONE of the GIFs are my own! https://giphy.com/search/alpaca
+* BG Pattern https://www.shutterstock.com/image-vector/seamless-pattern-cute-alpacas-cactus-1349855225
 
 ## Notes
+* All of this in name of good fun.
