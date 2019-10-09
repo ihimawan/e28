@@ -23,44 +23,37 @@
 <body id="main-page">
     <div class="container" id="app" v-cloak>
         <div class="card" id="main-card">
-            <!-- Introduction content -->
+
+            <!-- Introduction Page -->
             <div v-if="currentGameStage === 'intro'" id="intro-content">
                 <div class="card-body">
                     <div class="jumbotron" v-if="playerInfo.introduction">
-                        <div class="container">
-                            <h1 class="display-4">Alpacan Mingle</h1>
-                            <p class="lead">Welcome to the dating website from Alpaca to Alpaca. This is a secret
-                                web site in the <strong>deep deep dark web</strong> where nobody knows that Alpacas are
-                                smarter than humans and will we will eventually rule the world. But with this ambition,
-                                doesn't mean that we can't find some love in the middle of it ❤ Let's go find you a
-                                lover!</p>
-                            <hr class="my-4">
-                            <div>
-                                <img src="./resources/images/gifs/5.gif" id="quote-img" class="rounded float-left"
-                                    height="200px">
-                                <blockquote class="blockquote">
-                                    <p class="mb-0">Thanks to Alpacan Mingle, not only did I find love towards Alpacas,
-                                        now I've also found hate towards Llamas. Thank you for giving me love AND
-                                        education!</p>
-                                    <footer class="blockquote-footer">Dr. Paca<cite title="Source Title"> A super smart
-                                            Alpaca</cite></footer>
-                                </blockquote>
-
-                                <blockquote class="blockquote">
-                                    <p class="mb-0">I can't believe there is a dating website for humans of all race,
-                                        religion, and genders! It's about time Alpacas get the same treatment!! </p>
-                                    <footer class="blockquote-footer">Some poor Alpaca <cite title="Source Title">Who
-                                            tried
-                                            online dating with human websites.</cite></footer>
-                                </blockquote>
-
-                            </div>
-                            <a class="btn btn-primary btn-lg" href="#" role="button" @click='getStarted'>Sounds
-                                intriguing... how can I join in the fun?</a>
-
+                        <h1 class="display-4">Alpacan Mingle</h1>
+                        <p class="lead">Welcome to the dating website from Alpaca to Alpaca. This is a secret
+                            web site in the <strong>deep deep dark web</strong> where nobody knows that Alpacas are
+                            smarter than humans and will we will eventually rule the world. But with this ambition,
+                            doesn't mean that we can't find some love in the middle of it ❤ Let's go find you a
+                            lover!</p>
+                        <hr class="my-4">
+                        <div>
+                            <img src="./resources/images/gifs/5.gif" id="quote-img" class="rounded float-left" height="200px">
+                            <blockquote class="blockquote" v-for="quote in playerInfo.quotes">
+                                <p class="mb-0">{{quote.msg}}</p>
+                                <footer class="blockquote-footer">{{quote.name}}<cite title="Source Title">
+                                        {{quote.source}}</cite></footer>
+                            </blockquote>
+                        </div>
+                        <a class="btn btn-primary btn-lg" href="#" role="button" @click='getStarted'>Sounds
+                            intriguing... how can I join in the fun?</a>
+                        <div>
+                            <small>Put together by <a href="https://indrihimawan.com/" target="blank">Indri Himawan</a>
+                                /
+                                <a href="https://github.com/ihimawan/e28/tree/master/p1" target="blank">GitHub
+                                    Repository</a>
+                                /
+                                <a href="https://github.com/ihimawan/e28/blob/master/p1/README.md" target="blank">Credits</a></small>
                         </div>
                     </div>
-
 
                     <!-- Select profile picture -->
                     <div id="profile-pic-selection" v-else>
@@ -71,7 +64,7 @@
                             <p class="lead">Nice having you here... Let's get to know you more!</p>
                             <h1 class="display-4">Which one of these Alpacas is the most <i>you</i>?</h1>
                         </div>
-                        <div class="row">
+                        <div class="row justify-content-center">
                             <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerInfo.picturesAvailable'>
                                 <img :src="pictureInfo.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"
                                     :class="{'character-unselected' : playerInfo.selectedPictureIdx === null || playerInfo.selectedPictureIdx !== index}"
@@ -84,12 +77,10 @@
                     </div>
 
                     <!-- Pick a name -->
-                    <div id="text-input" class="container" v-if="playerInfo.selectedPictureIdx !== null">
+                    <div id="text-input" v-if="playerInfo.selectedPictureIdx !== null">
                         <div class="row justify-content-center">
                             <div class="col-md-4 mb-3">
-                                <input type="
-                                                text" class="form-control"
-                                    :class="{'is-valid' : playerInfo.validName, 'is-invalid' : playerInfo.name !== null && playerInfo.validName !== null && !playerInfo.validName}"
+                                <input type="text" class="form-control" :class="{'is-valid' : playerInfo.validName, 'is-invalid' : playerInfo.name !== null && playerInfo.validName !== null && !playerInfo.validName}"
                                     id="username" placeholder="Give yourself a name" v-model='playerInfo.name' @keyup=validateName(playerInfo.name)>
                                 <div class="valid-feedback">
                                     Hot name. Now select your gender.
@@ -107,13 +98,6 @@
                                     class="btn btn-primary">Hot. Let's go find you the love of your life.</button>
                             </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <small>Put together by <a href="https://indrihimawan.com/" target="blank">Indri Himawan</a> /
-                            <a href="https://github.com/ihimawan/e28/tree/master/p1" target="blank">GitHub Repository</a>
-                            /
-                            <a href="https://github.com/ihimawan/e28/blob/master/p1/README.md" target="blank">Credits</a></small>
                     </div>
 
                     <!-- Modal -->
@@ -144,7 +128,7 @@
                 </div>
             </div>
 
-
+            <!-- Home Page -->
             <div v-else-if="currentGameStage === 'home'">
                 <div class="card-body">
 
@@ -152,14 +136,12 @@
                     <h4 class="text-muted">You look like someone who could use a pretty alpaca...</h4>
 
                     <div class="alert alert-danger" role="alert" v-if="!homeInfo.testPassed">
-                        According to our data, you haven't taken the <strong>Llama or Alpaca</strong> test yet.
-                        Click
-                        <a href="#" @click="activateModalHandler">here</a> to get more information.
+                        According to our data, you haven't taken/passed the <strong>Llama or Alpaca</strong> test yet.
+                        Click <a href="#" @click="activateModalHandler">here</a> to get more information.
                     </div>
                     <div class="alert alert-success" role="alert" v-else>
                         You've passed the Alpaca test, woohoo! Now you can feel free to chat with other Alpacas :)
-                        Good
-                        luck out there! ❤</div>
+                        Good luck out there! ❤</div>
                     <div>
                         <div class="text-center">
                             <img src="./resources/images/gifs/6.gif" class="float-left">
@@ -182,11 +164,11 @@
                                     <h5 class="card-title">{{profile.title}}</h5>
                                     <p class="card-text">{{profile.description}}</p>
                                     <div v-if="!homeInfo.testPassed">
-                                        <a href="#" class="btn btn-primary" @click="activateModalHandler">Chat with
+                                        <button class="btn btn-primary" @click="activateModalHandler">Chat with
                                             me!</a>
                                     </div>
                                     <div v-else>
-                                        <a href="#" class="btn btn-primary" @click="journeyEndHandler">Chat with
+                                        <button class="btn btn-primary" @click="journeyEndHandler">Chat with
                                             me!</a>
                                     </div>
                                 </div>
@@ -197,8 +179,7 @@
                         </div>
                         <div class="text-center">
                             <button type="button" class="btn btn-link" @click="refreshProfiles">Can't find one you
-                                like? Load more
-                                ...</button>
+                                like? Load more...</button>
                         </div>
 
 
@@ -207,7 +188,7 @@
 
                 <div class="row card-footer text-muted">
                     <div class="col-sm" v-for="article in homeInfo.articles">
-                        <img :src=article.img width=200 class="img-thumbnail">
+                        <img :src=article.img class="img-article img-thumbnail">
                         <h5>{{article.title}}</h5>
                         <a :href=article.action target="_blank">View article</a>
                     </div>
@@ -239,7 +220,7 @@
                 </div>
             </div>
 
-
+            <!-- Actual game HTML -->
             <div v-else-if="currentGameStage === 'game'">
                 <div class="card-body">
                     <!-- header -->
@@ -267,11 +248,10 @@
                                         target="blank">read this article.</a></li>
                             </ul>
                         </p>
-                        <a href="#" @click="returnHomeFromGameHandler" class=" btn btn-secondary">Nevermind, I want
-                            to
-                            go back to looking at Alpacas</a>
-                        <a href="#" @click="gameBeginHandler" class="btn btn-primary">Start the test that will
-                            determine the rest of your life</a>
+                        <button type="button" @click="returnHomeFromGameHandler" class=" btn btn-secondary">Nevermind,
+                            I want to go back to looking at Alpacas</button>
+                        <button type="button" @click="gameBeginHandler" class="btn btn-primary">Start eligibility for
+                            this secret society</button>
                     </div>
                     <!-- Give a countdown right before game starts -->
                     <div v-else-if="gameInfo.loadingScreenShow" class="text-center">
@@ -283,42 +263,41 @@
                     </div>
                     <div v-else>
                         <!-- if game has started, give a restart button -->
-                        <a href="#" @click="returnHomeFromGameHandler" class="btn btn-secondary">Nevermind, I want
-                            to go back to looking at Alpacas</a>
-                        <a href="#" @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
-                            restart.</a>
+                        <button @click="returnHomeFromGameHandler" class="btn btn-secondary">Nevermind, I want
+                            to go back to looking at Alpacas</button>
+                        <button @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
+                            restart.</button>
                         <div class="row justify-content-center">
                             <h1 class="display-4">question {{gameInfo.doneIndexes.size}} of {{gameInfo.maxChoices}}
                             </h1>
                         </div>
-                        <div class="container" @keyup.37="chooseHandler('llamas')" @keyup.39="chooseHandler('alpacas')">
-                            <div class="
-                            row justify-content-center">
-                                <div class="col-sm answer-review">
-                                    <img :src="gameInfo.choices[leftIndex].url" v-for="leftIndex in gameInfo.leftChoiceIndexes"
-                                        class="rounded">
-                                </div>
-                                <div class="col-sm">
-                                    <div class="card border-secondary" style="width: 18rem;">
-                                        <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top"
-                                            width="300" height="300">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{gameInfo.choices[gameInfo.currentIndex].title}}</h5>
-                                            <p class="card-text">{{gameInfo.choices[gameInfo.currentIndex].description}}</p>
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="#" @click="chooseHandler('llamas')" class="card-link">Llama</a>
-                                            <a href="#" @click="chooseHandler('alpacas')" class="card-link">Alpaca</a>
-                                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-sm answer-review">
+                                <img :src="gameInfo.choices[leftIndex].url" v-for="leftIndex in gameInfo.leftChoiceIndexes"
+                                    class="rounded">
+                            </div>
+                            <div class="col-sm">
+                                <div class="card border-secondary" style="width: 18rem;">
+                                    <img :src="gameInfo.choices[gameInfo.currentIndex].url" class="card-img-top" width="300"
+                                        height="300">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{gameInfo.choices[gameInfo.currentIndex].title}}</h5>
+                                        <p class="card-text">{{gameInfo.choices[gameInfo.currentIndex].description}}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="#" @click="chooseHandler('llamas')" class="card-link">Llama</a>
+                                        <a href="#" @click="chooseHandler('alpacas')" class="card-link">Alpaca</a>
                                     </div>
                                 </div>
-                                <div class="col-sm answer-review">
-                                    <img :src="gameInfo.choices[rightIndex].url" v-for="rightIndex in gameInfo.rightChoiceIndexes"
-                                        class="rounded">
-                                </div>
-
                             </div>
+                            <div class="col-sm answer-review">
+                                <img :src="gameInfo.choices[rightIndex].url" v-for="rightIndex in gameInfo.rightChoiceIndexes"
+                                    class="rounded">
+                            </div>
+
                         </div>
+
                     </div>
 
                 </div>

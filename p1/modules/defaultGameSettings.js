@@ -1,21 +1,47 @@
-const gameStages = ['intro', 'home', 'game'];
+// settings for main game
 const maxChoices = 12;
 const passingPercentage = 70;
 
-const playerPictures = [
-    {
-        img: "resources/images/players/one.png",
-        comment: "Plain and simple.. What a handsome angel you are."
-    },
-    {
-        img: "resources/images/players/two.png",
-        comment: "mmm.. A saddle? Feleece navidad.."
-    },
-    {
-        img: "resources/images/players/three.png",
-        comment: "A party necklace? You look bombin in it.. it must be the alpacalypse."
+const gameStages = ['intro', 'home', 'game'];
+
+const llamasText = 'llamas';
+const alpacaText = 'alpacas'
+
+// centralizing logic 
+const validateName = (name) => {
+    return name !== '' && name.length <= 10 && name.search(/[^a-zA-Z]+/) === -1
+}
+
+const getGameStartState = () => {
+    return {
+        loadingScreenShow: null,
+        countDown: 3,
+        currentIndex: null,
+        leftChoiceIndexes: [],
+        rightChoiceIndexes: [],
+        wrongChoiceIndexes: [],
+        doneIndexes: new Set(),
+        timePerImg: 5000,
+        score: 0,
+        maxChoices: maxChoices,
+        modal: null,
+        choices: [...gameChoices]
     }
-];
+}
+
+const getHomeProfiles = () => {
+    const needHowMany = 3;
+    const randomIndexes = [];
+    for (let i = 0; i < needHowMany; i++) {
+        let nextRandomIndex = null;
+        while (nextRandomIndex === null || randomIndexes.includes(nextRandomIndex)) {
+            nextRandomIndex = Math.floor(Math.random() * gameChoices.length);
+        }
+        randomIndexes.push(nextRandomIndex);
+    }
+    return randomIndexes.map(index => gameChoices[index]);
+}
+
 
 const resultHandler = (score) => {
     let passingScore = Math.ceil(maxChoices * passingPercentage / 100);
@@ -39,6 +65,50 @@ const resultHandler = (score) => {
         img: "./resources/images/gifs/3.gif"
     };
 }
+
+// centralizing information about game.
+
+const playerModal = {
+    title: "Terms and Conditions (stop being offended)",
+    text: "This whole website is a satire to online dating and my pet peeve of humans not knowing the difference between Alpacas and Llamas (Alpacas are way cutter, obviously). With this, I hope that you, as a human user, playing the role of an Alpaca looking for a lover, will NOT be offended by the segregation of Alpacas and Llamas in this game; and/or my bias towards of Alpacas over Llamas.",
+    agree: "I will not feel attacked",
+    disagree: "I am offended already",
+    img: "./resources/images/gifs/1.gif"
+}
+
+const homeModal = {
+    title: "What is the Llama or Alpaca test?",
+    text: "Here at Alpacan Mingle, we value integrity by not allowing Alpacas who don't know the difference between Llamas or Alpacas. Every Alpaca, including you, must take and pass this test in order to continue using this website. This includes chatting up other Alpacas!",
+    agree: "Ok, I'll do it",
+    disagree: "Nah",
+    img: "./resources/images/gifs/4.gif"
+}
+
+const playerPictures = [
+    {
+        img: "resources/images/players/one.png",
+        comment: "Plain and simple.. What a handsome angel you are."
+    },
+    {
+        img: "resources/images/players/two.png",
+        comment: "mmm.. A saddle? Feleece navidad.."
+    },
+    {
+        img: "resources/images/players/three.png",
+        comment: "A party necklace? You look bombin in it.. it must be the alpacalypse."
+    }
+];
+
+const quotes = [{
+    msg: "Thanks to Alpacan Mingle, not only did I find love towards Alpacas, now I've also found HATE towards Llamas. Thank you for giving me love AND education!",
+    name: "Dr. Paca",
+    source: "A super smart Alpaca"
+},
+{
+    msg: "I can't believe there is a dating website for humans of all race, religion, and genders! It's about time Alpacas get the same treatment!! ",
+    name: "Some poor Alpaca",
+    source: "Who tried online dating with human websites."
+}];
 
 const genderSelection = ["Agender",
     "Androgyne",
@@ -243,34 +313,4 @@ const gameChoices = [
     }
 ];
 
-const getGameStartState = () => {
-    return {
-        loadingScreenShow: null,
-        countDown: 3,
-        currentIndex: null,
-        leftChoiceIndexes: [],
-        rightChoiceIndexes: [],
-        wrongChoiceIndexes: [],
-        doneIndexes: new Set(),
-        timePerImg: 5000,
-        score: 0,
-        maxChoices: maxChoices,
-        modal: null,
-        choices: [...gameChoices]
-    }
-}
-
-const getHomeProfiles = () => {
-    const needHowMany = 3;
-    const randomIndexes = [];
-    for (let i = 0; i < needHowMany; i++) {
-        let nextRandomIndex = null;
-        while (nextRandomIndex === null || randomIndexes.includes(nextRandomIndex)) {
-            nextRandomIndex = Math.floor(Math.random() * gameChoices.length);
-        }
-        randomIndexes.push(nextRandomIndex);
-    }
-    return randomIndexes.map(index => gameChoices[index]);
-}
-
-export { genderSelection, getHomeProfiles, gameStages, maxChoices, passingPercentage, getGameStartState, playerPictures, resultHandler, articles };
+export { quotes, llamasText, alpacaText, validateName, playerModal, homeModal, genderSelection, getHomeProfiles, gameStages, maxChoices, passingPercentage, getGameStartState, playerPictures, resultHandler, articles };
