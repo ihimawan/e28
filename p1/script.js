@@ -51,11 +51,12 @@ const app = new Vue({
             }
         },
         goToNextGameStage: function () {
-            let indexOfNextStage = gameSetting.gameStages.indexOf(this.currentGameStage);
-            if (indexOfNextStage !== -1 && gameSetting.gameStages.length <= indexOfNextStage + 2) {
-                throw new Error('Unable to find next stage');
+            let indexOfCurrentStage = gameSetting.gameStages.indexOf(this.currentGameStage);
+            console.log(indexOfCurrentStage);
+            if (indexOfCurrentStage !== -1 && gameSetting.gameStages.length < indexOfCurrentStage + 1) {
+                throw new Error('Unable to find next stage=' + (indexOfCurrentStage + 1));
             }
-            this.currentGameStage = gameSetting.gameStages[indexOfNextStage + 1]
+            this.currentGameStage = gameSetting.gameStages[indexOfCurrentStage + 1]
         },
         activateModalHandler: function () {
             if (this.currentGameStage === gameSetting.gameStages[0]) {

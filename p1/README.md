@@ -11,4 +11,4 @@
 * BG Pattern https://www.shutterstock.com/image-vector/seamless-pattern-cute-alpacas-cactus-1349855225
 
 ## Notes
-* All of this in name of good fun.
+* I mean I think I went overboard. But it was fun.
