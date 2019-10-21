@@ -1,0 +1,66 @@
+[v-cloak] {
+    display: none;
+}
+
+#main-page {
+    background-image: url(./resources/images/bg.jpg);
+    background-repeat: repeat;
+    color: #1A535C;
+}
+
+#main-card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.spinner-grow{
+    color: #f57f8f;
+    width: 3rem; 
+    height: 3rem;
+}
+
+.btn-primary{
+    background-color: #f57f8f;
+    border-color: #ff667c;
+}
+
+.btn-primary:hover{
+    background-color: #ff667c;
+    border-color: #ff667c;
+}
+
+#app {
+    margin: auto;
+}
+
+.character-unselected {
+    opacity: 0.5;
+}
+
+.character-unselected:hover {
+    opacity: 1;
+}
+
+.answer-review img {
+    margin: 5px;
+    max-width:100px;
+    max-height:100px
+}
+
+.modal-img {
+    max-width:200px;
+    margin-bottom: 15px;
+}
+
+#quote-img{
+    max-height:200px;
+    margin: 0 15px 0 0;
+}
+
+.jumbotron {
+    background-color: #fefefe;
+}
+
+.img-article{
+    max-width:200px;
+
+}
