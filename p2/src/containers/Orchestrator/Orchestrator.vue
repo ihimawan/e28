@@ -1,11 +1,11 @@
 <template>
-  <Layout />
+  <PreIntro />
 </template>
 
 <script>
-import Layout from '../../components/UI/Layout/Layout'
+import PreIntro from '../../components/PreIntro/PreIntro'
 export default {
-  components: {Layout},
+  components: {PreIntro},
   name: 'Orchestrator'
 }
 </script>

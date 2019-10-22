@@ -1,5 +1,7 @@
 <template>
-  <Orchestrator/>
+  <div id="main-page">
+    <Orchestrator/>
+  </div>
 </template>
 
 <script>
@@ -13,4 +15,10 @@ export default {
 </script>
 
 <style scoped>
+  #main-page {
+    background-image: url(../../src/assets/images/bg.jpg);
+    background-repeat: repeat;
+    color: #1A535C;
+    height:100%;
+  }
 </style>
