@@ -7,10 +7,11 @@
 
 <script>
 import PreIntro from '../../components/PreIntro/PreIntro'
+import Intro from '../../components/Intro/Intro'
 import * as constants from '../../helpers/commons/constants'
 
 export default {
-  components: {PreIntro},
+  components: {PreIntro, Intro},
   name: 'Orchestrator',
   data: function () {
     return {
