@@ -2,9 +2,8 @@
   <div class="row justify-content-center">
     <div class="col-md-4 mb-3">
       <select class="custom-select" v-model="selected" @change="emitting">
-        <option selected>Choose gender...
-        </option>
-        <option v-for="gender in genders" :value=gender>{{gender}}</option>
+        <option selected>Select Gender...</option>
+        <option v-for="gender in genders" :value=gender :key=gender>{{gender}}</option>
       </select>
       <small>We want to stay Politically Correct.
         <a href="https://abcnews.go.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users"

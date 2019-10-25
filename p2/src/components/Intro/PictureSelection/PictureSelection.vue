@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center">
-      <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerPictures'>
+      <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerPictures' :key="index">
         <img :src="pictureInfo.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"
              :class="{'character-unselected' : selectedPictureIdx === null || selectedPictureIdx !== index}"
              @click="selectProfilePicture(index)">

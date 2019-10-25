@@ -14,6 +14,8 @@
     </div>
   </div>
 
+  <Modal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="continuePage" />
+
 </Layout>
 </template>
 
@@ -22,15 +24,21 @@ import Layout from '../UI/Layout/Layout'
 import PictureSelection from './PictureSelection/PictureSelection'
 import EnterName from './EnterName/EnterName'
 import EnterGender from './EnterGender/EnterGender'
+import Modal from '../UI/Modal/Modal'
+import { playerModal } from '../../helpers/intro/library'
 
 export default {
   name: 'Intro',
-  components: {EnterGender, EnterName, PictureSelection, Layout},
+  components: {Modal, EnterGender, EnterName, PictureSelection, Layout},
   data: function () {
     return {
       name: null,
       selectedGender: null,
-      selectedPictureIdx: null
+      selectedPictureIdx: null,
+      modal: {
+        show: false,
+        ...playerModal
+      }
     }
   },
   methods: {
@@ -41,7 +49,14 @@ export default {
       this.name = name
     },
     activateModalHandler: function () {
-      alert('nice')
+      this.modal.show = true
+    },
+    continuePage: function () {
+      this.$emit('next', {
+        name: this.name,
+        selectedGender: this.selectedGender,
+        selectedPictureIdx: this.selectedPictureIdx
+      })
     }
   }
 }

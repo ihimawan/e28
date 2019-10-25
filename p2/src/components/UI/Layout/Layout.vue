@@ -31,7 +31,6 @@ export default {
 
 <style scoped>
   #main-container {
-    min-height: 100vh;
     align-items: center;
   }
   #main-card {

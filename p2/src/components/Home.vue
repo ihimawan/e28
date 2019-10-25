@@ -19,6 +19,6 @@ export default {
     background-image: url(../../src/assets/images/bg.jpg);
     background-repeat: repeat;
     color: #1A535C;
-    height:100%;
+    min-height: 100vh;
   }
 </style>

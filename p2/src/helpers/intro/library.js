@@ -1,6 +1,7 @@
 import picture1 from '../../assets/images/players/one.png'
 import picture2 from '../../assets/images/players/two.png'
 import picture3 from '../../assets/images/players/three.png'
+import gif1 from '../../assets/images/gifs/1.gif'
 
 export const playerPictures = [
   {
@@ -79,5 +80,5 @@ export const playerModal = {
   text: 'This whole website is a satire to online dating and my pet peeve of humans not knowing the difference between Alpacas and Llamas (Alpacas are way cutter, obviously). With this, I hope that you, as a human user, playing the role of an Alpaca looking for a lover, will NOT be offended by the segregation of Alpacas and Llamas in this game; and/or my bias towards of Alpacas over Llamas.',
   agree: 'I will not feel attacked',
   disagree: 'I am offended already',
-  img: './resources/images/gifs/1.gif'
+  img: gif1
 }

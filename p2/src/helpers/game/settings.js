@@ -1,4 +1,4 @@
-import {gameChoices} from '../commons/profileCollection'
+import gameChoices from '../commons/profileCollection'
 
 // game for main game
 export const maxChoices = 12

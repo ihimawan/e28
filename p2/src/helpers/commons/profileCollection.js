@@ -1,4 +1,4 @@
-export const gameChoices = [
+export default [
   {
     url: './resources/images/game/alpacas/1.jpg',
     title: 'Carl',
