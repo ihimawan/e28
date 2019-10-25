@@ -3,7 +3,7 @@
     <PreIntro @next="fromPreIntro" v-if="currentStage === 'pre-intro'"/>
     <Intro @next="fromIntro" v-if="currentStage === 'intro'"/>
     <MainPage @next="fromMainPage" v-if="currentStage === 'home'" :playerData="playerData"/>
-    <Game v-if="currentStage === 'game'" />
+    <Game @go-home="fromGame" v-if="currentStage === 'game'" />
   </div>
 </template>
 
@@ -32,6 +32,9 @@ export default {
     },
     fromMainPage: function () {
       this.currentStage = constants.gameStages[3]
+    },
+    fromGame: function () {
+      this.currentStage = constants.gameStages[2]
     }
   }
 }

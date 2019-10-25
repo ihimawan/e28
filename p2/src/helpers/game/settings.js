@@ -4,9 +4,11 @@ import gameChoices from '../commons/profileCollection'
 export const maxChoices = 12
 export const passingPercentage = 70
 
+export const llamasText = 'llamas'
+export const alpacaText = 'alpacas'
+
 export const getGameStartState = () => {
   return {
-    loadingScreenShow: null,
     countDown: 3,
     currentIndex: null,
     leftChoiceIndexes: [],
