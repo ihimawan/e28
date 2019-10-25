@@ -1,14 +1,18 @@
+import picture1 from '../../assets/images/players/one.png'
+import picture2 from '../../assets/images/players/two.png'
+import picture3 from '../../assets/images/players/three.png'
+
 export const playerPictures = [
   {
-    img: 'resources/images/players/one.png',
+    img: picture1,
     comment: 'Plain and simple.. What a handsome angel you are.'
   },
   {
-    img: 'resources/images/players/two.png',
+    img: picture2,
     comment: 'mmm.. A saddle? Feleece navidad..'
   },
   {
-    img: 'resources/images/players/three.png',
+    img: picture3,
     comment: 'A party necklace? You look bombin in it.. it must be the alpacalypse.'
   }
 ]

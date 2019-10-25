@@ -1,16 +1,17 @@
 <template>
 <Layout>
-  <template #header>Which one of these Alpacas is the most <i>you</i>?</template>
+  <template #header>Nice having you here!!</template>
+  <template #subtext>Which one of these Alpacas is the most <i>you</i>?</template>
+
+  <PictureSelection @select-picture="selectProfilePicture" :selected-picture-idx=selectedPictureIdx />
+  <EnterName v-if="selectedPictureIdx !== null" @set-name="setName" />
+  <EnterGender v-if="name !== null" :selected-gender.sync="selectedGender" />
 
   <div class="row justify-content-center">
-    <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerPictures'>
-      <img :src="pictureInfo.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"
-           :class="{'character-unselected' : selectedPictureIdx === null || selectedPictureIdx !== index}"
-           @click="selectProfilePicture(index)">
+    <div class="col-md-4 mb-3">
+      <button v-if="selectedGender" @click="activateModalHandler" type="button"
+              class="btn btn-primary">Hot. Let's go find you the love of your life.</button>
     </div>
-  </div>
-  <div class="row justify-content-center" v-if="selectedPictureIdx !==null">
-    <p class="text-muted">{{playerPictures[selectedPictureIdx].comment}}</p>
   </div>
 
 </Layout>
@@ -18,20 +19,29 @@
 
 <script>
 import Layout from '../UI/Layout/Layout'
-import * as pageInfo from '../../helpers/intro/library'
+import PictureSelection from './PictureSelection/PictureSelection'
+import EnterName from './EnterName/EnterName'
+import EnterGender from './EnterGender/EnterGender'
 
 export default {
   name: 'Intro',
-  components: {Layout},
+  components: {EnterGender, EnterName, PictureSelection, Layout},
   data: function () {
     return {
-      playerPictures: pageInfo.playerPictures,
+      name: null,
+      selectedGender: null,
       selectedPictureIdx: null
     }
   },
   methods: {
-    selectProfilePicture : function () {
-
+    selectProfilePicture: function (index) {
+      this.selectedPictureIdx = index
+    },
+    setName: function (name) {
+      this.name = name
+    },
+    activateModalHandler: function () {
+      alert('nice')
     }
   }
 }
