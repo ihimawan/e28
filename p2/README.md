@@ -1,21 +1,14 @@
-# p2
+# Project 1
+* By: Indri Himawan
+* Prod URL: http://p2.indrihimawan.com/
+* Old Repository: https://github.com/ihimawan/e28/tree/master/p1
 
-> llama or alpaca v2
+## Outside resources
+* Used `vue create`
 
-## Build Setup
+## Notes
+* Added functionality to edit profile and messaging option.
+* But there is no reply to message functionality (yet).
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Credits
+Same as in https://github.com/ihimawan/e28/tree/master/p1
