@@ -1,11 +1,10 @@
 import gameChoices from '../commons/profileCollection'
+import gif2 from '../../assets/images/gifs/2.gif'
+import gif3 from '../../assets/images/gifs/3.gif'
 
 // game for main game
 export const maxChoices = 12
 export const passingPercentage = 70
-
-export const llamasText = 'llamas'
-export const alpacaText = 'alpacas'
 
 export const getGameStartState = () => {
   return {
@@ -18,7 +17,7 @@ export const getGameStartState = () => {
     timePerImg: 5000,
     score: 0,
     maxChoices: maxChoices,
-    modal: null,
+    modal: {},
     choices: [...gameChoices]
   }
 }
@@ -34,7 +33,7 @@ export const resultHandler = (score) => {
       text: scoreString + ' You have proven yourself that you are not an impostor to the Alpaca community. Welcome to Alpacan Mingle. You now have full access to our site.',
       agree: "Let's chat up some lady Alpacas",
       disagree: "I'm not convinced I'm worthy",
-      img: './resources/images/gifs/2.gif'
+      img: gif2
     }
   }
   return {
@@ -42,6 +41,6 @@ export const resultHandler = (score) => {
     title: 'FAKE!!!',
     text: scoreString + ' You may be a Llama! Even worse... a Llama Lover!!',
     disagree: "This is BS I'll try again...",
-    img: './resources/images/gifs/3.gif'
+    img: gif3
   }
 }

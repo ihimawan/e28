@@ -15,6 +15,7 @@
           <div class="modal-body text-center">
             <img class="modal-img" :src="modalData.img">
             <p>{{modalData.text}}</p>
+            <slot />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="dismissModalHandler"><slot name="dismissText">{{modalData.disagree}}</slot></button>

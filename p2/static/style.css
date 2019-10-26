@@ -7,3 +7,9 @@
   background-color: #ff667c;
   border-color: #ff667c;
 }
+
+.answer-review-img {
+ margin: 5px;
+ max-width:100px;
+ max-height:100px
+}
