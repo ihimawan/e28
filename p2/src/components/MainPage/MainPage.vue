@@ -2,27 +2,26 @@
   <Layout>
     <template #header>Welcome, {{playerData.name}}.</template>
     <template #subtext>You look like someone who could use a pretty alpaca...</template>
-    <TakeTestAlert :has-player-passed="playerData.passedTest" @open-modal="openModal"/>
-    <LoversProof />
-    <LoverReel :has-player-passed="playerData.passedTest" @open-modal="openModal" />
-    <Articles />
+    <NavigationBar :active-index.sync="activePageIndex" @change-page="changePage"/>
 
-    <Modal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="$emit('next')" />
-
+    <div v-if="activePageIndex === 0">
+      <Dashboard :player-data="playerData" @go-to-game="$emit('next')"/>
+    </div>
+    <div v-else-if="activePageIndex === 1">
+      <Profile :player-data="playerData"/>
+    </div>
   </Layout>
 </template>
 
 <script>
+import Dashboard from './Dashboard/Dashboard'
 import Layout from '../UI/Layout/Layout'
-import LoversProof from './LoversProof/LoversProof'
-import TakeTestAlert from './TakeTestAlert/TakeTestAlert'
-import LoverReel from './LoverReel/LoverReel'
-import Articles from './Articles/Articles'
-import { homeModal } from '../../helpers/main/library'
-import Modal from '../UI/Modal/Modal'
+import NavigationBar from './NagivationBar/NavigationBar'
+import Profile from './Profile/Profile'
 
 export default {
-  components: {Modal, Articles, LoverReel, TakeTestAlert, LoversProof, Layout},
+  name: 'MainPage',
+  components: {Profile, NavigationBar, Layout, Dashboard},
   props: {
     playerData: {
       type: Object,
@@ -31,16 +30,12 @@ export default {
   },
   data: function () {
     return {
-      modal: {
-        show: false,
-        ...homeModal
-      }
+      activePageIndex: 0
     }
   },
   methods: {
-    openModal: function () {
-      console.log('open')
-      this.modal.show = true
+    changePage: function (pageIndex) {
+      this.activePageIndex = pageIndex
     }
   }
 }

@@ -40,9 +40,10 @@ export default {
 <style scoped>
   .character-unselected {
     opacity: 0.5;
+    filter: grayscale(100%);
   }
 
   .character-unselected:hover {
-    opacity: 1;
+    filter: grayscale(0%);
   }
 </style>

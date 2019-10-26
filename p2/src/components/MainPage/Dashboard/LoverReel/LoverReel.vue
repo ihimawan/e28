@@ -29,7 +29,7 @@
 
 <script>
 
-import { getHomeProfiles } from '../../../helpers/main/settings'
+import { getHomeProfiles } from '../../../../helpers/main/settings'
 
 export default {
   name: 'LoverReel',

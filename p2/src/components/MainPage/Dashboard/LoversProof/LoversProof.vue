@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { loversProof } from '../../../helpers/main/library'
+import { loversProof } from '../../../../helpers/main/library'
 
 export default {
   name: 'LoversProof',
