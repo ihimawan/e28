@@ -6,9 +6,17 @@
     <Instructions v-show="instructionsShow" @return-to-home="$emit('go-home')" @begin-game="readyHandler"/>
     <Countdown v-if="loadingScreenShow" @finish-countdown="startGameHandler"/>
 
-    <CoreGame v-if="!instructionsShow && !loadingScreenShow" @go-home="$emit('go-home')" @game-finish="gameFinishHandler"/>
+    <div v-if="gameBegin">
+      <button @click="$emit('go-home')" class="btn btn-secondary">Nevermind, I want
+        to go back to looking at Alpacas
+      </button>
+      <button @click="restartGameHandler" class="btn btn-primary">Messed up... I want a
+        restart.
+      </button>
+      <CoreGame @go-home="$emit('go-home')" @game-finish="gameFinishHandler"/>
+    </div>
 
-    <Modal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="continuePage">
+    <Modal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="$emit('go-home', true)">
       <div v-if="modal.wrongProfiles.length > 0">
         <p><strong>You got the following wrong:</strong></p>
         <img :src="wrongProfile.url" v-for="(wrongProfile, index) in modal.wrongProfiles"
@@ -36,15 +44,26 @@ export default {
     return {
       instructionsShow: true,
       loadingScreenShow: false,
-      passed: null,
+      passed: false,
       modal: {
+        title: null,
+        text: null,
+        agree: null,
+        disagree: null,
+        img: null,
+        show: false,
         wrongProfiles: []
       }
     }
   },
+  computed: {
+    gameBegin: function () {
+      return !this.instructionsShow && !this.loadingScreenShow
+    }
+  },
   methods: {
-    continuePage: function () {
-      return false
+    restartGameHandler: function () {
+      this.loadingScreenShow = true
     },
     readyHandler: function () {
       this.instructionsShow = false
@@ -54,8 +73,14 @@ export default {
       this.loadingScreenShow = false
     },
     gameFinishHandler: function (modalData) {
-      this.modal = modalData
+      Object.keys(this.modal).forEach(key => {
+        this.modal[key] = modalData[key]
+      })
       this.modal.show = true
+      this.instructionsShow = true
+      if (this.modal.status === 'win') {
+        this.passed = true
+      }
     }
   }
 }

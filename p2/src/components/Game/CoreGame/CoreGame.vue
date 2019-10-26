@@ -1,13 +1,5 @@
 <template>
   <div>
-
-    <button @click="$emit('go-home')" class="btn btn-secondary">Nevermind, I want
-      to go back to looking at Alpacas
-    </button>
-    <button @click="gameBeginHandler" class="btn btn-primary">Messed up... I want a
-      restart.
-    </button>
-
     <div class="row justify-content-center">
       <h1 class="display-4">question {{state.doneIndexes.size}} of {{state.maxChoices}}
       </h1>
@@ -41,7 +33,6 @@ export default {
         timePerImg: null,
         score: null,
         maxChoices: null,
-        modal: {},
         choices: [{}]
       }
     }
@@ -60,11 +51,9 @@ export default {
   },
   methods: {
     continuePage: function () {
-      console.log('d')
     },
     gameBeginHandler: function () {
       // reset game settings
-      console.log('begin')
       const startState = settings.getGameStartState()
       Object.keys(startState).forEach(key => {
         this.state[key] = startState[key]

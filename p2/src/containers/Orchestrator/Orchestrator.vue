@@ -18,8 +18,13 @@ export default {
   components: {Game, MainPage, PreIntro, Intro},
   data: function () {
     return {
-      currentStage: constants.gameStages[0],
-      playerData: null
+      currentStage: constants.gameStages[3],
+      playerData: {
+        name: null,
+        selectedGender: null,
+        selectedPictureIdx: null,
+        passedTest: false
+      }
     }
   },
   methods: {
@@ -27,14 +32,17 @@ export default {
       this.currentStage = constants.gameStages[1]
     },
     fromIntro: function (playerData) {
-      this.playerData = playerData
+      Object.keys(this.modal).forEach(key => {
+        this.modal[key] = playerData[key]
+      })
       this.currentStage = constants.gameStages[2]
     },
     fromMainPage: function () {
       this.currentStage = constants.gameStages[3]
     },
-    fromGame: function () {
+    fromGame: function (testPassed = false) {
       this.currentStage = constants.gameStages[2]
+      this.playerData.passedTest = testPassed
     }
   }
 }

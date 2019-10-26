@@ -17,7 +17,6 @@ export const getGameStartState = () => {
     timePerImg: 5000,
     score: 0,
     maxChoices: maxChoices,
-    modal: {},
     choices: [...gameChoices]
   }
 }

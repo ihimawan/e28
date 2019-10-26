@@ -2,7 +2,7 @@
   <!-- Modal -->
   <div v-if="modalShow">
     <div class="modal-backdrop show fade"></div>
-    <div class="modal show in" id="playerModal" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="modal show in" tabindex="-1" role="dialog" aria-hidden="true"
          style="display:block;">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -19,7 +19,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="dismissModalHandler"><slot name="dismissText">{{modalData.disagree}}</slot></button>
-            <button type="button" class="btn btn-primary" @click="agreeHandler"><slot name="agreeText">{{modalData.agree}}</slot></button>
+            <button type="button" class="btn btn-primary" @click="agreeHandler" v-if="modalData.agree!==null"><slot name="agreeText">{{modalData.agree}}</slot></button>
           </div>
         </div>
       </div>
