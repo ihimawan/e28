@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="main-page">
     <PreIntro @next="fromPreIntro" v-if="currentStage === 'pre-intro'"/>
     <Intro @next="fromIntro" v-if="currentStage === 'intro'"/>
     <MainPage @next="fromMainPage" v-if="currentStage === 'home'" :playerData="playerData"/>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import PreIntro from '../../components/PreIntro/PreIntro'
-import Intro from '../../components/Intro/Intro'
-import * as constants from '../../helpers/commons/constants'
-import MainPage from '../../components/MainPage/MainPage'
-import Game from '../../components/Game/Game'
+import PreIntro from './PreIntro/PreIntro'
+import Intro from './Intro/Intro'
+import * as constants from '../helpers/commons/constants'
+import MainPage from './MainPage/MainPage'
+import Game from './Game/Game'
 
 export default {
   components: {Game, MainPage, PreIntro, Intro},
@@ -47,3 +47,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #main-page {
+    background-image: url(../../src/assets/images/bg.jpg);
+    background-repeat: repeat;
+    color: #1A535C;
+    min-height: 100vh;
+  }
+</style>

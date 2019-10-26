@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
+import Orchestrator from '../components/Orchestrator'
 
 Vue.use(Router)
 
@@ -9,7 +9,7 @@ let router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Orchestrator
     }
   ]
 })
