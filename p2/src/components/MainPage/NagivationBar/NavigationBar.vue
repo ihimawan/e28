@@ -1,17 +1,19 @@
 <template>
   <ul class="nav nav-tabs">
-    <NavigationItem v-for="(pageName, index) in pageNames" :active='index===activeIndex'
-    @clicked="navigationClicked(index)" :key="index">{{pageName}}</NavigationItem>
+    <NavigationItem v-for="(page, index) in pages" :active='index===activeIndex'
+    @clicked="navigationClicked(index)" :key="index">
+      <FontAwesomeIcon :icon="page.icon" class="navigationIcon" />{{page.value}}</NavigationItem>
   </ul>
 </template>
 
 <script>
 import {pages} from '../../../helpers/commons/constants'
 import NavigationItem from './NavigationItem/NavigationItem'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'NavigationBar',
-  components: {NavigationItem},
+  components: {NavigationItem, FontAwesomeIcon},
   props: {
     activeIndex: {
       type: Number,
@@ -20,7 +22,7 @@ export default {
   },
   data: function () {
     return {
-      pageNames: pages
+      pages: pages
     }
   },
   methods: {
@@ -34,5 +36,8 @@ export default {
 <style scoped>
 ul {
   margin-bottom: 10px;
+}
+.navigationIcon {
+  margin-right: 3px;
 }
 </style>

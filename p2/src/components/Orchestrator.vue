@@ -54,5 +54,6 @@ export default {
     background-repeat: repeat;
     color: #1A535C;
     min-height: 100vh;
+    padding-bottom: 50px;
   }
 </style>

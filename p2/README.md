@@ -5,6 +5,7 @@
 
 ## Outside resources
 * Used `vue create`
+* Used Fontawesome (https://github.com/FortAwesome/vue-fontawesome)
 
 ## Notes
 * Added functionality to edit profile and messaging option.
