@@ -51,7 +51,9 @@ export default {
     },
     fromGame: function (testPassed = false) {
       this.currentStage = constants.gameStages[2]
-      this.playerData.passedTest = testPassed
+      if (!this.playerData.passedTest) {
+        this.playerData.passedTest = testPassed
+      }
     }
   }
 }
