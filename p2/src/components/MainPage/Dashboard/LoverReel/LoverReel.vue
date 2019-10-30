@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     journeyEndHandler: function () {
-      console.log('s')
+      window.open('https://indrihimawan.com/')
     },
     refreshProfiles: function () {
       this.profiles = getHomeProfiles()
