@@ -8,7 +8,10 @@
       <Dashboard :player-data="playerData" @go-to-game="$emit('next')"/>
     </div>
     <div v-else-if="activePageIndex === 1">
-      <Profile :player-data="playerData"/>
+      <ProfilePage :player-data="playerData" @update="playerDataUpdate"/>
+    </div>
+    <div v-else-if="activePageIndex === 2">
+      No Messages available (coming soon)
     </div>
   </Layout>
 </template>
@@ -17,11 +20,11 @@
 import Dashboard from './Dashboard/Dashboard'
 import Layout from '../UI/Layout/Layout'
 import NavigationBar from './NagivationBar/NavigationBar'
-import Profile from './Profile/Profile'
+import ProfilePage from './ProfilePage/ProfilePage'
 
 export default {
   name: 'MainPage',
-  components: {Profile, NavigationBar, Layout, Dashboard},
+  components: {ProfilePage, NavigationBar, Layout, Dashboard},
   props: {
     playerData: {
       type: Object,
@@ -36,6 +39,9 @@ export default {
   methods: {
     changePage: function (pageIndex) {
       this.activePageIndex = pageIndex
+    },
+    playerDataUpdate: function (playerData) {
+      this.$emit('player-data-update', playerData)
     }
   }
 }

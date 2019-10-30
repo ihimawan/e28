@@ -2,7 +2,7 @@
   <div id="main-page">
     <PreIntro @next="fromPreIntro" v-if="currentStage === 'pre-intro'"/>
     <Intro @next="fromIntro" v-if="currentStage === 'intro'"/>
-    <MainPage @next="fromMainPage" v-if="currentStage === 'home'" :playerData="playerData"/>
+    <MainPage @next="fromMainPage" v-if="currentStage === 'home'" :playerData="playerData" @player-data-update="playerDataUpdate"/>
     <Game @go-home="fromGame" v-if="currentStage === 'game'" />
   </div>
 </template>
@@ -23,16 +23,25 @@ export default {
         name: null,
         selectedGender: null,
         selectedPictureIdx: null,
-        passedTest: false
+        passedTest: false,
+        about: null,
+        lookingFor: null,
+        initiated: 0,
+        received: 0
       }
     }
   },
   methods: {
     fromIntro: function (playerData) {
-      Object.keys(this.playerData).forEach(key => {
+      Object.keys(playerData).forEach(key => {
         this.playerData[key] = playerData[key]
       })
       this.currentStage = constants.gameStages[2]
+    },
+    playerDataUpdate: function (playerData) {
+      Object.keys(playerData).forEach(key => {
+        this.playerData[key] = playerData[key]
+      })
     },
     fromPreIntro: function () {
       this.currentStage = constants.gameStages[1]

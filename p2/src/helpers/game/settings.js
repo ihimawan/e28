@@ -40,6 +40,7 @@ export const resultHandler = (score) => {
     title: 'FAKE!!!',
     text: scoreString + ' You may be a Llama! Even worse... a Llama Lover!!',
     disagree: "This is BS I'll try again...",
+    agree: null,
     img: gif3
   }
 }
