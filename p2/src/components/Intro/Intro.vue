@@ -4,7 +4,9 @@
   <template #subtext>Which one of these Alpacas is the most <i>you</i>?</template>
 
   <PictureSelection @select-picture="selectProfilePicture" :selected-picture-idx=selectedPictureIdx />
-  <EnterName v-if="selectedPictureIdx !== null" @set-name="setName" />
+  <EnterName v-if="selectedPictureIdx !== null" @set-name="setName">
+    <template #valid-feedback-text>Hot name. Now select your gender.</template>
+  </EnterName>
   <EnterGender v-if="name !== null" :selected-gender.sync="selectedGender" />
 
   <div class="row justify-content-center">

@@ -27,7 +27,13 @@
         <div class="form-group row">
           <label for="inputName" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputName" placeholder="Name" v-model="newName">
+            <input type="text" class="form-control" :class="{'is-valid' : validNewName, 'is-invalid' : !validNewName}" id="inputName" placeholder="Name" v-model="newName">
+            <div class="valid-feedback">
+              Beautiful name you got.
+            </div>
+            <div class="invalid-feedback">
+              Can't read this.. must be just alphabets and not too long please..
+            </div>
           </div>
         </div>
         <div class="form-group row">
@@ -70,6 +76,7 @@
 
 import { playerPictures } from '../../../helpers/intro/library'
 import Metric from './Metric/Metric'
+import { validateName } from '../../../helpers/intro/settings'
 
 export default {
   name: 'ProfilePage',
@@ -106,9 +113,14 @@ export default {
       this.messages = null
     },
     hasDelta: function () {
-      return this.newName !== this.playerData.name ||
+      return this.validNewName && (this.newName !== this.playerData.name ||
         this.newAbout !== this.playerData.about ||
-        this.newLookingFor !== this.playerData.lookingFor
+        this.newLookingFor !== this.playerData.lookingFor)
+    }
+  },
+  computed: {
+    validNewName: function () {
+      return validateName(this.newName)
     }
   }
 }
