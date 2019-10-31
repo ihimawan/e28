@@ -11,18 +11,9 @@
           <small>(These numbers won't change. Coming soon.)</small>
         </div>
         <div class="row">
-          <div class="col-sm-4" align="center">
-            <h2>{{playerData.initiated}}</h2>
-            <p>Initiated</p>
-          </div>
-          <div class="col-sm-4" align="center">
-            <h2>{{playerData.received}}</h2>
-            <p>Received</p>
-          </div>
-          <div class="col-sm-4" align="center">
-            <h2>{{playerData.received}}</h2>
-            <p>Ghosted</p>
-          </div>
+          <Metric :counter-value="playerData.initiated">Initiated</Metric>
+          <Metric :counter-value="playerData.received">Received</Metric>
+          <Metric :counter-value="playerData.ghosted">Ghosted</Metric>
         </div>
       </div>
       <div class="col-sm-8">
@@ -78,9 +69,11 @@
 <script>
 
 import { playerPictures } from '../../../helpers/intro/library'
+import Metric from './Metric/Metric'
 
 export default {
   name: 'ProfilePage',
+  components: {Metric},
   props: {
     playerData: {
       type: Object,

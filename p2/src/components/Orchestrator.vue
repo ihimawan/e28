@@ -27,7 +27,8 @@ export default {
         about: null,
         lookingFor: null,
         initiated: 0,
-        received: 0
+        received: 0,
+        ghosted: 0
       }
     }
   },
