@@ -1,4 +1,4 @@
-# Project 1
+# Project 2
 * By: Indri Himawan
 * Prod URL: http://p2.indrihimawan.com/
 * Old Repository: https://github.com/ihimawan/e28/tree/master/p1
