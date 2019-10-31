@@ -20,10 +20,12 @@
       <li class="list-group-item"> If you have no clue what you're doing, <a href="https://www.alpacadirect.com/blogs/alpaca-direct-blog/alpaca-vs-llama-7-ways-to-tell-the-difference"
                                                                              target="blank">read this article.</a></li>
     </ul>
-    <button type="button" @click="$emit('return-to-home')" class=" btn btn-secondary">Nevermind,
-      I want to go back to looking at Alpacas</button>
-    <button type="button" @click="$emit('begin-game')" class="btn btn-primary">Start eligibility for
-      this secret society</button>
+    <div class="instruction-buttons">
+      <button type="button" @click="$emit('return-to-home')" class=" btn btn-secondary">Nevermind,
+        I want to go back to looking at Alpacas</button>
+      <button type="button" @click="$emit('begin-game')" class="btn btn-primary">Start eligibility for
+        this secret society</button>
+    </div>
   </div>
 </template>
 
@@ -32,3 +34,9 @@ export default {
   name: 'Instructions'
 }
 </script>
+
+<style>
+.instruction-buttons {
+  margin-top: 10px
+}
+</style>
