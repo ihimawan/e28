@@ -5,6 +5,7 @@
 
 ## Outside resources
 * Used Fontawesome (https://github.com/FortAwesome/vue-fontawesome)
+* Used Bootstrap's CSS
 
 ## Notes
 * I used the comprehensive approach. I created a brand new project using vue components and a router that isn't really used.
