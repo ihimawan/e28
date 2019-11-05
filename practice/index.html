@@ -27,7 +27,7 @@
         <input type="text" v-model='name' />
         <p v-if='name != null'> my name is {{name}} </p>
 
-        <button id='btn' v-on:click='flipHappy'>flip happiness</button>
+        <button id='btn' @click='flipHappy'>flip happiness</button>
 
         <div v-if='happy'>yay im happy</div>
         <div v-else>im sad</div>
@@ -40,7 +40,7 @@
             </ul>
         </div>
 
-        <button v-on:click='moods.push(name)'>use more moods</button>
+        <button @click='moods.push(name)'>use more moods</button>
         <button @click='someOtherMethod'>another way </button>
 
     </div>
