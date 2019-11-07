@@ -11,7 +11,12 @@ Vue.config.productionTip = false;
 const routes = [
   { path: "/", component: ShowHome },
   { path: "/products", component: ShowProducts },
-  { path: "/categories", component: ShowCategories }
+  { path: "/categories", component: ShowCategories },
+  {
+    path: "/categories/:category",
+    name: "categories",
+    component: ShowCategories
+  }
 ];
 
 const router = new VueRouter({
