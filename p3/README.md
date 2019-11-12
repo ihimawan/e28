@@ -1,16 +1,19 @@
-# Project 2
+# Project 3
 * By: Indri Himawan
-* Prod URL: http://p2.indrihimawan.com/
-* Old Repository: https://github.com/ihimawan/e28/tree/master/p1
+* Prod URL: http://p3.indrihimawan.com/
 
 ## Outside resources
-* Used Fontawesome (https://github.com/FortAwesome/vue-fontawesome)
-* Used Bootstrap's CSS
 
 ## Notes
-* I used the comprehensive approach. I created a brand new project using vue components and a router that isn't really used.
 * __Added functionality__: to edit your profile
 * __Functionality I want to do__: messaging functionality to other alpacas (computers, really), counter to see how many conversations you initiated, received, and how many ghosted.
 
 ## Credits
-Same as in https://github.com/ihimawan/e28/tree/master/p1
+* Used Fontawesome (https://github.com/FortAwesome/vue-fontawesome)
+* Used Bootstrap's CSS
+* NONE of Alpaca pictures are my own! Sources: https://www.boredpanda.com/cute-funny-alpacas/
+* NONE of Llama pictures are my own! Source: Google image searches.
+* 58 Genders: https://abcnews.go.com/blogs/headlines/2014/02/heres-a-list-of-58-gender-options-for-facebook-users
+* NONE of the GIFs are my own! https://giphy.com/search/alpaca
+* BG Pattern https://www.shutterstock.com/image-vector/seamless-pattern-cute-alpacas-cactus-1349855225
+* Cheers to the person I forced to user test this.

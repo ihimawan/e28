@@ -1,10 +1,10 @@
 <template>
-  <Layout>
+  <DefaultLayout>
     <template #header>Llama or Alpaca Test</template>
     <template #subtext>Because we can't deal with Llamas. They're Llaaaaame (hehe)</template>
 
-    <Instructions v-show="instructionsShow" @return-to-home="$emit('go-home', passed)" @begin-game="readyHandler"/>
-    <Countdown v-if="loadingScreenShow" @finish-countdown="startGameHandler"/>
+    <InstructionsList v-show="instructionsShow" @return-to-home="$emit('go-home', passed)" @begin-game="readyHandler"/>
+    <CountdownDisplay v-if="loadingScreenShow" @finish-countdown="startGameHandler"/>
 
     <div v-if="gameBegin">
       <button @click="$emit('go-home', passed)" class="btn btn-secondary">Nevermind, I want
@@ -16,7 +16,7 @@
       <CoreGame @go-home="$emit('go-home', passed)" @game-finish="gameFinishHandler"/>
     </div>
 
-    <Modal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="$emit('go-home', passed)">
+    <ShowModal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="$emit('go-home', passed)">
       <div v-if="modal.wrongProfiles.length > 0">
         <p><strong>You got the following wrong:</strong></p>
         <img :src="wrongProfile.url" v-for="(wrongProfile, index) in modal.wrongProfiles"
@@ -25,21 +25,21 @@
       <div v-else>
         <strong>You got nothing wrong! You are an expert!</strong>
       </div>
-    </Modal>
+    </ShowModal>
 
-  </Layout>
+  </DefaultLayout>
 </template>
 
 <script>
-import Layout from '../UI/Layout/Layout'
-import Instructions from './Instructions/Instructions'
-import Countdown from './Countdown/Countdown'
+import DefaultLayout from '../UI/DefaultLayout/DefaultLayout'
+import InstructionsList from './InstructionsList/InstructionsList'
+import CountdownDisplay from './Countdown/CountdownDisplay'
 import CoreGame from './CoreGame/CoreGame'
-import Modal from '../UI/Modal/Modal'
+import ShowModal from '../UI/ShowModal/ShowModal'
 
 export default {
-  name: 'Game',
-  components: {Modal, CoreGame, Countdown, Instructions, Layout},
+  name: 'GamePage',
+  components: {ShowModal, CoreGame, CountdownDisplay, InstructionsList, DefaultLayout},
   data: function () {
     return {
       instructionsShow: true,

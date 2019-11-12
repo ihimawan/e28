@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <DefaultLayout>
     <template #header>{{header}}</template>
     <template #subtext> {{subtext}}</template>
     <hr class="my-4">
@@ -15,19 +15,19 @@
       Sounds intriguing... how can I join in the fun?</a>
     <div>
     </div>
-  </Layout>
+  </DefaultLayout>
 </template>
 
 <script>
-import Layout from '../UI/Layout/Layout'
+import DefaultLayout from '../UI/DefaultLayout/DefaultLayout'
 import * as pageInfo from '../../helpers/preintro/library'
 
 export default {
   next () {
     this.$emit('nextPageHandler')
   },
-  components: {Layout},
-  name: 'PreIntro',
+  components: {DefaultLayout},
+  name: 'PreIntroPage',
   data: function () {
     return {
       mainImg: pageInfo.mainImg,

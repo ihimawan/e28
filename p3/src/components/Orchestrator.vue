@@ -1,21 +1,21 @@
 <template>
   <div id="main-page">
-    <PreIntro @next="fromPreIntro" v-if="currentStage === 'pre-intro'"/>
-    <Intro @next="fromIntro" v-if="currentStage === 'intro'"/>
+    <PreIntroPage @next="fromPreIntro" v-if="currentStage === 'pre-intro'"/>
+    <IntroPage @next="fromIntro" v-if="currentStage === 'intro'"/>
     <MainPage @next="fromMainPage" v-if="currentStage === 'home'" :playerData="playerData" @player-data-update="playerDataUpdate"/>
-    <Game @go-home="fromGame" v-if="currentStage === 'game'" />
+    <GamePage @go-home="fromGame" v-if="currentStage === 'game'" />
   </div>
 </template>
 
 <script>
-import PreIntro from './PreIntro/PreIntro'
-import Intro from './Intro/Intro'
+import PreIntroPage from './PreIntroPage/PreIntroPage'
+import IntroPage from './IntroPage/IntroPage'
 import * as constants from '../helpers/commons/constants'
 import MainPage from './MainPage/MainPage'
-import Game from './Game/Game'
+import GamePage from './GamePage/GamePage'
 
 export default {
-  components: {Game, MainPage, PreIntro, Intro},
+  components: {GamePage, MainPage, PreIntroPage, IntroPage},
   data: function () {
     return {
       currentStage: constants.gameStages[0],

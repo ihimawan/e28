@@ -1,5 +1,4 @@
 <template>
-  <!-- Modal -->
   <div v-if="modalShow">
     <div class="modal-backdrop show fade"></div>
     <div class="modal show in" tabindex="-1" role="dialog" aria-hidden="true"
@@ -31,7 +30,7 @@
 
 <script>
 export default {
-  name: 'Modal',
+  name: 'ShowModal',
   props: {
     modalShow: Boolean,
     modalData: Object

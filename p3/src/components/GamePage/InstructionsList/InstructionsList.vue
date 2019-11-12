@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Instructions'
+  name: 'InstructionsList'
 }
 </script>
 

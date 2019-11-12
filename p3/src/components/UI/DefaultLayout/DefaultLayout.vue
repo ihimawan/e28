@@ -24,7 +24,7 @@
 <script>
 import DefaultFooter from './DefaultFooter/DefaultFooter'
 export default {
-  name: 'Layout',
+  name: 'DefaultLayout',
   components: {DefaultFooter}
 }
 </script>

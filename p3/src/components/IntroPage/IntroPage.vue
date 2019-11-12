@@ -1,5 +1,5 @@
 <template>
-<Layout>
+<DefaultLayout>
   <template #header>Nice having you here!!</template>
   <template #subtext>Which one of these Alpacas is the most <i>you</i>?</template>
 
@@ -16,22 +16,22 @@
     </div>
   </div>
 
-  <Modal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="continuePage" />
+  <ShowModal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="continuePage" />
 
-</Layout>
+</DefaultLayout>
 </template>
 
 <script>
-import Layout from '../UI/Layout/Layout'
+import DefaultLayout from '../UI/DefaultLayout/DefaultLayout'
 import PictureSelection from './PictureSelection/PictureSelection'
 import EnterName from './EnterName/EnterName'
 import EnterGender from './EnterGender/EnterGender'
-import Modal from '../UI/Modal/Modal'
+import ShowModal from '../UI/ShowModal/ShowModal'
 import { playerModal } from '../../helpers/intro/library'
 
 export default {
-  name: 'Intro',
-  components: {Modal, EnterGender, EnterName, PictureSelection, Layout},
+  name: 'IntroPage',
+  components: {ShowModal, EnterGender, EnterName, PictureSelection, DefaultLayout},
   data: function () {
     return {
       name: null,

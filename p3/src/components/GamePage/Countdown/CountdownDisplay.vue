@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Countdown',
+  name: 'CountdownDisplay',
   data: function () {
     return {
       countDown: 3

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Metric',
+  name: 'DisplayMetric',
   props: {
     counterValue: Number
   }
