@@ -1,11 +1,11 @@
 <template>
   <div>
-    <router-view/>
+    hello
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'MessagesPage'
 }
 </script>

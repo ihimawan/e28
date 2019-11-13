@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Orchestrator from '../components/Orchestrator'
 import GamePage from '../components/GamePage/GamePage'
-import ProfilePage from '../components/MainPage/ProfilePage/ProfilePage'
+import ProfilePage from '../components/HomePage/MainPage/ProfilePage/ProfilePage'
+import MessagesPage from '../components/HomePage/MainPage/MessagesPage/MessagesPage'
+import DashboardPage from '../components/HomePage/MainPage/DashboardPage/DashboardPage'
 
 Vue.use(Router)
 
 let router = new Router({
+  mode: 'history',
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Orchestrator
+      name: 'DashboardPage',
+      component: DashboardPage
     },
     {
       path: '/game',
@@ -22,12 +25,12 @@ let router = new Router({
       path: '/profile',
       name: 'ProfilePage',
       component: ProfilePage
+    },
+    {
+      path: '/messages',
+      name: 'MessagesPage',
+      component: MessagesPage
     }
-    // {
-    //   path: '/messages',
-    //   name: 'MessagesPage',
-    //   component: MessagesPage
-    // }
   ]
 })
 

@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import DefaultLayout from '../UI/DefaultLayout/DefaultLayout'
+import DefaultLayout from '../../../UI/DefaultLayout/DefaultLayout'
 import PictureSelection from './PictureSelection/PictureSelection'
 import EnterName from './EnterName/EnterName'
 import EnterGender from './EnterGender/EnterGender'
-import ShowModal from '../UI/ShowModal/ShowModal'
-import { playerModal } from '../../helpers/intro/library'
+import ShowModal from '../../../UI/ShowModal/ShowModal'
+import { playerModal } from '../../../../helpers/intro/library'
 
 export default {
   name: 'IntroPage',

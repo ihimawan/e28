@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="playerData">
     <div class="row justify-content-center">
       <div class="col-sm">
         <img :src="playerPic.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"/>
@@ -74,32 +74,33 @@
 
 <script>
 
-import { playerPictures } from '../../../helpers/intro/library'
+import { playerPictures } from '../../../../helpers/intro/library'
 import DisplayMetric from './DisplayMetric/DisplayMetric'
-import { validateName } from '../../../helpers/intro/settings'
+import { validateName } from '../../../../helpers/intro/settings'
+import {
+  copyJSONValues,
+  getJSONFromLocalStorage,
+  playerDataKey,
+  setJSONToLocalStorage
+} from '../../../../helpers/commons/constants'
 
 export default {
   name: 'ProfilePage',
   components: {DisplayMetric},
-  props: {
-    playerData: {
-      type: Object,
-      required: true
-    }
-  },
   data: function () {
     return {
-      playerPic: playerPictures[this.playerData.selectedPictureIdx],
-      newName: this.playerData.name,
-      newAbout: this.playerData.about,
-      newLookingFor: this.playerData.lookingFor,
+      playerData: null,
+      playerPic: null,
+      newName: null,
+      newAbout: null,
+      newLookingFor: null,
       messages: null
     }
   },
   methods: {
     saveChanges: function () {
       if (this.hasDelta()) {
-        this.$emit('update', {
+        this.playerDataUpdate({
           name: this.newName,
           about: this.newAbout,
           lookingFor: this.newLookingFor
@@ -116,12 +117,25 @@ export default {
       return this.validNewName && (this.newName !== this.playerData.name ||
         this.newAbout !== this.playerData.about ||
         this.newLookingFor !== this.playerData.lookingFor)
+    },
+    playerDataUpdate: function (newPlayerData) {
+      const playerData = getJSONFromLocalStorage(playerDataKey)
+      setJSONToLocalStorage(playerDataKey, copyJSONValues(playerData, newPlayerData))
     }
   },
   computed: {
     validNewName: function () {
       return validateName(this.newName)
     }
+  },
+  mounted () {
+    const existingPlayerDataStr = localStorage.getItem(playerDataKey)
+    const playerData = JSON.parse(existingPlayerDataStr)
+    this.playerData = playerData
+    this.playerPic = playerPictures[playerData.selectedPictureIdx]
+    this.newName = playerData.name
+    this.newAbout = playerData.about
+    this.newLookingFor = playerData.lookingFor
   }
 }
 

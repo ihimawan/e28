@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import DefaultLayout from '../UI/DefaultLayout/DefaultLayout'
-import * as pageInfo from '../../helpers/preintro/library'
+import DefaultLayout from '../../../UI/DefaultLayout/DefaultLayout'
+import * as pageInfo from '../../../../helpers/preintro/library'
 
 export default {
   next () {

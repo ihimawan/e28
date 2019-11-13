@@ -39,7 +39,9 @@ export default {
   #main-page {
     background-image: url(../../../assets/images/bg.jpg);
     background-repeat: repeat;
-    padding-top: 50px;
     color: #1A535C;
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 </style>

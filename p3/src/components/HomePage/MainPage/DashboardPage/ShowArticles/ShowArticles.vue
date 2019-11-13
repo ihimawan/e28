@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { articles } from '../../../../helpers/main/library'
+import { articles } from '../../../../../helpers/main/library'
 
 export default {
   name: 'Articles',

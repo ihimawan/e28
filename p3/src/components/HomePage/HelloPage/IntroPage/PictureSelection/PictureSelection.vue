@@ -17,7 +17,7 @@
 
 <script>
 
-import * as info from '../../../helpers/intro/library'
+import * as info from '../../../../../helpers/intro/library'
 
 export default {
   name: 'PictureSelection',

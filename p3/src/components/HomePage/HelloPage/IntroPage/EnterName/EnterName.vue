@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import * as settings from '../../../helpers/intro/settings'
+import * as settings from '../../../../../helpers/intro/settings'
 
 export default {
   name: 'EnterName',
