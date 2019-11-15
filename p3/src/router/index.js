@@ -4,6 +4,7 @@ import GamePage from '../components/GamePage/GamePage'
 import ProfilePage from '../components/HomePage/MainPage/ProfilePage/ProfilePage'
 import MessagesPage from '../components/HomePage/MainPage/MessagesPage/MessagesPage'
 import DashboardPage from '../components/HomePage/MainPage/DashboardPage/DashboardPage'
+import GamePageLayout from '../components/GamePage/GamePageLayout'
 
 Vue.use(Router)
 
@@ -19,6 +20,7 @@ let router = new Router({
     {
       path: '/game',
       name: 'GamePage',
+      meta: {layout: GamePageLayout},
       component: GamePage
     },
     {

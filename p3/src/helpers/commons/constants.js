@@ -20,6 +20,12 @@ export const pages = [
 
 export const llamasText = 'llamas'
 export const alpacaText = 'alpacas'
+const llamasId = 2
+const alpacaId = 1
+
+export const getChoiceId = (text) => {
+  return text === llamasText ? llamasId : alpacaId
+}
 
 export const playerDataKey = 'playerData'
 

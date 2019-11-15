@@ -21,7 +21,7 @@
                                                                              target="blank">read this article.</a></li>
     </ul>
     <div class="instruction-buttons">
-      <button type="button" @click="$emit('return-to-home')" class=" btn btn-secondary">Nevermind,
+      <button type="button" @click="returnHome" class=" btn btn-secondary">Nevermind,
         I want to go back to looking at Alpacas</button>
       <button type="button" @click="$emit('begin-game')" class="btn btn-primary">Start eligibility for
         this secret society</button>
@@ -30,8 +30,15 @@
 </template>
 
 <script>
+import router from '../../../router'
+
 export default {
-  name: 'InstructionsList'
+  name: 'InstructionsList',
+  methods: {
+    returnHome: function () {
+      router.push({name: 'DashboardPage'})
+    }
+  }
 }
 </script>
 

@@ -1,4 +1,3 @@
-import gameChoices from '../commons/profileCollection'
 import gif2 from '../../assets/images/gifs/2.gif'
 import gif3 from '../../assets/images/gifs/3.gif'
 
@@ -6,7 +5,7 @@ import gif3 from '../../assets/images/gifs/3.gif'
 export const maxChoices = 12
 export const passingPercentage = 70
 
-export const getGameStartState = () => {
+export const getGameStartState = (profileCollection) => {
   return {
     countDown: 3,
     currentIndex: null,
@@ -17,7 +16,7 @@ export const getGameStartState = () => {
     timePerImg: 5000,
     score: 0,
     maxChoices: maxChoices,
-    choices: [...gameChoices]
+    choices: [...profileCollection]
   }
 }
 

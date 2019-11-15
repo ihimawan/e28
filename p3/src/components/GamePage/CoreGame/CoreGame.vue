@@ -1,14 +1,22 @@
 <template>
   <div>
-    <div class="row justify-content-center">
-      <h1 class="display-4">question {{state.doneIndexes.size}} of {{state.maxChoices}}
-      </h1>
+    <div class="row justify-content-center" v-if="loading">
+      Loading...
     </div>
+    <div class="row justify-content-center" v-else-if="!loading && error">
+      Unable to load game :( come back later?
+    </div>
+    <div v-else>
+      <div class="row justify-content-center">
+        <h1 class="display-4">question {{state.doneIndexes.size}} of {{state.maxChoices}}
+        </h1>
+      </div>
 
-    <div class="row justify-content-center">
-      <PastChoices :choice-displays="leftChoices" />
-      <ProfileCard :current-profile="state.choices[state.currentIndex]" @select-answer="chooseHandler"/>
-      <PastChoices :choice-displays="rightChoices" />
+      <div class="row justify-content-center">
+        <PastChoices :choice-displays="leftChoices"/>
+        <ProfileCard :current-profile="state.choices[state.currentIndex]" @select-answer="chooseHandler"/>
+        <PastChoices :choice-displays="rightChoices"/>
+      </div>
     </div>
   </div>
 </template>
@@ -17,13 +25,16 @@
 import * as settings from '../../../helpers/game/settings'
 import PastChoices from './PastChoices/PastChoices'
 import ProfileCard from './ProfileCard/ProfileCard'
-import { llamasText } from '../../../helpers/commons/constants'
+import {copyJSONValues, getChoiceId, llamasText} from '../../../helpers/commons/constants'
+import axios from '../../../axios'
 
 export default {
   name: 'CoreGame',
   components: {ProfileCard, PastChoices},
   data: function () {
     return {
+      loading: true,
+      error: false,
       state: {
         currentIndex: 0,
         leftChoiceIndexes: [],
@@ -37,9 +48,8 @@ export default {
       }
     }
   },
-  beforeMount: function () {
+  mounted: function () {
     this.gameBeginHandler()
-    this.generateNewImageHandler()
   },
   computed: {
     leftChoices: function () {
@@ -50,14 +60,18 @@ export default {
     }
   },
   methods: {
-    continuePage: function () {
-    },
     gameBeginHandler: function () {
       // reset game settings
-      const startState = settings.getGameStartState()
-      Object.keys(startState).forEach(key => {
-        this.state[key] = startState[key]
-      })
+      axios.get('/profiles')
+        .then(res => {
+          let profileCollections = res.data
+          const startState = settings.getGameStartState(profileCollections)
+          this.state = copyJSONValues(this.state, startState)
+          this.error = false
+          this.generateNewImageHandler()
+        })
+        .catch(() => (this.error = true))
+        .finally(() => (this.loading = false))
     },
     generateNewImageHandler: function () {
       // check if game is finished
@@ -79,7 +93,8 @@ export default {
       this.$emit('game-finish', this.state.modal)
     },
     chooseHandler: function (choice) {
-      if (this.state.choices[this.state.currentIndex].species === choice) { // 'llamas' or 'alpacas'
+      const choiceId = getChoiceId(choice)
+      if (this.state.choices[this.state.currentIndex].speciesId === choiceId) {
         this.state.score++
       } else {
         this.state.wrongChoiceIndexes.push(this.state.currentIndex)

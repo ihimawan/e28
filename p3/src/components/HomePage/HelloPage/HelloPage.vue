@@ -15,7 +15,6 @@ import {
   playerDataKey,
   setJSONToLocalStorage
 } from '../../../helpers/commons/constants'
-import router from '../../../router'
 
 export default {
   name: 'HelloPage',
@@ -27,9 +26,9 @@ export default {
   },
   methods: {
     fromIntro: function (playerData) {
-      const newPlayerData = getDefaultPlayerData()
-      setJSONToLocalStorage(playerDataKey, copyJSONValues(newPlayerData, playerData))
-      router.push({name: 'HomePage'})
+      const newPlayerData = copyJSONValues(getDefaultPlayerData(), playerData)
+      setJSONToLocalStorage(playerDataKey, newPlayerData)
+      this.$emit('profile-created', newPlayerData)
     },
     fromPreIntro: function () {
       this.currentStage = introStages[1]

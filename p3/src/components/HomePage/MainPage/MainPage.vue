@@ -1,29 +1,19 @@
 <template>
-  <DefaultLayout v-if="playerData">
-    <template #header>Welcome, {{playerData.name}}.</template>
-    <template #subtext>You look like someone who could use a pretty alpaca...</template>
-    <NavigationBar/>
-
+  <component :is="layout">
     <router-view/>
-
-  </DefaultLayout>
+  </component>
 </template>
 
 <script>
-import DefaultLayout from '../../UI/DefaultLayout/DefaultLayout'
-import NavigationBar from './NagivationBar/NavigationBar'
-import {playerDataKey} from '../../../helpers/commons/constants'
+
+import MainPageLayout from './MainPageLayout'
 
 export default {
   name: 'MainPage',
-  components: {NavigationBar, DefaultLayout},
-  data: function () {
-    return {
-      playerData: null
+  computed: {
+    layout: function () {
+      return this.$route.meta.layout || MainPageLayout
     }
-  },
-  mounted () {
-    this.playerData = JSON.parse(localStorage.getItem(playerDataKey))
   }
 }
 </script>

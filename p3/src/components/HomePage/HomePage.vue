@@ -1,5 +1,5 @@
 <template>
-  <HelloPage v-if="!playerData"/>
+  <HelloPage v-if="!playerData" @profile-created="profileCreated"/>
   <MainPage v-else-if="playerData"/>
 </template>
 
@@ -13,6 +13,11 @@ export default {
   data: function () {
     return {
       playerData: null
+    }
+  },
+  methods: {
+    profileCreated: function (newPlayerData) {
+      this.playerData = newPlayerData
     }
   },
   mounted () {

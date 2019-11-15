@@ -1,6 +1,4 @@
-import profileCollection from '../commons/profileCollection'
-
-export const getHomeProfiles = () => {
+export const getHomeProfiles = (profileCollection) => {
   const needHowMany = 3
   const randomIndexes = []
   for (let i = 0; i < needHowMany; i++) {

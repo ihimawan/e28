@@ -1,7 +1,6 @@
 <template>
   <ul class="nav nav-tabs">
-    <NavigationItem v-for="(page, index) in pages" :active='index===activeIndex' :route-name="page.routeName"
-                    :key="index">
+    <NavigationItem v-for="(page, index) in pages" :route-name="page.routeName" :key="index">
       <FontAwesomeIcon :icon="page.icon" class="navigationIcon"/>
       {{page.value}}
     </NavigationItem>

@@ -1,45 +1,46 @@
 <template>
-  <DefaultLayout>
-    <template #header>Llama or Alpaca Test</template>
-    <template #subtext>Because we can't deal with Llamas. They're Llaaaaame (hehe)</template>
-
-    <InstructionsList v-show="instructionsShow" @return-to-home="$emit('go-home', passed)" @begin-game="readyHandler"/>
+  <div>
+    <InstructionsList v-show="instructionsShow" @return-to-home="returnHome" @begin-game="readyHandler"/>
     <CountdownDisplay v-if="loadingScreenShow" @finish-countdown="startGameHandler"/>
 
     <div v-if="gameBegin">
-      <button @click="$emit('go-home', passed)" class="btn btn-secondary">Nevermind, I want
+      <button @click="returnHome" class="btn btn-secondary">Nevermind, I want
         to go back to looking at Alpacas
       </button>
       <button @click="restartGameHandler" class="btn btn-primary">Messed up... I want a
         restart.
       </button>
-      <CoreGame @go-home="$emit('go-home', passed)" @game-finish="gameFinishHandler"/>
+      <CoreGame @game-finish="gameFinishHandler"/>
     </div>
 
-    <ShowModal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="$emit('go-home', passed)">
+    <ShowModal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="returnHome">
       <div v-if="modal.wrongProfiles.length > 0">
         <p><strong>You got the following wrong:</strong></p>
-        <img :src="wrongProfile.url" v-for="(wrongProfile, index) in modal.wrongProfiles"
+        <img :src="require('../../assets/images/game/' + wrongProfile.id + '.jpg')" v-for="(wrongProfile, index) in modal.wrongProfiles"
              class="rounded answer-review-img" :key="index">
       </div>
       <div v-else>
         <strong>You got nothing wrong! You are an expert!</strong>
       </div>
     </ShowModal>
-
-  </DefaultLayout>
+  </div>
 </template>
 
 <script>
-import DefaultLayout from '../UI/DefaultLayout/DefaultLayout'
 import InstructionsList from './InstructionsList/InstructionsList'
 import CountdownDisplay from './Countdown/CountdownDisplay'
 import CoreGame from './CoreGame/CoreGame'
 import ShowModal from '../UI/ShowModal/ShowModal'
+import router from '../../router'
+import {
+  getJSONFromLocalStorage,
+  playerDataKey,
+  setJSONToLocalStorage
+} from '../../helpers/commons/constants'
 
 export default {
   name: 'GamePage',
-  components: {ShowModal, CoreGame, CountdownDisplay, InstructionsList, DefaultLayout},
+  components: {ShowModal, CoreGame, CountdownDisplay, InstructionsList},
   data: function () {
     return {
       instructionsShow: true,
@@ -80,8 +81,14 @@ export default {
       this.modal.show = true
       this.instructionsShow = true
       if (this.modal.status === 'win') {
-        this.passed = true
+        const playerData = getJSONFromLocalStorage(playerDataKey)
+        const updatedPlayerData = {...playerData}
+        updatedPlayerData.passedTest = true
+        setJSONToLocalStorage(playerDataKey, updatedPlayerData)
       }
+    },
+    returnHome: function () {
+      router.push({name: 'DashboardPage'})
     }
   }
 }
