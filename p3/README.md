@@ -5,10 +5,13 @@
 ## Outside resources
 
 ## Notes
-* __Added functionality__: to edit your profile
+* Used the fake API (https://my-json-server.typicode.com/ihimawan/e28JsonServer) to store all available user profiles to be displayed on the main dashboard and the game.
+* Used local storage to store player information, such as name, gender, whether they have beaten the game, etc.
 * __Functionality I want to do__: messaging functionality to other alpacas (computers, really), counter to see how many conversations you initiated, received, and how many ghosted.
 
 ## Credits
+* Fake API using my-json-server (https://my-json-server.typicode.com/)
+* Github Repository used with my-json-server https://github.com/ihimawan/e28JsonServer
 * Used Fontawesome (https://github.com/FortAwesome/vue-fontawesome)
 * Used Bootstrap's CSS
 * NONE of Alpaca pictures are my own! Sources: https://www.boredpanda.com/cute-funny-alpacas/
