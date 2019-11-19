@@ -58,16 +58,48 @@ export const getDefaultPlayerData = () => {
 
 export const getDefaultMessageData = () => {
   return [
-    {
-      userId: 21, // talking to user with ID
-      username: 'Miss Boss Lady',
-      messages: [
-        {
-          userId: 21,
-          text: 'Welcome to Alpacan Mingle! The best place to find an lover and for beautiful Alpacas to find the beautiful and wonderful... You!! Exited to have you here.'
-        }
-      ],
-      read: false
-    }
+    { ...createMessage([], 21, 21, 'Miss Boss Lady', 'Welcome to Alpacan Mingle! The best place to find an lover and for beautiful Alpacas to find the beautiful and wonderful... You!! Exited to have you here.') }
   ]
 }
+
+export const createMessage = (allMessages, userIdFrom, userId, usernameTo, message) => {
+  const addMessageToConversation = (existingConversation, userIdFrom, message) => {
+    const updatedConversation = {...existingConversation}
+    updatedConversation.messages.push({
+      userId: userIdFrom,
+      text: message
+    })
+    updatedConversation.lastMessageTimestamp = Date.now()
+    updatedConversation.read = userIdFrom === playerId
+    return updatedConversation
+  }
+
+  const createNewConversation = (userIdFrom, userId, usernameTo, message) => {
+    return {
+      userId: userId,
+      username: usernameTo,
+      messages: [
+        {
+          userId: userIdFrom,
+          text: message
+        }
+      ],
+      lastMessageTimestamp: Date.now(),
+      read: userIdFrom === playerId
+    }
+  }
+
+  const updatedAllMessages = [...allMessages]
+  const conversationWithUserIndex = updatedAllMessages.findIndex(convo => convo.userId === userId)
+  if (~conversationWithUserIndex) { // have talked to this user before
+    const updatedConversation = addMessageToConversation(conversationWithUserIndex, userIdFrom, message)
+    updatedAllMessages[conversationWithUserIndex] = updatedConversation
+  } else { // never talked to this person before
+    const newConversation = createNewConversation(userIdFrom, userId, usernameTo, message)
+    updatedAllMessages.push(newConversation)
+  }
+
+  return updatedAllMessages
+}
+
+export const playerId = 0

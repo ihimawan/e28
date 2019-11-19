@@ -8,6 +8,13 @@
   border-color: #ff667c;
 }
 
+.btn-primary:disabled,
+.btn-primary[disabled]{
+  border: 1px solid #cccccc;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .answer-review-img {
  margin: 5px;
  max-width:100px;

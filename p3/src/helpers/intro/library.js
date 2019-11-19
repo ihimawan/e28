@@ -1,6 +1,6 @@
-import picture1 from '../../assets/images/players/one.png'
-import picture2 from '../../assets/images/players/two.png'
-import picture3 from '../../assets/images/players/three.png'
+import picture1 from '../../assets/images/players/0.png'
+import picture2 from '../../assets/images/players/1.png'
+import picture3 from '../../assets/images/players/2.png'
 import gif1 from '../../assets/images/gifs/1.gif'
 
 export const playerPictures = [

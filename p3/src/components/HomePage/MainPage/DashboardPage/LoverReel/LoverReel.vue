@@ -21,16 +21,9 @@
           <div class="card-body">
             <h5 class="card-title">{{profile.title}}</h5>
             <p class="card-text">{{profile.description}}</p>
-            <div v-if="!hasPlayerPassed">
-              <button class="btn btn-primary" @click="$emit('open-modal')">Chat with
-                me!
-              </button>
-            </div>
-            <div v-else>
-              <button class="btn btn-primary" @click="chatHandler">Chat with
-                me!
-              </button>
-            </div>
+            <button class="btn btn-primary" @click="!hasPlayerPassed ? $emit('open-modal') : openChatModal(profile)">Chat with
+              me!
+            </button>
           </div>
           <div class="card-footer">
             <small class="text-muted">{{profile.distance}} alpaca distances away</small>
@@ -42,6 +35,7 @@
           like? Load more...
         </button>
       </div>
+      <ChatModal :modal-show.sync="modal.show" :data="modal" />
     </div>
   </div>
 </template>
@@ -49,10 +43,12 @@
 <script>
 
 import { getHomeProfiles } from '../../../../../helpers/main/settings'
+import ChatModal from '../ChatModal/ChatModal'
 import axios from '../../../../../axios'
 
 export default {
   name: 'LoverReel',
+  components: {ChatModal},
   props: {
     hasPlayerPassed: {
       type: Boolean,
@@ -63,12 +59,17 @@ export default {
     return {
       loading: true,
       masterProfileCollection: null,
-      profiles: null
+      profiles: null,
+      modal: {
+        show: false,
+        profile: null
+      }
     }
   },
   methods: {
-    chatHandler: function () {
-      window.open('https://indrihimawan.com/')
+    openChatModal: function (profile) {
+      this.modal.show = true
+      this.modal.profile = profile
     },
     refreshProfiles: function () {
       this.profiles = getHomeProfiles(this.masterProfileCollection)

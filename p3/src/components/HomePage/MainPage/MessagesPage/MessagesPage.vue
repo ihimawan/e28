@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted () {
-    this.messageInfos = getJSONFromLocalStorage(messageDataKey)
+    this.messageInfos = getJSONFromLocalStorage(messageDataKey).sort((first, second) => first.lastMessageTimestamp > second.lastMessageTimestamp)
     this.loaded = true
   }
 

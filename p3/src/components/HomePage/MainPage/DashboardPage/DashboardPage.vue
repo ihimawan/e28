@@ -34,6 +34,7 @@ export default {
     openModal: function () {
       this.modal.show = true
     },
+
     goToGamePage: function () {
       router.push({name: 'GamePage'})
     }

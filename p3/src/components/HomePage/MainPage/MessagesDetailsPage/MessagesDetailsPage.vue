@@ -4,13 +4,13 @@
       Unable to find conversation.
     </div>
     <div class="container" v-else>
-      <MessageText v-for="(message, index) in messages" :message="message" :key="index">{{message.text}}</MessageText>
+      <MessageText v-for="(message, index) in messages" :message="message" :player-image-index="playerImageIndex" :key="index">{{message.text}}</MessageText>
     </div>
   </div>
 </template>
 
 <script>
-import {getJSONFromLocalStorage, messageDataKey} from '../../../../helpers/commons/constants'
+import {getJSONFromLocalStorage, messageDataKey, playerDataKey} from '../../../../helpers/commons/constants'
 import MessageText from './MessageText/MessageText'
 
 export default {
@@ -21,11 +21,14 @@ export default {
     return {
       loaded: false,
       found: false,
-      messages: []
+      messages: [],
+      playerImageIndex: null
     }
   },
   mounted () {
     const allMessages = getJSONFromLocalStorage(messageDataKey)
+    const playerData = getJSONFromLocalStorage(playerDataKey)
+    this.playerImageIndex = playerData.selectedPictureIdx
     const messageForId = allMessages.find(messageInfo => messageInfo.userId === Number(this.userId))
     if (messageForId) {
       this.found = true
