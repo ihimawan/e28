@@ -3,17 +3,8 @@
     <div class="row justify-content-center">
       <div class="col-sm">
         <img :src="playerPic.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"/>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="player-pic-comment">
           <p class="text-muted">{{playerPic.comment}}</p>
-        </div>
-        <div class="row justify-content-center">
-          <p>Messaging stats</p>
-          <small>(These numbers won't change. Coming soon.)</small>
-        </div>
-        <div class="row">
-          <DisplayMetric :counter-value="playerData.initiated">Initiated</DisplayMetric>
-          <DisplayMetric :counter-value="playerData.received">Received</DisplayMetric>
-          <DisplayMetric :counter-value="playerData.ghosted">Ghosted</DisplayMetric>
         </div>
       </div>
       <div class="col-sm-8">
@@ -75,7 +66,6 @@
 <script>
 
 import { playerPictures } from '../../../../helpers/intro/library'
-import DisplayMetric from './DisplayMetric/DisplayMetric'
 import { validateName } from '../../../../helpers/intro/settings'
 import {
   copyJSONValues,
@@ -86,7 +76,6 @@ import {
 
 export default {
   name: 'ProfilePage',
-  components: {DisplayMetric},
   data: function () {
     return {
       playerData: null,
@@ -106,6 +95,12 @@ export default {
           lookingFor: this.newLookingFor
         })
         this.messages = 'Changed Saved!'
+        if (this.newName !== this.playerData.name) {
+          this.$emit('update-template')
+        }
+        this.playerData.name = this.newName
+        this.playerData.about = this.newAbout
+        this.playerData.lookingFor = this.newLookingFor
       } else {
         this.messages = 'No new changed needed to be saved.'
       }
@@ -144,5 +139,8 @@ export default {
 <style scoped>
 .save-button{
   margin-right: 15px;
+}
+#player-pic-comment{
+  margin: 0 15px 0 10px;
 }
 </style>

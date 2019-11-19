@@ -5,6 +5,7 @@ import ProfilePage from '../components/HomePage/MainPage/ProfilePage/ProfilePage
 import MessagesPage from '../components/HomePage/MainPage/MessagesPage/MessagesPage'
 import DashboardPage from '../components/HomePage/MainPage/DashboardPage/DashboardPage'
 import GamePageLayout from '../components/GamePage/GamePageLayout'
+import MessagesDetailsPage from '../components/HomePage/MainPage/MessagesDetailsPage/MessagesDetailsPage'
 
 Vue.use(Router)
 
@@ -32,6 +33,12 @@ let router = new Router({
       path: '/messages',
       name: 'MessagesPage',
       component: MessagesPage
+    },
+    {
+      path: '/messages/:userId',
+      name: 'MessagesDetailsPage',
+      component: MessagesDetailsPage,
+      props: true
     }
   ]
 })

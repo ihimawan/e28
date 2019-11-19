@@ -9,9 +9,9 @@
 import PreIntroPage from './PreIntroPage/PreIntroPage'
 import IntroPage from './IntroPage/IntroPage'
 import {
-  copyJSONValues,
+  copyJSONValues, getDefaultMessageData,
   getDefaultPlayerData,
-  introStages,
+  introStages, messageDataKey,
   playerDataKey,
   setJSONToLocalStorage
 } from '../../../helpers/commons/constants'
@@ -28,6 +28,8 @@ export default {
     fromIntro: function (playerData) {
       const newPlayerData = copyJSONValues(getDefaultPlayerData(), playerData)
       setJSONToLocalStorage(playerDataKey, newPlayerData)
+      const newMessageData = getDefaultMessageData()
+      setJSONToLocalStorage(messageDataKey, newMessageData)
       this.$emit('profile-created', newPlayerData)
     },
     fromPreIntro: function () {

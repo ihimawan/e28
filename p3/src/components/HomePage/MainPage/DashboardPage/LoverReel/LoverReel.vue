@@ -27,7 +27,7 @@
               </button>
             </div>
             <div v-else>
-              <button class="btn btn-primary" @click="journeyEndHandler">Chat with
+              <button class="btn btn-primary" @click="chatHandler">Chat with
                 me!
               </button>
             </div>
@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    journeyEndHandler: function () {
+    chatHandler: function () {
       window.open('https://indrihimawan.com/')
     },
     refreshProfiles: function () {

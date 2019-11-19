@@ -28,6 +28,7 @@ export const getChoiceId = (text) => {
 }
 
 export const playerDataKey = 'playerData'
+export const messageDataKey = 'messageData'
 
 export const copyJSONValues = (destination, source) => {
   const dest = {...destination}
@@ -51,9 +52,22 @@ export const getDefaultPlayerData = () => {
     selectedPictureIdx: null,
     passedTest: false,
     about: null,
-    lookingFor: null,
-    initiated: 0,
-    received: 0,
-    ghosted: 0
+    lookingFor: null
   }
+}
+
+export const getDefaultMessageData = () => {
+  return [
+    {
+      userId: 21, // talking to user with ID
+      username: 'Miss Boss Lady',
+      messages: [
+        {
+          userId: 21,
+          text: 'Welcome to Alpacan Mingle! The best place to find an lover and for beautiful Alpacas to find the beautiful and wonderful... You!! Exited to have you here.'
+        }
+      ],
+      read: false
+    }
+  ]
 }
