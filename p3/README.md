@@ -7,7 +7,7 @@
 ## Notes
 * Used the fake API (https://my-json-server.typicode.com/ihimawan/e28JsonServer) to store all available user profiles to be displayed on the main dashboard and the game.
 * Used local storage to store player information, such as name, gender, whether they have beaten the game, etc.
-* __Functionality I want to do__: messaging functionality to other alpacas (computers, really), counter to see how many conversations you initiated, received, and how many ghosted.
+* __Functionality I want to do__: messaging functionality to other alpacas (computers, really). Right now it's just one way. You will never get messages from other users.
 
 ## Things I've probably could have done better
 * Using a local storage key for each conversation, instead of consolidating all of them in one JSON as a value in one key in the local storage.
