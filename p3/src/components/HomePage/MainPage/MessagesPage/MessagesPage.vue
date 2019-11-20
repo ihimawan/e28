@@ -17,9 +17,13 @@ export default {
     }
   },
   mounted () {
-    this.messageInfos = getJSONFromLocalStorage(messageDataKey).sort((first, second) => first.lastMessageTimestamp > second.lastMessageTimestamp)
+    const messages = getJSONFromLocalStorage(messageDataKey)
+    messages.sort((first, second) => {
+      console.log(first.userId + ' ' + second.userId + ' ' + first.lastMessageTimestamp > second.lastMessageTimestamp)
+      return second.lastMessageTimestamp - first.lastMessageTimestamp
+    })
+    this.messageInfos = messages
     this.loaded = true
   }
-
 }
 </script>

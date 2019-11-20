@@ -70,8 +70,10 @@ export default {
       const updatedMessages = createMessage(existingMessages, playerId, this.data.profile.id, this.data.profile.title, this.message)
       setJSONToLocalStorage(messageDataKey, updatedMessages)
       this.sent = true
+      this.message = ''
     },
     dismissModalHandler: function () {
+      this.sent = false
       this.$emit('update:modal-show', false)
     },
     agreeHandler: function () {

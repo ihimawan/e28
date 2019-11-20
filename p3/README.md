@@ -9,6 +9,10 @@
 * Used local storage to store player information, such as name, gender, whether they have beaten the game, etc.
 * __Functionality I want to do__: messaging functionality to other alpacas (computers, really), counter to see how many conversations you initiated, received, and how many ghosted.
 
+## Things I've probably could have done better
+* Using a local storage key for each conversation, instead of consolidating all of them in one JSON as a value in one key in the local storage.
+* Need to refresh to see messages badges to be updated
+
 ## Credits
 * Fake API using my-json-server (https://my-json-server.typicode.com/)
 * Github Repository used with my-json-server https://github.com/ihimawan/e28JsonServer

@@ -4,13 +4,30 @@
       Unable to find conversation.
     </div>
     <div class="container" v-else>
-      <MessageText v-for="(message, index) in messages" :message="message" :player-image-index="playerImageIndex" :key="index">{{message.text}}</MessageText>
+      <div class="fixed-height-container overflow-content" id="message-window">
+        <MessageText v-for="(message, index) in messages" :message="message" :player-image-index="playerImageIndex" :key="index">{{message.text}}</MessageText>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-11">
+          <textarea class="form-control" rows="3" placeholder="Write message" v-model="currentMessage"></textarea>
+          <small>Note: They will NEVER reply because they are not coded :P So don't wait!</small>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary send-button" @click="sendMessage">Send</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {getJSONFromLocalStorage, messageDataKey, playerDataKey} from '../../../../helpers/commons/constants'
+import {
+  createMessage,
+  getJSONFromLocalStorage,
+  messageDataKey,
+  playerDataKey, playerId,
+  readMessage, setJSONToLocalStorage
+} from '../../../../helpers/commons/constants'
 import MessageText from './MessageText/MessageText'
 
 export default {
@@ -22,8 +39,25 @@ export default {
       loaded: false,
       found: false,
       messages: [],
-      playerImageIndex: null
+      playerImageIndex: null,
+      currentMessage: ''
     }
+  },
+  methods: {
+    sendMessage: function () {
+      if (this.currentMessage !== '') {
+        const allMessages = getJSONFromLocalStorage(messageDataKey)
+        const updatedMessages = createMessage(allMessages, playerId, Number(this.userId), null, this.currentMessage)
+        this.currentMessage = ''
+        const messageForId = allMessages.find(messageInfo => messageInfo.userId === Number(this.userId))
+        this.messages = messageForId.messages
+        setJSONToLocalStorage(messageDataKey, updatedMessages)
+      }
+    }
+  },
+  updated () {
+    let container = this.$el.querySelector('#message-window')
+    container.scrollTop = container.scrollHeight
   },
   mounted () {
     const allMessages = getJSONFromLocalStorage(messageDataKey)
@@ -33,8 +67,31 @@ export default {
     if (messageForId) {
       this.found = true
       this.messages = messageForId.messages
+      const updatedMessages = readMessage(allMessages, messageForId.userId)
+      setJSONToLocalStorage(messageDataKey, updatedMessages)
     }
     this.loaded = true
   }
 }
 </script>
+
+<style scoped>
+.fixed-height-container {
+  height: 500px;
+  padding:3px;
+  background:#f00;
+  margin-bottom: 15px;
+}
+
+.overflow-content {
+  height:500px;
+  overflow-x: hidden;
+  overflow-y: visible;
+  background:#fff;
+}
+
+.send-button {
+  height: 75px;
+  width: 75px;
+}
+</style>

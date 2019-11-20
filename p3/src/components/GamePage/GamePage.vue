@@ -33,7 +33,8 @@ import CoreGame from './CoreGame/CoreGame'
 import ShowModal from '../UI/ShowModal/ShowModal'
 import router from '../../router'
 import {
-  getJSONFromLocalStorage,
+  createMessage,
+  getJSONFromLocalStorage, messageDataKey,
   playerDataKey,
   setJSONToLocalStorage
 } from '../../helpers/commons/constants'
@@ -84,6 +85,9 @@ export default {
         const playerData = getJSONFromLocalStorage(playerDataKey)
         const updatedPlayerData = {...playerData}
         updatedPlayerData.passedTest = true
+        const allMessages = getJSONFromLocalStorage(messageDataKey)
+        const updatedMessages = createMessage(allMessages, 21, 21, null, 'Congratulations for passing the test! Now you can go to your dashboard and click on \'Chat with me!\' on any profile you see and you can start chatting with them <3')
+        setJSONToLocalStorage(messageDataKey, updatedMessages)
         setJSONToLocalStorage(playerDataKey, updatedPlayerData)
       }
     },
