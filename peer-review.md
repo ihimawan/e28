@@ -8,7 +8,7 @@
 *Include context and code examples in your answers when relevant.*
 
 ### Are you able to produce any errors or unexpected results?
-- I can append query parameters on the search bar so that it returns unexpected results. For example, inserting `bitcoin&from=2019-01-01` as a search query resulted in a `426 UPGRADE REQUIRED` from the news API, which results in the console logging an error. I think the search bar can benefit from validation. Or something like this:
+- I can append query parameters on the search bar so that it returns unexpected results. For example, inserting `bitcoin&from=2019-01-01` as a search query resulted in a `426 UPGRADE REQUIRED` from the news API, which results in the console logging an error. With this, the search bar can benefit from validation. Even better, using axios to do something like this:
 ```javascript
 axios.get('/user', {
     params: {
@@ -18,7 +18,7 @@ axios.get('/user', {
 ```
 
 ### Were there any parts of the interface that you found confusing or unclear?
-- `Recent Searches` was unclear to me for a moment. It wasn't separated by any significant character (currently delimited by a space character), so I thought I might have been typing my search query incorrectly. Would be nice if it could be underlined or have it link to the search results, or something similar.
+- `Recent Searches` was unclear to me for a moment. It wasn't separated by any significant character (currently delimited by a space character), so I thought I might have been typing my search query incorrectly. Would be nice if it could be underlined instead or something that is more obvious than just a space between two search queries. A fun idea could be also to link them to the search results themselves.
 - Would be nice to add a catch whenever the external API doesn't work so that a text along the lines of `unable to retrieve news` can be shown to the user. Currently it shows empty.
 
 ### Are there aspects of the code that you feel were not self-evident and would benefit from comments?
