@@ -16,6 +16,7 @@ axios.get('/user', {
     }
   })
 ```
+- None other than the above! I don't see any other console logs or errors from the project.
 
 ### Were there any parts of the interface that you found confusing or unclear?
 - `Recent Searches` was unclear to me for a moment. It wasn't separated by any significant character (currently delimited by a space character), so I thought I might have been typing my search query incorrectly. Would be nice if it could be underlined instead or something that is more obvious than just a space between two search queries. A fun idea could be also to link them to the search results themselves.
@@ -30,7 +31,7 @@ axios.get('/user', {
 - `api.jsonbin.io` to store JSON!
 
 ### Are there any best practices discussed in course material that you feel were not addressed in the code?
-- Nothing that I can think of from what I've reviewed.
+- The modal that you currently have in `NewsList.vue` could be its own separate component. This would modularize the code and make it more maintainable.
 
 ### Do you have any additional comments not covered in the above questions?
 - `app.js` could be simplified such that if the API key changes, you won't have to change it in multiple places/lines. Same thing for the base URL of the news API. There is a feature in axios that you can use to set the base URL:
@@ -43,5 +44,7 @@ const instance = axios.create({
 
 export default instance
 ```
-- Not sure if this was intended, but it looks like `My Channels` is shared across all users of the project, evident by the use one JSONBin location across all users.
+However, excellent job for using the `js` file to pull out common variables!
+
+- Not sure if this was intended, but it looks like `My Channels` is shared across all users of the project, evident by the use one JSONBin location across all users. If this is not intended, I think that the usage of local storage would have been efficient. This would reduce the amount of axios calls as well.
 

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0600403e-9377-4775-86bb-27d6e48b6f63" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/peer-review.md" beforeDir="false" afterPath="$PROJECT_DIR$/peer-review.md" afterDir="false" />
-    </list>
+    <list default="true" id="0600403e-9377-4775-86bb-27d6e48b6f63" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
       <updated>1574483978699</updated>
       <workItem from="1574483979863" duration="2879000" />
       <workItem from="1574730483266" duration="3541000" />
-      <workItem from="1575334347898" duration="2132000" />
+      <workItem from="1575334347898" duration="2365000" />
     </task>
     <servers />
   </component>
