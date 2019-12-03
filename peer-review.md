@@ -23,14 +23,14 @@ axios.get('/user', {
 
 ### Are there aspects of the code that you feel were not self-evident and would benefit from comments?
 - The package structure overall is easy to follow. I can see the various pages that are available through the package structure and the component `NewsList.vue` is a common component getting used across the pages.
-- There are assets that doesn't look like they are getting used. E.g. `src/assets/favicon/apple-touch-icon.png`
-- The existing code that is right now is straightforward and existing logic such as, fetching/adding new channels or search, aren't convoluted.
+- There are assets that don't look like they are getting used. E.g. `src/assets/favicon/apple-touch-icon.png`
+- The existing code is straightforward. Existing logic such as fetching/adding new channels or searching aren't convoluted.
 
 ### Are there any parts of the code that you found interesting or taught you something new?
 - `api.jsonbin.io` to store JSON!
 
 ### Are there any best practices discussed in course material that you feel were not addressed in the code?
-- Nothing that I can think of from what I've seen.
+- Nothing that I can think of from what I've reviewed.
 
 ### Do you have any additional comments not covered in the above questions?
 - `app.js` could be simplified such that if the API key changes, you won't have to change it in multiple places/lines. Same thing for the base URL of the news API. There is a feature in axios that you can use to set the base URL:
