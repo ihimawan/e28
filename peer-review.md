@@ -26,12 +26,33 @@ axios.get('/user', {
 - The package structure overall is easy to follow. I can see the various pages that are available through the package structure and the component `NewsList.vue` is a common component getting used across the pages.
 - There are assets that don't look like they are getting used. E.g. `src/assets/favicon/apple-touch-icon.png`
 - The existing code is straightforward. Existing logic such as fetching/adding new channels or searching aren't convoluted.
+- I see that in one of the logic in `NewsList.vue`, with the following:
+```javascript
+for(let i=0; i<this.myChannels.length; i++){
+        if(this.myChannels[i].domain == domain){
+          return true;
+        }
+}
+return false;
+```
+I think that this can instead be converted to using a one liner arrow function, such as:
+```javascript
+this.myChannels.some(channel => channel.domain === domain)
+```
+- There is the method `uniqueChannel` in `NewsList.vue` that looks like you are attempting to get a list of unique strings. You can instead use the built in Javascript Set.
+- `getSourceDomain` could use a bit of explanation on what it does. Judging by what I can see, it seems like it's trying to get the baseURL given a URL. If that is the case, you can simply use regex <https://coderwall.com/p/utgplg/regex-full-url-base-url>
 
 ### Are there any parts of the code that you found interesting or taught you something new?
 - `api.jsonbin.io` to store JSON!
 
 ### Are there any best practices discussed in course material that you feel were not addressed in the code?
 - The modal that you currently have in `NewsList.vue` could be its own separate component. This would modularize the code and make it more maintainable.
+- I'm not sure if this was mentioned in the course materials or not, but I read sometime ago about how it is a good idea not to modify the DOM manually when using the Vue framework. In `NewsList.vue`, you currently have lines like:
+```javascript
+let modal = document.getElementById("newsModal");
+modal.style.display = "none";
+```
+This can be converted to using either `v-if` or `v-show` instead.
 
 ### Do you have any additional comments not covered in the above questions?
 - `app.js` could be simplified such that if the API key changes, you won't have to change it in multiple places/lines. Same thing for the base URL of the news API. There is a feature in axios that you can use to set the base URL:
@@ -47,4 +68,5 @@ export default instance
 However, excellent job for using the `js` file to pull out common variables!
 
 - Not sure if this was intended, but it looks like `My Channels` is shared across all users of the project, evident by the use one JSONBin location across all users. If this is not intended, I think that the usage of local storage would have been efficient. This would reduce the amount of axios calls as well.
+- I am seeing several places where you are using `==` instead of `===`. For example, `this.myChannels[i].domain == domain`. As of right now, I don't see using `==` is affecting your existing code, but since Javacript is dynamically typed, I think it is best to use `===` instead to avoid unexpected results.
 
