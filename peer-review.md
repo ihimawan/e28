@@ -39,7 +39,7 @@ I think that this can instead be converted to using a one liner arrow function, 
 ```javascript
 this.myChannels.some(channel => channel.domain === domain)
 ```
-- There is the method `uniqueChannel` in `NewsList.vue` that looks like you are attempting to get a list of unique strings. You can instead use the built in Javascript Set.
+- There is the method `uniqueChannel` in `NewsList.vue` that looks like you are attempting to get a list of unique strings. You can instead use the builtin Javascript Set <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set>.
 - `getSourceDomain` could use a bit of explanation on what it does. Judging by what I can see, it seems like it's trying to get the baseURL given a URL. If that is the case, you can simply use regex <https://coderwall.com/p/utgplg/regex-full-url-base-url>
 
 ### Are there any parts of the code that you found interesting or taught you something new?
