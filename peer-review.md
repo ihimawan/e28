@@ -43,4 +43,5 @@ const instance = axios.create({
 
 export default instance
 ```
+- Not sure if this was intended, but it looks like `My Channels` is shared across all users of the project, evident by the use one JSONBin location across all users.
 
