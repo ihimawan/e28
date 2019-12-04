@@ -26,7 +26,7 @@ import {
   getJSONFromLocalStorage,
   messageDataKey,
   playerDataKey, playerId,
-  readMessage, setJSONToLocalStorage
+  readMessage, setJSONToLocalStorage, wasMessageRead
 } from '../../../../helpers/commons/constants'
 import MessageText from './MessageText/MessageText'
 
@@ -59,7 +59,16 @@ export default {
     let container = this.$el.querySelector('#message-window')
     container.scrollTop = container.scrollHeight
   },
+  computed: {
+    messageCount: function () {
+      return this.$store.state.messageCount
+    }
+  },
   mounted () {
+    if (!this.messageCount) {
+      this.$store.dispatch('setMessageCount')
+    }
+
     const allMessages = getJSONFromLocalStorage(messageDataKey)
     const playerData = getJSONFromLocalStorage(playerDataKey)
     this.playerImageIndex = playerData.selectedPictureIdx
@@ -67,8 +76,11 @@ export default {
     if (messageForId) {
       this.found = true
       this.messages = messageForId.messages
-      const updatedMessages = readMessage(allMessages, messageForId.userId)
-      setJSONToLocalStorage(messageDataKey, updatedMessages)
+      if (!wasMessageRead(allMessages, messageForId.userId)) {
+        const updatedMessages = readMessage(allMessages, messageForId.userId)
+        this.$store.commit('updateMessageCount', -1)
+        setJSONToLocalStorage(messageDataKey, updatedMessages)
+      }
     }
     this.loaded = true
   }

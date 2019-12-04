@@ -1,6 +1,6 @@
 <template>
-  <DefaultLayout v-if="playerData">
-    <template #header>Welcome, {{playerData.name}}.</template>
+  <DefaultLayout v-if="playerName">
+    <template #header>Welcome, {{playerName}}.</template>
     <template #subtext>You look like someone who could use a pretty alpaca...</template>
     <NavigationBar/>
 
@@ -12,18 +12,19 @@
 <script>
 import DefaultLayout from '../../UI/DefaultLayout/DefaultLayout'
 import NavigationBar from './NagivationBar/NavigationBar'
-import {playerDataKey} from '../../../helpers/commons/constants'
 
 export default {
   name: 'MainPageLayout',
   components: {NavigationBar, DefaultLayout},
-  data: function () {
-    return {
-      playerData: null
+  computed: {
+    playerName: function () {
+      return this.$store.state.playerName
     }
   },
   mounted () {
-    this.playerData = JSON.parse(localStorage.getItem(playerDataKey))
+    if (!this.playerName) {
+      this.$store.dispatch('setPlayerName')
+    }
   }
 }
 </script>

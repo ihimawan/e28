@@ -94,15 +94,15 @@ export default {
           about: this.newAbout,
           lookingFor: this.newLookingFor
         })
-        this.messages = 'Changed Saved!'
+        this.messages = 'Changes Saved!'
         if (this.newName !== this.playerData.name) {
-          this.$emit('update-template')
+          this.$store.commit('setPlayerName', this.newName)
         }
         this.playerData.name = this.newName
         this.playerData.about = this.newAbout
         this.playerData.lookingFor = this.newLookingFor
       } else {
-        this.messages = 'No new changed needed to be saved.'
+        this.messages = 'No new changes needed to be saved.'
       }
     },
     dismissAlert: function () {
@@ -124,8 +124,7 @@ export default {
     }
   },
   mounted () {
-    const existingPlayerDataStr = localStorage.getItem(playerDataKey)
-    const playerData = JSON.parse(existingPlayerDataStr)
+    const playerData = getJSONFromLocalStorage(playerDataKey)
     this.playerData = playerData
     this.playerPic = playerPictures[playerData.selectedPictureIdx]
     this.newName = playerData.name

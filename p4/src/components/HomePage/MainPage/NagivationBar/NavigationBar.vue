@@ -3,13 +3,13 @@
     <NavigationItem v-for="(page, index) in pages" :route-name="page.routeName" :key="index">
       <FontAwesomeIcon :icon="page.icon" class="navigationIcon"/>
       {{page.value}}
-      <span class="badge badge-pill badge-pink" v-if="loaded && page.value === 'Messages' && messageBadge">{{messageBadge}}</span>
+      <span class="badge badge-pill badge-pink" v-if="page.value === 'Messages' && messageBadge">{{messageBadge}}</span>
     </NavigationItem>
   </ul>
 </template>
 
 <script>
-import {getJSONFromLocalStorage, messageDataKey, pages} from '../../../../helpers/commons/constants'
+import { pages } from '../../../../helpers/commons/constants'
 import NavigationItem from './NavigationItem/NavigationItem'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -19,14 +19,18 @@ export default {
   data: function () {
     return {
       loaded: false,
-      pages: pages,
-      messageBadge: 0
+      pages: pages
+    }
+  },
+  computed: {
+    messageBadge: function () {
+      return this.$store.state.messageCount
     }
   },
   mounted: function () {
-    const existingConversations = getJSONFromLocalStorage(messageDataKey)
-    this.messageBadge = existingConversations.filter(convo => !convo.read).length
-    this.loaded = true
+    if (!this.messageBadge) {
+      this.$store.dispatch('setMessageCount')
+    }
   }
 }
 </script>

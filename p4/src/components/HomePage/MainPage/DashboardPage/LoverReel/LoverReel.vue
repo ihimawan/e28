@@ -44,7 +44,6 @@
 
 import { getHomeProfiles } from '../../../../../helpers/main/settings'
 import ChatModal from '../ChatModal/ChatModal'
-import axios from '../../../../../axios'
 
 export default {
   name: 'LoverReel',
@@ -58,7 +57,6 @@ export default {
   data: function () {
     return {
       loading: true,
-      masterProfileCollection: null,
       profiles: null,
       modal: {
         show: false,
@@ -75,13 +73,20 @@ export default {
       this.profiles = getHomeProfiles(this.masterProfileCollection)
     }
   },
+  computed: {
+    masterProfileCollection: function () {
+      return this.$store.state.profileCollections
+    }
+  },
   mounted () {
-    axios.get('/profiles')
-      .then(res => {
-        this.masterProfileCollection = res.data
+    if (!this.masterProfileCollection) {
+      this.$store.dispatch('setProfileCollections').then(() => {
         this.refreshProfiles()
-      })
-      .finally(() => (this.loading = false))
+      }).finally(() => (this.loading = false))
+    } else {
+      this.refreshProfiles()
+      this.loading = false
+    }
   }
 }
 </script>

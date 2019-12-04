@@ -1,6 +1,6 @@
-# Project 3
+# Project 4
 * By: Indri Himawan
-* Prod URL: http://p3.indrihimawan.com/
+* Prod URL: http://p4.indrihimawan.com/
 
 ## Outside resources
 
@@ -11,7 +11,6 @@
 
 ## Things I've probably could have done better
 * Using a local storage key for each conversation, instead of consolidating all of them in one JSON as a value in one key in the local storage.
-* Need to refresh to see messages badges to be updated
 
 ## Credits
 * Fake API using my-json-server (https://my-json-server.typicode.com/)

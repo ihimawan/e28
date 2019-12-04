@@ -63,6 +63,13 @@ export const getDefaultMessageData = () => {
   return allMessages
 }
 
+export const wasMessageRead = (allMessages, userId) => {
+  const conversationWithUserIndex = allMessages.findIndex(convo => convo.userId === userId)
+  if (~conversationWithUserIndex) { // have talked to this user before
+    return allMessages[conversationWithUserIndex].read
+  }
+}
+
 export const readMessage = (allMessages, userId) => {
   const updatedAllMessages = [...allMessages]
   const conversationWithUserIndex = updatedAllMessages.findIndex(convo => convo.userId === userId)

@@ -1,6 +1,6 @@
 <template>
-  <component :is="layout" :key="componentKey">
-    <router-view @update-template="updateTemplate"/>
+  <component :is="layout">
+    <router-view/>
   </component>
 </template>
 
@@ -18,11 +18,6 @@ export default {
   computed: {
     layout: function () {
       return this.$route.meta.layout || MainPageLayout
-    }
-  },
-  methods: {
-    updateTemplate: function () {
-      this.componentKey++
     }
   }
 }
