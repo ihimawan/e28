@@ -7,11 +7,21 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       }
     ]
   },
   plugins: [
-    // make sure to include the plugin!
     new VueLoaderPlugin()
-  ]
+  ],
+  resolve: {
+    extensions: ['*', '.js', '.vue', '.json']
+  }
 }
