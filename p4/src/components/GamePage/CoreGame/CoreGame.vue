@@ -46,7 +46,6 @@ export default {
     }
   },
   mounted: function () {
-    this.$store.dispatch('setProducts')
     this.gameBeginHandler()
   },
   computed: {
@@ -64,7 +63,7 @@ export default {
     gameBeginHandler: function () {
       // reset game settings
       if (!this.profileCollection) {
-        this.$store.dispatch('setProfileCollections').then(res => {
+        this.$store.dispatch('setProfileCollections').then(() => {
           this.startGame()
         }).catch(() => (this.error = true))
           .finally(() => (this.loading = false))
