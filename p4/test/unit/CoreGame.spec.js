@@ -9,27 +9,25 @@ localVue.use(Vuex)
 describe('CoreGame', () => {
   let profileCollection = [{
     id: 1,
-    title: 'Carl',
-    description: 'Hi!! My name is Carl and I\'m just looking for a friendly male don\'t worry Carl is girl alpaca name.',
+    title: 'name1',
+    description: 'text1',
     distance: 1,
     speciesId: 1
   },
   {
     id: 2,
-    title: 'Billy Bob',
-    description: 'My friend told me to use this website to find a man but idk how to take selfies with good lighting',
+    title: 'name2',
+    description: 'text2',
     distance: 2,
     speciesId: 1
   }]
 
-  let state = {
-    profileCollection
-  }
-
   let store
   beforeEach(() => {
     store = new Vuex.Store({
-      state
+      state: {
+        profileCollection
+      }
     })
   })
 
