@@ -1,0 +1,28 @@
+.btn-primary{
+  background-color: #f57f8f;
+  border-color: #ff667c;
+}
+
+.btn-primary:hover{
+  background-color: #ff667c;
+  border-color: #ff667c;
+}
+
+.btn-primary:disabled,
+.btn-primary[disabled]{
+  border: 1px solid #cccccc;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.answer-review-img {
+ margin: 5px;
+ max-width:100px;
+ max-height:100px
+}
+
+.spinner-grow{
+  color: #f57f8f;
+  width: 3rem;
+  height: 3rem;
+}
