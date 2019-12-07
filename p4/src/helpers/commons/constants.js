@@ -31,11 +31,7 @@ export const playerDataKey = 'playerData'
 export const messageDataKey = 'messageData'
 
 export const copyJSONValues = (destination, source) => {
-  const dest = {...destination}
-  Object.keys(source).forEach(key => {
-    dest[key] = source[key]
-  })
-  return dest
+  return {...destination, ...source}
 }
 export const getJSONFromLocalStorage = (key) => {
   const value = localStorage.getItem(key)
