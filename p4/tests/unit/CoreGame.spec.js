@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import CoreGame from "../../src/components/GamePage/CoreGame/CoreGame";
 import Vuex from "vuex";
+import Vue from "vue";
 import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 
 const localVue = createLocalVue();
@@ -58,11 +59,10 @@ describe("CoreGame", () => {
       store: storeFailedFetch
     });
 
-    await new Promise(resolve => setTimeout(resolve));
-
+    await Vue.nextTick();
     expect(wrapper.vm.error).to.equal(true);
     expect(wrapper.vm.loading).to.equal(false);
-    expect(wrapper.text()).to.include("Error");
+    expect(wrapper.text()).to.include("error");
   });
 
   it("Shows one profile by random from the profile list", () => {
