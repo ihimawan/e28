@@ -8,8 +8,8 @@
         <p class="card-text">{{currentProfile.description}}</p>
       </div>
       <div class="card-body">
-        <a href="#" @click="$emit('select-answer', 'llamas')" class="card-link">Llama</a>
-        <a href="#" @click="$emit('select-answer', 'alpacas')" class="card-link">Alpaca</a>
+        <a href="#" data-test-id="llama-button" @click="$emit('select-answer', 'llamas')" class="card-link">Llama</a>
+        <a href="#" data-test-id="alpaca-button" @click="$emit('select-answer', 'alpacas')" class="card-link">Alpaca</a>
       </div>
     </div>
   </div>

@@ -16,8 +16,7 @@ new Vue({
   el: '#app',
   store,
   router,
-  components: { HomePage },
-  template: '<HomePage />'
+  render: h=>h(HomePage)
 })
 
 Vue.use(BootstrapVue)

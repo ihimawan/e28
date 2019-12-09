@@ -1,9 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from '../axios'
-import {getJSONFromLocalStorage, messageDataKey, playerDataKey} from '../helpers/commons/constants'
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "../axios";
+import {
+  getJSONFromLocalStorage,
+  messageDataKey,
+  playerDataKey
+} from "../helpers/commons/constants";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
@@ -13,38 +17,43 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setPlayerName: (state, payload) => {
-      state.playerName = payload
+      state.playerName = payload;
     },
     setMessageCount: (state, payload) => {
-      state.messageCount = payload
+      state.messageCount = payload;
     },
     setProfileCollections: (state, payload) => {
-      state.profileCollections = payload
+      state.profileCollections = payload;
     },
     updateMessageCount: (state, payload) => {
-      state.messageCount += payload
+      state.messageCount += payload;
     }
   },
   actions: {
-    setPlayerName: ({commit}) => {
-      const {name} = getJSONFromLocalStorage(playerDataKey)
-      if (name) { commit('setPlayerName', name) }
+    setPlayerName: ({ commit }) => {
+      const { name } = getJSONFromLocalStorage(playerDataKey);
+      if (name) {
+        commit("setPlayerName", name);
+      }
     },
-    setMessageCount: ({commit}) => {
-      const existingConversations = getJSONFromLocalStorage(messageDataKey)
-      const messageBadge = existingConversations.filter(convo => !convo.read).length
-      commit('setMessageCount', messageBadge)
+    setMessageCount: ({ commit }) => {
+      const existingConversations = getJSONFromLocalStorage(messageDataKey);
+      const messageBadge = existingConversations.filter(convo => !convo.read)
+        .length;
+      commit("setMessageCount", messageBadge);
     },
-    setProfileCollections: ({commit}) => {
+    setProfileCollections: ({ commit }) => {
       return new Promise((resolve, reject) => {
-        axios.get('/profiles')
+        axios
+          .get("/profiles")
           .then(res => {
-            commit('setProfileCollections', res.data)
-            resolve(res)
-          }).catch(error => {
-            reject(error)
+            commit("setProfileCollections", res.data);
+            resolve(res);
           })
-      })
+          .catch(error => {
+            reject(error);
+          });
+      });
     }
   }
-})
+});

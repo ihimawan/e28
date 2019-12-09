@@ -4,7 +4,7 @@
       Loading...
     </div>
     <div class="row justify-content-center" v-else-if="!loading && error">
-      Unable to load game :( come back later?
+      Error loading game :( come back later?
     </div>
     <div v-else>
       <div class="row justify-content-center">
@@ -45,7 +45,7 @@ export default {
       }
     }
   },
-  mounted: function () {
+  beforeMount: function () {
     this.gameBeginHandler()
   },
   computed: {
@@ -66,11 +66,21 @@ export default {
         this.$store.dispatch('setProfileCollections').then(() => {
           this.startGame()
         }).catch(() => (this.error = true))
-          .finally(() => (this.loading = false))
+          .finally(() => {
+              this.loading = false;
+              // eslint-disable-next-line no-console
+              console.log('[fx]' + this.error)
+              // eslint-disable-next-line no-console
+              console.log('[fx]' + this.loading)
+          })
       } else {
         this.startGame()
         this.loading = false
       }
+        // eslint-disable-next-line no-console
+      console.log('[CoreGamee]' + this.error)
+        // eslint-disable-next-line no-console
+        console.log('[CoreGamel]' + this.loading)
     },
     startGame: function () {
       const startState = settings.getGameStartState(this.profileCollection)
@@ -83,6 +93,7 @@ export default {
       if (this.state.doneIndexes.size >= this.state.maxChoices ||
         this.state.doneIndexes.size >= this.profileCollection.length) {
         this.finishGameHandler()
+        return
       }
       // if not, generate new image
       let newIndex = null
