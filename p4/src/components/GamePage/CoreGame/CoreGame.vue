@@ -65,22 +65,22 @@ export default {
       if (!this.profileCollection) {
         this.$store.dispatch('setProfileCollections').then(() => {
           this.startGame()
-        }).catch(() => (this.error = true))
-          .finally(() => {
-              this.loading = false;
-              // eslint-disable-next-line no-console
-              console.log('[fx]' + this.error)
-              // eslint-disable-next-line no-console
-              console.log('[fx]' + this.loading)
-          })
+        }).catch(() => {
+          this.error = true;
+          // eslint-disable-next-line no-console
+          console.log('[fx-error]' + this.error);
+        })
+        .finally(() => {
+          this.loading = false;
+          // eslint-disable-next-line no-console
+          console.log('[fx]' + this.loading)
+        })
       } else {
         this.startGame()
         this.loading = false
       }
-        // eslint-disable-next-line no-console
-      console.log('[CoreGamee]' + this.error)
-        // eslint-disable-next-line no-console
-        console.log('[CoreGamel]' + this.loading)
+      // eslint-disable-next-line no-console
+      console.log('[CoreGame]' + this.loading)
     },
     startGame: function () {
       const startState = settings.getGameStartState(this.profileCollection)
