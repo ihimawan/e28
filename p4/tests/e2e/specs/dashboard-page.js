@@ -5,18 +5,18 @@ import {
 } from "../../../src/helpers/commons/constants";
 
 describe("Visit Dashboard page as REGISTERED user", () => {
-  const initialPlayerData = {
-    ...getDefaultPlayerData(),
+  const initialPlayerData = Object.assign(getDefaultPlayerData(), {
     name: "testUser",
     selectedGender: "Agender",
     selectedPictureIdx: 2
-  };
-
+  });
   it("Displays you haven't taken L&A test if you haven't", () => {
-    setJSONToLocalStorage(playerDataKey, {
-      initialPlayerData,
-      passedTest: false
-    });
+    setJSONToLocalStorage(
+      playerDataKey,
+      Object.assign(initialPlayerData, {
+        passedTest: false
+      })
+    );
 
     // assertions of text
     cy.visit("/")
@@ -30,9 +30,11 @@ describe("Visit Dashboard page as REGISTERED user", () => {
       .click();
 
     // able to navigate to game page through CHAT ME button
-    cy.get('[data-test="lover-reel-profile-2"] button').click();
-    cy.contains("What is the Llama or Alpaca test?");
-    cy.get('[data-test="modal-agree-button]').click();
-    cy.contains("Llama or Alpaca Test");
+    cy.get('[data-test="lover-reel-profile-2"] button')
+      .click()
+      .contains("What is the Llama or Alpaca test?");
+    cy.get('[data-test="modal-agree-button]')
+      .click()
+      .contains("Llama or Alpaca Test");
   });
 });
