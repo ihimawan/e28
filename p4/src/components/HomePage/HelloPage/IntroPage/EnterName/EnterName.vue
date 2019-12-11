@@ -2,13 +2,16 @@
   <div>
     <div class="row justify-content-center">
       <div class="col-md-4 mb-3">
-        <input type="text" class="form-control" :class="{'is-valid' : validName, 'is-invalid' : enteredName !== null && validName !== null && !validName}"
-               id="username" placeholder="Give yourself a name" v-model=enteredName data-test="enter-name-input">
+        <input type="text" class="form-control" :class="{'is-valid' : $v.enteredName.$dirty && !$v.enteredName.$anyError, 'is-invalid' : $v.enteredName.$anyError}"
+               id="username" placeholder="Give yourself a name" v-model.trim="$v.enteredName.$model" data-test="enter-name-input">
         <div class="valid-feedback">
           <slot name="valid-feedback-text">Beautiful name you got.</slot>
         </div>
         <div class="invalid-feedback">
-          Can't read this.. must be just alphabets and not too long please..
+          <div v-if="!$v.enteredName.required">You must put your name!</div>
+          <div v-if="!$v.enteredName.minLength">Name must have at least {{$v.enteredName.$params.minLength.min}} characters!</div>
+          <div v-if="!$v.enteredName.maxLength">Name must be less than {{$v.enteredName.$params.maxLength.max}} characters!</div>
+          <div v-if="!$v.enteredName.alpha">Must only be alphabetic name!</div>
         </div>
       </div>
     </div>
@@ -16,24 +19,23 @@
 </template>
 
 <script>
-import * as settings from '../../../../../helpers/intro/settings'
+// import {maxLength, minLength, required} from "vuelidate";
+
+import {minLength, required, maxLength, alpha} from "vuelidate/lib/validators";
 
 export default {
   name: 'EnterName',
   data: function () {
     return {
-      enteredName: null,
-      validName: null
+      enteredName: ''
     }
   },
-  watch: {
-    enteredName: function () {
-      this.validName = settings.validateName(this.enteredName)
-      if (this.validName) {
-        this.$emit('set-name', this.enteredName)
-      } else {
-        this.$emit('set-name', null)
-      }
+  validations: {
+    enteredName: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(10),
+      alpha
     }
   }
 }

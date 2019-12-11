@@ -8,6 +8,7 @@ import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "../static/style.css";
+import Vuelidate from "vuelidate";
 
 Vue.config.productionTip = false;
 
@@ -20,3 +21,4 @@ new Vue({
 });
 
 Vue.use(BootstrapVue);
+Vue.use(Vuelidate);

@@ -3,6 +3,10 @@
 * Prod URL: http://p4.indrihimawan.com/
 
 ## Outside resources
+* (NEW) Using Vuelidate
+* (NEW) Using Mocha and Chai for unit testing
+* (NEW) Using Cypress for e2e testing
+* (NEW) Deployed on Netlify
 
 ## Notes
 * Used the fake API (https://my-json-server.typicode.com/ihimawan/e28JsonServer) to store all available user profiles to be displayed on the main dashboard and the game.
