@@ -19,9 +19,7 @@
 </template>
 
 <script>
-// import {maxLength, minLength, required} from "vuelidate";
-
-import {minLength, required, maxLength, alpha} from "vuelidate/lib/validators";
+import {validName} from "../../../../../helpers/intro/settings";
 
 export default {
   name: 'EnterName',
@@ -31,11 +29,15 @@ export default {
     }
   },
   validations: {
-    enteredName: {
-      required,
-      minLength: minLength(4),
-      maxLength: maxLength(10),
-      alpha
+    enteredName: validName
+  },
+  watch: {
+    enteredName: function () {
+      if (this.$v.enteredName.$dirty && !this.$v.enteredName.$anyError) {
+        this.$emit('set-name', this.enteredName)
+      } else {
+        this.$emit('set-name', null)
+      }
     }
   }
 }

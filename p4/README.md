@@ -3,8 +3,8 @@
 * Prod URL: http://p4.indrihimawan.com/
 
 ## Outside resources
-* (NEW) Using Vuelidate
-* (NEW) Using Mocha and Chai for unit testing
+* (NEW) Using Vuelidate for name validation
+* (NEW) Using Mocha and Chai for `CoreGame` unit testing
 * (NEW) Using Cypress for e2e testing
 * (NEW) Deployed on Netlify
 

@@ -18,12 +18,16 @@
         <div class="form-group row">
           <label for="inputName" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" :class="{'is-valid' : validNewName, 'is-invalid' : !validNewName}" id="inputName" placeholder="Name" v-model="newName">
+            <input type="text" class="form-control" :class="{'is-valid' : $v.newName.$dirty && !$v.newName.$anyError, 'is-invalid' : $v.newName.$anyError}"
+                   id="inputName" placeholder="Name" v-model="$v.newName.$model">
             <div class="valid-feedback">
               Beautiful name you got.
             </div>
             <div class="invalid-feedback">
-              Can't read this.. must be just alphabets and not too long please..
+              <div v-if="!$v.newName.required">You must put your name!</div>
+              <div v-if="!$v.newName.minLength">Name must have at least {{$v.newName.$params.minLength.min}} characters!</div>
+              <div v-if="!$v.newName.maxLength">Name must be less than {{$v.newName.$params.maxLength.max}} characters!</div>
+              <div v-if="!$v.newName.alpha">Must only be alphabetic name!</div>
             </div>
           </div>
         </div>
@@ -56,7 +60,7 @@
           </div>
         </div>
         <div class="row float-right save-button">
-          <button class="btn btn-primary" @click="saveChanges">Save Changes</button>
+          <button class="btn btn-primary" @click="saveChanges" :disabled="this.validNewName">Save Changes</button>
         </div>
       </div>
     </div>
@@ -66,7 +70,7 @@
 <script>
 
 import { playerPictures } from '../../../../helpers/intro/library'
-import { validateName } from '../../../../helpers/intro/settings'
+import {validName} from '../../../../helpers/intro/settings'
 import {
   copyJSONValues,
   getJSONFromLocalStorage,
@@ -85,6 +89,9 @@ export default {
       newLookingFor: null,
       messages: null
     }
+  },
+  validations: {
+    newName: validName
   },
   methods: {
     saveChanges: function () {
@@ -120,7 +127,7 @@ export default {
   },
   computed: {
     validNewName: function () {
-      return validateName(this.newName)
+      return this.$v.newName.$dirty && this.$v.newName.$anyError
     }
   },
   mounted () {
