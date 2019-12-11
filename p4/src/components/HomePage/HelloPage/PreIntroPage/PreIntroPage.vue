@@ -22,7 +22,7 @@
       you are a Llama. Llama bad.
       <img src="../../../../assets/images/preview/2.jpg" width="600" class="preview-image"/>
     </div>
-    <a class="btn btn-primary btn-lg get-started-btn" href="#" role="button" @click="$emit('next')">
+    <a class="btn btn-primary btn-lg get-started-btn" data-test="register-button" href="#" role="button" @click="$emit('next')">
       Sounds intriguing... how can I join in the fun?</a>
     <div>
     </div>

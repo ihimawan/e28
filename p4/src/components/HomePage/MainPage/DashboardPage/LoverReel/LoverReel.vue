@@ -15,14 +15,14 @@
     </div>
     <div v-else>
       <div class="card-deck">
-        <div class="card border-secondary" v-for="profile in profiles" :key="profile.title">
+        <div class="card border-secondary" v-for="(profile, index) in profiles" :key="profile.title" :data-test="['lover-reel-profile', 'lover-reel-profile-'.concat(index)]">
           <img :src="require('../../../../../assets/images/game/' + profile.id + '.jpg')" width="300" height="320"
                class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{profile.title}}</h5>
             <p class="card-text">{{profile.description}}</p>
-            <button class="btn btn-primary" @click="!hasPlayerPassed ? $emit('open-modal') : openChatModal(profile)">Chat with
-              me!
+            <button class="btn btn-primary" @click="!hasPlayerPassed ? $emit('open-modal') : openChatModal(profile)">
+              Chat with me!
             </button>
           </div>
           <div class="card-footer">
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-link" @click="refreshProfiles">Can't find one you
+        <button type="button" class="btn btn-link" @click="refreshProfiles" data-test="load-more-button">Can't find one you
           like? Load more...
         </button>
       </div>

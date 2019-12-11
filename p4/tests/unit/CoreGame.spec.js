@@ -76,7 +76,7 @@ describe("CoreGame", () => {
     const wrapper = mount(CoreGame, options);
     const names = profileCollection.map(profile => profile.title);
     const firstProfile = wrapper.text();
-    wrapper.find('[data-test-id = "llama-button"]').trigger("click");
+    wrapper.find('[data-test = "llama-button"]').trigger("click");
     const secondProfile = wrapper.text();
 
     const profiles = [firstProfile, secondProfile];
@@ -93,13 +93,13 @@ describe("CoreGame", () => {
 
   it("adds profile to the left when llama button is clicked", () => {
     const wrapper = mount(CoreGame, options);
-    wrapper.find('[data-test-id = "llama-button"]').trigger("click");
+    wrapper.find('[data-test = "llama-button"]').trigger("click");
     expect(wrapper.vm.state.leftChoiceIndexes.length).to.equal(1);
   });
 
   it("adds profile to the right when alpaca button is clicked", () => {
     const wrapper = mount(CoreGame, options);
-    wrapper.find('[data-test-id = "alpaca-button"]').trigger("click");
+    wrapper.find('[data-test = "alpaca-button"]').trigger("click");
     expect(wrapper.vm.state.rightChoiceIndexes.length).to.equal(1);
   });
 
@@ -110,8 +110,8 @@ describe("CoreGame", () => {
         maxChoices: 2
       }
     });
-    wrapper.find('[data-test-id = "alpaca-button"]').trigger("click");
-    wrapper.find('[data-test-id = "alpaca-button"]').trigger("click");
+    wrapper.find('[data-test = "alpaca-button"]').trigger("click");
+    wrapper.find('[data-test = "alpaca-button"]').trigger("click");
     expect(wrapper.vm.state.modal.status).to.not.null;
   });
 });

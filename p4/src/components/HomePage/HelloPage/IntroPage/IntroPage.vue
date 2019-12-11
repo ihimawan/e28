@@ -12,7 +12,7 @@
   <div class="row justify-content-center">
     <div class="col-md-4 mb-3">
       <button v-if="selectedGender" @click="activateModalHandler" type="button"
-              class="btn btn-primary">Hot. Let's go find you the love of your life.</button>
+              class="btn btn-primary" data-test="final-register-button">Hot. Let's go find you the love of your life.</button>
     </div>
   </div>
 

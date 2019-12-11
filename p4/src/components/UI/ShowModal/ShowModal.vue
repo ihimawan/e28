@@ -17,8 +17,8 @@
             <slot />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="dismissModalHandler"><slot name="dismissText">{{modalData.disagree}}</slot></button>
-            <button v-if="modalData.agree!==null" type="button" class="btn btn-primary" @click="agreeHandler">
+            <button type="button" class="btn btn-secondary" @click="dismissModalHandler" data-test="dismiss-modal-button"><slot name="dismissText">{{modalData.disagree}}</slot></button>
+            <button v-if="modalData.agree!==null" type="button" class="btn btn-primary" @click="agreeHandler" data-test="agree-modal-button">
               <slot name="agreeText">{{modalData.agree}}</slot>
             </button>
           </div>

@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'https://my-json-server.typicode.com/ihimawan/e28JsonServer'
-})
+  baseURL: "https://my-json-server.typicode.com/ihimawan/e28JsonServer"
+});
 
-export default instance
+export default instance;

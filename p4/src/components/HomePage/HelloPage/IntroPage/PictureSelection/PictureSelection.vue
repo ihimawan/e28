@@ -5,6 +5,7 @@
       <div class="col-md-4 mb-3" v-for='(pictureInfo, index) in playerPictures' :key="index">
         <img :src="pictureInfo.img" width="300" height="300" class="rounded mx-auto d-block img-thumbnail"
              :class="{'character-unselected' : selectedPictureIdx === null || selectedPictureIdx !== index}"
+             :data-test="['picture-select', 'picture-select-'.concat(index)].join(' ')"
              @click="selectProfilePicture(index)">
       </div>
     </div>

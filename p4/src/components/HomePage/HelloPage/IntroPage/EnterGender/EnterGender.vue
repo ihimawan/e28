@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-md-4 mb-3">
-      <select class="custom-select" v-model="selected" @change="emitting">
+      <select class="custom-select" v-model="selected" @change="emitting" data-test="select-gender">
         <option selected>Select Gender...</option>
         <option v-for="gender in genders" :value=gender :key=gender>{{gender}}</option>
       </select>
