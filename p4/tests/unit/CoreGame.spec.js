@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import CoreGame from "../../src/components/GamePage/CoreGame/CoreGame";
 import Vuex from "vuex";
-import Vue from "vue";
 import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 
 const localVue = createLocalVue();
@@ -59,14 +58,15 @@ describe("CoreGame", () => {
       store: storeFailedFetch
     });
 
-    await Vue.nextTick();
+    await new Promise(resolve => setTimeout(resolve));
     expect(wrapper.vm.error).to.equal(true);
     expect(wrapper.vm.loading).to.equal(false);
-    expect(wrapper.text()).to.include("error");
+    expect(wrapper.text()).to.include("Error");
   });
 
-  it("Shows one profile by random from the profile list", () => {
+  it("Shows one profile by random from the profile list", async () => {
     const wrapper = shallowMount(CoreGame, options);
+    await new Promise(resolve => setTimeout(resolve));
     expect(wrapper.vm.error).to.equal(false);
     expect(wrapper.vm.loading).to.equal(false);
     expect(wrapper.vm.state.currentIndex !== 0).to.equal(true);

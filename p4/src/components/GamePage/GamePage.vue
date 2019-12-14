@@ -4,10 +4,10 @@
     <CountdownDisplay v-if="loadingScreenShow" @finish-countdown="startGameHandler"/>
 
     <div v-if="gameBegin">
-      <button @click="returnHome" class="btn btn-secondary">Nevermind, I want
+      <button @click="returnHome" class="btn btn-secondary" data-test="game-return-home">Nevermind, I want
         to go back to looking at Alpacas
       </button>
-      <button @click="restartGameHandler" class="btn btn-primary">Messed up... I want a
+      <button @click="restartGameHandler" class="btn btn-primary" data-test="game-restart">Messed up... I want a
         restart.
       </button>
       <CoreGame @game-finish="gameFinishHandler"/>

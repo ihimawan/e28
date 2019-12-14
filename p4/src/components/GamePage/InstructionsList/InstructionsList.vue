@@ -21,9 +21,9 @@
                                                                              target="blank">read this article.</a></li>
     </ul>
     <div class="instruction-buttons">
-      <button type="button" @click="returnHome" class=" btn btn-secondary">Nevermind,
+      <button type="button" @click="returnHome" class=" btn btn-secondary" data-test="game-page-reject">Nevermind,
         I want to go back to looking at Alpacas</button>
-      <button type="button" @click="$emit('begin-game')" class="btn btn-primary">Start eligibility for
+      <button type="button" @click="$emit('begin-game')" class="btn btn-primary" data-test="game-page-accept">Start eligibility for
         this secret society</button>
     </div>
   </div>
