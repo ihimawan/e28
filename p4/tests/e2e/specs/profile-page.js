@@ -57,9 +57,9 @@ describe("Profile Page", () => {
   it("saves information upon change and click", () => {
     cy.visit("/profile")
       .get("[data-test='name-input']")
-      .type("string")
+      .type("str")
       .get("[data-test='save-changes-button']")
       .click()
-      .contains("Welcome, stringstring");
+      .contains("Welcome, stringstr");
   });
 });
