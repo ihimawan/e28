@@ -10,7 +10,7 @@
       <button @click="restartGameHandler" class="btn btn-primary" data-test="game-restart">Messed up... I want a
         restart.
       </button>
-      <CoreGame @game-finish="gameFinishHandler"/>
+      <CoreGame @game-finish="gameFinishHandler" :max-choices="maxChoices"/>
     </div>
 
     <ShowModal :modal-show.sync="modal.show" :modal-data="modal" @agree-action="returnHome">
@@ -32,6 +32,7 @@ import CountdownDisplay from './Countdown/CountdownDisplay'
 import CoreGame from './CoreGame/CoreGame'
 import ShowModal from '../UI/ShowModal/ShowModal'
 import router from '../../router'
+import {maxChoices} from "../../helpers/game/settings";
 import {
   createMessage,
   getJSONFromLocalStorage, messageDataKey,
@@ -47,6 +48,7 @@ export default {
       instructionsShow: true,
       loadingScreenShow: false,
       passed: false,
+      maxChoices: maxChoices,
       modal: {
         title: null,
         text: null,

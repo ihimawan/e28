@@ -8,7 +8,7 @@
     </div>
     <div v-else>
       <div class="row justify-content-center">
-        <h1 class="display-4">question {{state.doneIndexes.size}} of {{state.maxChoices}}
+        <h1 class="display-4">question {{state.doneIndexes.size}} of {{maxChoices}}
         </h1>
       </div>
 
@@ -30,6 +30,7 @@ import {copyJSONValues, getChoiceId, llamasText} from '../../../helpers/commons/
 export default {
   name: 'CoreGame',
   components: {ProfileCard, PastChoices},
+  props: ['maxChoices'],
   data: function () {
     return {
       loading: true,
@@ -40,8 +41,7 @@ export default {
         rightChoiceIndexes: [],
         wrongChoiceIndexes: [],
         doneIndexes: [],
-        score: null,
-        maxChoices: null
+        score: null
       }
     }
   },
@@ -84,7 +84,7 @@ export default {
     },
     generateNewImageHandler: function () {
       // check if game is finished
-      if (this.state.doneIndexes.size >= this.state.maxChoices ||
+      if (this.state.doneIndexes.size >= this.maxChoices ||
         this.state.doneIndexes.size >= this.profileCollection.length) {
         this.finishGameHandler()
         return
@@ -98,7 +98,7 @@ export default {
       this.state.doneIndexes.add(newIndex)
     },
     finishGameHandler: function () {
-      this.state.modal = settings.resultHandler(this.state.score)
+      this.state.modal = settings.resultHandler(this.state.score, this.maxChoices)
       this.state.modal.wrongProfiles = this.state.wrongChoiceIndexes.map(wrongIdx => this.profileCollection[wrongIdx])
       this.$emit('game-finish', this.state.modal)
     },

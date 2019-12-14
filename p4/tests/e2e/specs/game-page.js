@@ -43,18 +43,4 @@ describe("Visit game page", () => {
       .click()
       .contains("Get Ready!");
   });
-
-  it("Continuing game to winner, win must reflect on dashboard.", async () => {
-    cy.visit("/game")
-      .get('[data-test="game-page-agree"]')
-      .click();
-
-    await new Promise(resolve => setTimeout(resolve));
-  });
-
-  it("Continuing game to lose, lose must refelct on dashboard", () => {
-    cy.visit("/game")
-      .get('[data-test="game-page-agree"]')
-      .click();
-  });
 });

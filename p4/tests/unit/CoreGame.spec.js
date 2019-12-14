@@ -36,7 +36,10 @@ describe("CoreGame", () => {
 
     options = {
       localVue,
-      store
+      store,
+      propsData: {
+        maxChoices: 2
+      }
     };
   });
 
@@ -103,15 +106,17 @@ describe("CoreGame", () => {
     expect(wrapper.vm.state.rightChoiceIndexes.length).to.equal(1);
   });
 
-  it("evaluates score based on choices", () => {
+  it("evaluates score based and recognizes wins", () => {
     const wrapper = mount(CoreGame, options);
-    wrapper.setData({
-      state: {
-        maxChoices: 2
-      }
-    });
     wrapper.find('[data-test = "alpaca-button"]').trigger("click");
     wrapper.find('[data-test = "alpaca-button"]').trigger("click");
-    expect(wrapper.vm.state.modal.status).to.not.null;
+    expect(wrapper.vm.state.modal.status).to.equal("win");
+  });
+
+  it("evaluates score based and recognizes loses", () => {
+    const wrapper = mount(CoreGame, options);
+    wrapper.find('[data-test = "llama-button"]').trigger("click");
+    wrapper.find('[data-test = "llama-button"]').trigger("click");
+    expect(wrapper.vm.state.modal.status).to.equal("lose");
   });
 });

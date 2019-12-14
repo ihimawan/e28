@@ -13,12 +13,11 @@ export const getGameStartState = () => {
     rightChoiceIndexes: [],
     wrongChoiceIndexes: [],
     doneIndexes: new Set(),
-    score: 0,
-    maxChoices: maxChoices
+    score: 0
   };
 };
 
-export const resultHandler = score => {
+export const resultHandler = (score, maxChoices) => {
   let passingScore = Math.ceil((maxChoices * passingPercentage) / 100);
 
   const scoreString =

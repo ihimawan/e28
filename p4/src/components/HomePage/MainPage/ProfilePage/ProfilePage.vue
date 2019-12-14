@@ -19,7 +19,7 @@
           <label for="inputName" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" :class="{'is-valid' : $v.newName.$dirty && !$v.newName.$anyError, 'is-invalid' : $v.newName.$anyError}"
-                   id="inputName" placeholder="Name" v-model="$v.newName.$model">
+                   id="inputName" placeholder="Name" v-model="$v.newName.$model" data="name-input">
             <div class="valid-feedback">
               Beautiful name you got.
             </div>
@@ -42,7 +42,7 @@
           <label for="about-me" class="col-sm-2 col-form-label">Why me</label>
           <div class="col-sm-10">
             <textarea class="form-control" id="about-me" placeholder="I'm the best Alpaca around. Everyone is jealous."
-                      v-model="newAbout" rows="3"/>
+                      v-model="newAbout" rows="3" data-test="about-me-input"/>
             <small class="form-text text-muted">
               Use something that will catch your next lover's eye..
             </small>
@@ -53,14 +53,14 @@
           <div class="col-sm-10">
             <textarea class="form-control" id="looking-for"
                       placeholder="An Alpaca that can love me the way my mother can't." v-model="newLookingFor"
-                      rows="3"/>
+                      rows="3" data-test="looking-for-input"/>
             <small class="form-text text-muted">
               Don't beat around the bush! Tell em what you want!
             </small>
           </div>
         </div>
         <div class="row float-right save-button">
-          <button class="btn btn-primary" @click="saveChanges" :disabled="this.validNewName">Save Changes</button>
+          <button class="btn btn-primary" @click="saveChanges" :disabled="!this.validNewName" data-test="save-changes-button">Save Changes</button>
         </div>
       </div>
     </div>
@@ -116,9 +116,11 @@ export default {
       this.messages = null
     },
     hasDelta: function () {
-      return this.validNewName && (this.newName !== this.playerData.name ||
+      // eslint-disable-next-line no-console
+      console.log(this.validNewName)
+      return this.newName !== this.playerData.name ||
         this.newAbout !== this.playerData.about ||
-        this.newLookingFor !== this.playerData.lookingFor)
+        this.newLookingFor !== this.playerData.lookingFor
     },
     playerDataUpdate: function (newPlayerData) {
       const playerData = getJSONFromLocalStorage(playerDataKey)
@@ -127,7 +129,7 @@ export default {
   },
   computed: {
     validNewName: function () {
-      return this.$v.newName.$dirty && this.$v.newName.$anyError
+      return this.$v.newName.$dirty && !this.$v.newName.$anyError
     }
   },
   mounted () {
