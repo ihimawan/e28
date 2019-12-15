@@ -1,6 +1,6 @@
 <template>
   <ul class="nav nav-tabs">
-    <NavigationItem v-for="(page, index) in pages" :route-name="page.routeName" :key="index" :data-test="['navigation-item', 'navigation-item-'.concat(page.routeName.toLowerCase())]">
+    <NavigationItem v-for="(page, index) in pages" :route-name="page.routeName" :key="index" :data-test="['navigation-item', 'navigation-item-'.concat(page.routeName.toLowerCase())].join(' ')">
       <FontAwesomeIcon :icon="page.icon" class="navigationIcon"/>
       {{page.value}}
       <span class="badge badge-pill badge-pink" v-if="page.value === 'Messages' && messageBadge" data-test="message-badge">{{messageBadge}}</span>

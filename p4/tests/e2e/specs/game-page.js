@@ -18,29 +18,30 @@ describe("Visit game page", () => {
   it("Will prompt you to register first if user is unregistered", () => {
     cy.clearLocalStorage(playerDataKey);
     cy.visit("/game")
-      .get('[data-test="final-register-button"]')
+      .get('[data-test="register-button"]')
       .should("be.visible");
   });
 
   it("Rejecting instructions on screen", () => {
     cy.visit("/game")
       .get('[data-test="game-page-reject"]')
-      .click()
-      .contains("Welcome, " + initialPlayerData.name);
+      .click();
+    cy.contains("Welcome, " + initialPlayerData.name);
 
     cy.visit("/game")
-      .get('[data-test="game-return-home"]')
-      .click()
-      .contains("Welcome, " + initialPlayerData.name);
+      .get('[data-test="game-page-accept"]')
+      .click();
+    cy.get('[data-test="game-return-home"]').click();
+    cy.contains("Welcome, " + initialPlayerData.name);
   });
 
   it("Has functionality to restart the game in middle of game", () => {
     cy.visit("/game")
-      .get('[data-test="game-page-agree"]')
+      .get('[data-test="game-page-accept"]')
       .click();
 
-    cy.get('[data-test="game-restart"]')
-      .click()
-      .contains("Get Ready!");
+    cy.get('[data-test="game-restart"]').click();
+    cy.contains("Get Ready!");
+    cy.contains("question 1 of");
   });
 });

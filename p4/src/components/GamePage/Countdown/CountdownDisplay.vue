@@ -11,11 +11,7 @@
 <script>
 export default {
   name: 'CountdownDisplay',
-  data: function () {
-    return {
-      countDown: 3
-    }
-  },
+  props: ['countDown'],
   methods: {
     loadingScreenTimeDown: function () {
       if (this.countDown > 0) {

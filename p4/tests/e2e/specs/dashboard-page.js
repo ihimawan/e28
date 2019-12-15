@@ -22,35 +22,30 @@ describe("Visit Dashboard page as REGISTERED user", () => {
   it("Shows navigation and able to navigate", () => {
     cy.visit("/")
       .contains("Why are Alpacas such good lovers?")
-      .get('[data-test=*"navigation-item"]')
+      .get('[data-test*="navigation-item"]')
       .should("have.length", 3);
 
     // visit profile page
-    cy.get("[data-test=navigation-item-profilepage]")
-      .click()
-      .contains("Edit Your Profile");
+    cy.get("[data-test*='navigation-item-profilepage']").click();
+    cy.contains("Edit Your Profile");
 
     // visit messages page, initially will have one new message from the boss
-    cy.get("[data-test=navigation-item-messagespage]")
-      .click()
-      .contains("Miss Boss Lady")
-      .contains("NEW");
-    cy.get("[data-test=message-badge]").contains("1");
+    cy.get("[data-test*='navigation-item-messagespage']").click();
+    cy.contains("Messages From Lovers");
 
     // visit back home
-    cy.get("[data-test=navigation-item-dashboardpage]")
-      .click()
-      .contains("Why are Alpacas such good lovers?");
+    cy.get("[data-test*='navigation-item-dashboardpage']").click();
+    cy.contains("Why are Alpacas such good lovers?");
   });
 
   it("Displays a lover reel and shows more if you click on load more", () => {
     cy.visit("/")
       .get('[data-test*="lover-reel-profile"]')
       .should("have.length", 3)
-      .get('[data-test="load-more-button]')
+      .get('[data-test="load-more-button"]')
       .click();
     // TODO ensure that they are different profiles
-    cy.get('[data-test="lover-reel-profile"]').should("have.length", 3);
+    cy.get('[data-test*="lover-reel-profile"]').should("have.length", 3);
   });
 
   it("Displays you haven't taken L&A test if you haven't taken it and able to navigate to game page", () => {
@@ -58,12 +53,11 @@ describe("Visit Dashboard page as REGISTERED user", () => {
     cy.visit("/").contains("you haven't taken");
 
     // able to navigate to game page through CHAT ME button
-    cy.get('[data-test*="lover-reel-profile-2"] button')
-      .click()
-      .contains("What is the Llama or Alpaca test?");
-    cy.get('[data-test="modal-agree-button]')
-      .click()
-      .contains("Llama or Alpaca Test");
+    cy.get('[data-test*="lover-reel-profile-2"] button').click();
+
+    cy.contains("What is the Llama or Alpaca test?");
+    cy.get('[data-test="agree-modal-button"]').click();
+    cy.contains("Llama or Alpaca Test");
   });
 
   it("Displays you have taken L&A test and able to chat to dates", () => {
@@ -78,8 +72,7 @@ describe("Visit Dashboard page as REGISTERED user", () => {
     cy.visit("/").contains("You've passed");
 
     // able to navigate to game page through CHAT ME button
-    cy.get('[data-test*="lover-reel-profile-2"] button')
-      .click()
-      .contains("What is the Llama or Alpaca test?");
+    cy.get('[data-test*="lover-reel-profile-2"] button').click();
+    cy.contains("Send message to");
   });
 });

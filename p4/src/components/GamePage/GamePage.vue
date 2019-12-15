@@ -1,7 +1,7 @@
 <template>
   <div>
     <InstructionsList v-show="instructionsShow" @return-to-home="returnHome" @begin-game="readyHandler"/>
-    <CountdownDisplay v-if="loadingScreenShow" @finish-countdown="startGameHandler"/>
+    <CountdownDisplay v-if="loadingScreenShow" @finish-countdown="startGameHandler" :count-down="countDown"/>
 
     <div v-if="gameBegin">
       <button @click="returnHome" class="btn btn-secondary" data-test="game-return-home">Nevermind, I want
@@ -45,6 +45,7 @@ export default {
   components: {ShowModal, CoreGame, CountdownDisplay, InstructionsList},
   data: function () {
     return {
+      countDown: 3,
       instructionsShow: true,
       loadingScreenShow: false,
       passed: false,

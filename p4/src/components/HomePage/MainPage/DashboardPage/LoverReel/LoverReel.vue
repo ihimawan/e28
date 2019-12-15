@@ -15,7 +15,7 @@
     </div>
     <div v-else>
       <div class="card-deck">
-        <div class="card border-secondary" v-for="(profile, index) in profiles" :key="profile.title" :data-test="['lover-reel-profile', 'lover-reel-profile-'.concat(index)]">
+        <div class="card border-secondary" v-for="(profile, index) in profiles" :key="profile.title" :data-test="['lover-reel-profile', 'lover-reel-profile-'.concat(index)].join(' ')">
           <img :src="require('../../../../../assets/images/game/' + profile.id + '.jpg')" width="300" height="320"
                class="card-img-top">
           <div class="card-body">

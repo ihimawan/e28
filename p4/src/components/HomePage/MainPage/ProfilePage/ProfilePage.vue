@@ -16,10 +16,10 @@
           </button>
         </div>
         <div class="form-group row">
-          <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+          <label for="input-name" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" :class="{'is-valid' : $v.newName.$dirty && !$v.newName.$anyError, 'is-invalid' : $v.newName.$anyError}"
-                   id="inputName" placeholder="Name" v-model="$v.newName.$model" data="name-input">
+                   id="input-name" placeholder="Name" v-model="$v.newName.$model" data-test="name-input">
             <div class="valid-feedback">
               Beautiful name you got.
             </div>
