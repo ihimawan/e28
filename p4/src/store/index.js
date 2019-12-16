@@ -45,7 +45,7 @@ export const store = new Vuex.Store({
     setProfileCollections: ({ commit }) => {
       return new Promise((resolve, reject) => {
         axios
-          .get("/profiles")
+          .get("/profiles.json")
           .then(res => {
             commit("setProfileCollections", res.data);
             resolve(res);
