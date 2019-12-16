@@ -44,4 +44,14 @@ describe("Visit game page", () => {
     cy.contains("Get Ready!");
     cy.contains("question 1 of");
   });
+
+  it("won't show success on dashboard page if you fail the test", () => {
+    cy.visit("/game")
+      .get('[data-test="game-page-accept"]')
+      .click();
+
+    cy.get('[data-test="game-restart"]').click();
+    cy.contains("Get Ready!");
+    cy.contains("question 1 of");
+  });
 });

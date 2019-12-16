@@ -45,7 +45,7 @@ export default {
   components: {ShowModal, CoreGame, CountdownDisplay, InstructionsList},
   data: function () {
     return {
-      countDown: 3,
+      countDown: process.env.VUE_APP_COUNT_DOWN_SECONDS,
       instructionsShow: true,
       loadingScreenShow: false,
       passed: false,
@@ -64,6 +64,8 @@ export default {
   },
   computed: {
     gameBegin: function () {
+      // eslint-disable-next-line no-console
+      console.log(process.env)
       return !this.instructionsShow && !this.loadingScreenShow
     }
   },

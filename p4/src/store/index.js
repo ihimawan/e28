@@ -38,9 +38,13 @@ export const store = new Vuex.Store({
     },
     setMessageCount: ({ commit }) => {
       const existingConversations = getJSONFromLocalStorage(messageDataKey);
-      const messageBadge = existingConversations.filter(convo => !convo.read)
-        .length;
-      commit("setMessageCount", messageBadge);
+      if (!existingConversations) {
+        commit("setMessageCount", 0);
+      } else {
+        const messageBadge = existingConversations.filter(convo => !convo.read)
+          .length;
+        commit("setMessageCount", messageBadge);
+      }
     },
     setProfileCollections: ({ commit }) => {
       return new Promise((resolve, reject) => {
