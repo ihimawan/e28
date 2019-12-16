@@ -20,15 +20,20 @@ describe("Visit Profile Page", () => {
     setJSONToLocalStorage(messageDataKey, initialMessagesData);
   });
 
-  it("will shows all messages available", () => {
+  it("will shows all messages available and adjusts badge count", () => {
     cy.visit("/messages")
       .contains("Messages From Lovers")
       .get("[data-test*='message-tile']")
       .should("have.length", 1)
       .contains("Miss Boss Lady");
+
+    // has new on unread messages
+    cy.get("[data-test*='message-tile']").contains("NEW");
+    // has badge count of how many un updated conversations
+    cy.get("[data-test='message-badge']").contains(1);
   });
 
-  it("will show messages from a user upon click", () => {
+  it("will show messages from a user upon click and adjust badge count", () => {
     cy.visit("/messages")
       .contains("Messages From Lovers")
       .get("[data-test*='message-tile-21']")
@@ -38,6 +43,14 @@ describe("Visit Profile Page", () => {
       expect(loc.pathname).to.eq("/messages/21");
     });
     cy.get("[data-test='message-text']").should("have.length", 3);
+
+    // badge reduces to zero
+    cy.get("[data-test='message-badge']").should("not.exist");
+
+    cy.visit("/messages")
+      .get("[data-test*='message-tile-21']")
+      .contains("NEW")
+      .should("not.exist");
   });
 
   it("will allow user to message others and it will appear on the messages", () => {
