@@ -1,4 +1,4 @@
-describe("Visit Main page", () => {
+describe("Visit Registration page", () => {
   it("As unregistered user, visits the app root url and able to register", () => {
     const name = "testUser";
 

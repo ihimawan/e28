@@ -2,9 +2,9 @@
   <div>
     <h4>Messages From Lovers</h4>
     <div v-if="loaded && messageInfos!==null">
-      <MessageTile v-for="messageInfo in messageInfos" :message-info="messageInfo" :key="messageInfo.userId"/>
+      <MessageTile v-for="(messageInfo) in messageInfos" :message-info="messageInfo" :key="messageInfo.userId"/>
     </div>
-    <div v-else-if="messageInfos === null">
+    <div v-else-if="loaded && messageInfos === null">
       <p class="lead">No messages to display</p>
     </div>
     <div v-else>
@@ -28,7 +28,7 @@ export default {
   },
   mounted () {
     const messages = getJSONFromLocalStorage(messageDataKey)
-    if (!messages) {
+    if (messages) {
       messages.sort((first, second) => {
         return second.lastMessageTimestamp - first.lastMessageTimestamp
       })

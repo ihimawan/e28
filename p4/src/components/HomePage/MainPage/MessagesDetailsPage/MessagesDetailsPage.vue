@@ -5,15 +5,15 @@
     </div>
     <div class="container" v-else>
       <div class="fixed-height-container overflow-content" id="message-window">
-        <MessageText v-for="(message, index) in messages" :message="message" :player-image-index="playerImageIndex" :key="index">{{message.text}}</MessageText>
+        <MessageText v-for="(message, index) in messages" :message="message" :player-image-index="playerImageIndex" :key="index" data-test="message-text">{{message.text}}</MessageText>
       </div>
       <div class="row form-group">
         <div class="col-md-11">
-          <textarea class="form-control" rows="3" placeholder="Write message" v-model="currentMessage"></textarea>
+          <textarea class="form-control" rows="3" placeholder="Write message" v-model="currentMessage" data-test="write-message-input"></textarea>
           <small>Note: They will NEVER reply because they are not coded :P So don't wait!</small>
         </div>
         <div class="col-md-1">
-          <button class="btn btn-primary send-button" @click="sendMessage">Send</button>
+          <button class="btn btn-primary send-button" @click="sendMessage" data-test="send-message-button">Send</button>
         </div>
       </div>
     </div>

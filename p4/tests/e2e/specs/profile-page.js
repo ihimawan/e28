@@ -4,7 +4,7 @@ import {
   setJSONToLocalStorage
 } from "../../../src/helpers/commons/constants";
 
-describe("Profile Page", () => {
+describe("Visit Profile Page", () => {
   const initialPlayerData = Object.assign(getDefaultPlayerData(), {
     name: "string",
     selectedGender: "Agender",
