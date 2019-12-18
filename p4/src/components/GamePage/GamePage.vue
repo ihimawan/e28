@@ -64,8 +64,6 @@ export default {
   },
   computed: {
     gameBegin: function () {
-      // eslint-disable-next-line no-console
-      console.log(process.env)
       return !this.instructionsShow && !this.loadingScreenShow
     }
   },

@@ -116,8 +116,6 @@ export default {
       this.messages = null
     },
     hasDelta: function () {
-      // eslint-disable-next-line no-console
-      console.log(this.validNewName)
       return this.newName !== this.playerData.name ||
         this.newAbout !== this.playerData.about ||
         this.newLookingFor !== this.playerData.lookingFor
