@@ -10,9 +10,10 @@
 * (NEW) Using environment variables for game count down (3 seconds in prod but 1 in dev, in order to speed up testing)
 * (NEW) Using Firebase to store all available user profiles to be displayed on the main dashboard and the game.
 * Used local storage to store player information, such as name, gender, whether they have beaten the game, etc.
+* Thank you Susan for the awesome course!!! I had (too) much fun! 
 
 ## Notes to user/professor about extended development
-I wanted to do the feature where there is two way messaging. However, life happened and I know I won't have time to develop it in the way I want to. But I would still like to share my idea on how I would approach creating this feature!
+I wanted to do the feature where there is two way messaging. However, life happened and I know I won't have time to develop it in the way I want to. But I would still like to share my ideas on how I would approach creating this feature!
 
 #### Approach 1 - the easy solution but boring
 Use Vue's state changes so that once the player sends a message, I could add a `setTimeout` (to simulate a "person" reading and replying to the message). 
@@ -27,7 +28,7 @@ Creating a separate service (let's call it, the "messaging service") that would 
 #### Approach 3 - the ideal solution but I don't have friends
 Take `Approach 2` up a notch and instead of a "messaging service" with an AI, it would be with other players. 
 * **PRO:** It would be an amazing, funny website of people trying to date each other as Alpacas, and only Alpacas.
-* **CON:** I would obviously need to create an authentication service. Ideally there would be some users so I won't have to maintain a repository of fake users. I think the hardest part about this one is just testing. Meaning that it would be nice to have a group and have them chat with each other to see if anything breaks. I guess you can do some automation testing that simulates different users. Or, the lazy choice is just to open a bunch of incognito windows. 
+* **CON:** I would obviously need to create an authentication service. In addition, in this approach, ideally there would be some users so I won't have to maintain a repository of fake users. I think the hardest part about this one is just testing. Meaning that it would be nice to have a group and have them chat with each other to see if anything breaks. I guess you can do some automation testing that simulates multiple concurrent users. Or, the lazy/forever alone choice is just to open a bunch of incognito windows and chat by yourself. 
 
 ## Credits
 * Used Fontawesome (https://github.com/FortAwesome/vue-fontawesome)
